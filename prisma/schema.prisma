@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  clerkId    String   @unique             
+  email      String?  @unique
+  firstName  String?
+  lastName   String?
+  name       String?
+  imageUrl   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum PropertyStatus {
+  available
+  sold
+  rented
+  pending
+}
+
+enum RoomType {
+  Condo
+  Townhouse
+  SingleHouse
+  Apartment
+  Other
+}
+
+model Project {
+  id                Int        @id @default(autoincrement())
+  projectName       String
+  projectCode       String     @unique
+  projectLocation   String[]   // Postgres text[]
+  projectImageUrl   String[]   // Postgres text[]
+  projectFacilities String[]   // Postgres text[]
+  addressNumber     String
+  addressSubDistrict String
+  addressDistrict   String
+  addressProvince   String
+  addressZipcode    String
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  // Relation
+  properties        Property[]
+
+  @@map("projects")
+}
+
+model Property {
+  id                 Int             @id @default(autoincrement())
+  propertyId         Int             @unique
+  propertyCode       String          @unique
+  projectPropertyCode String         @unique
+
+  roomNumber         String
+  projectId          Int
+  projectName        String
+  location           String[]        // ["Phetchaburi", "Makkasan", "Bangkok"]
+
+  status             PropertyStatus  @default(available)
+  bedRoom            Int
+  bathRoom           Int
+  roomSize           Float           // in sqm
+  rentalRate         Decimal?        @db.Decimal(12, 2)
+  sell               Decimal?        @db.Decimal(14, 2)
+  roomType           RoomType
+
+  phone              String?
+  lineId             String?
+  indexFbUrl         String?
+
+  imageUrls          String[]        // Postgres text[]
+  isPetFriendly      Boolean         @default(false)
+  isOwner            Boolean         @default(false)
+
+  distanceToStation  Int?            // in meters
+  distanceStation    String?
+  note               String?
+  carPark            Int?
+  messageToPost      String?
+  roomAmenities      String[]        // Postgres text[]
+
+  floor              Int?
+  whenAvailable      String?         // could also be Date if always a date
+  isAcceptShortTerm  Boolean         @default(false)
+
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  // Relation
+  project            Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([status])
+  @@map("properties")
+}
