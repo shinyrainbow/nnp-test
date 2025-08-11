@@ -1,3 +1,9 @@
+-- CreateEnum
+CREATE TYPE "public"."PropertyStatus" AS ENUM ('available', 'sold', 'rented', 'pending');
+
+-- CreateEnum
+CREATE TYPE "public"."RoomType" AS ENUM ('Condo', 'Townhouse', 'SingleHouse', 'Apartment', 'Other');
+
 -- CreateTable
 CREATE TABLE "public"."users" (
     "id" SERIAL NOT NULL,
@@ -5,6 +11,7 @@ CREATE TABLE "public"."users" (
     "email" TEXT,
     "firstName" TEXT,
     "lastName" TEXT,
+    "name" TEXT,
     "imageUrl" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -14,17 +21,20 @@ CREATE TABLE "public"."users" (
 
 -- CreateTable
 CREATE TABLE "public"."projects" (
-    "id" SERIAL NOT NULL,
-    "projectName" TEXT NOT NULL,
-    "projectCode" TEXT NOT NULL,
-    "projectLocation" TEXT[],
-    "projectImageUrl" TEXT[],
-    "projectFacilities" TEXT[],
-    "addressNumber" TEXT NOT NULL,
-    "addressSubDistrict" TEXT NOT NULL,
-    "addressDistrict" TEXT NOT NULL,
-    "addressProvince" TEXT NOT NULL,
-    "addressZipcode" TEXT NOT NULL,
+    "id" TEXT NOT NULL,
+    "projectNameEn" TEXT,
+    "projectNameTh" TEXT,
+    "projectCode" TEXT,
+    "projectLocation" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "projectImageUrl" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "projectFacilities" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "addressNumberRoad" TEXT,
+    "addressSubDistrict" TEXT,
+    "addressDistrict" TEXT,
+    "addressProvince" TEXT,
+    "addressZipcode" TEXT,
+    "completeYear" TEXT,
+    "distanceToStation" INTEGER[] DEFAULT ARRAY[]::INTEGER[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -33,36 +43,31 @@ CREATE TABLE "public"."projects" (
 
 -- CreateTable
 CREATE TABLE "public"."properties" (
-    "id" SERIAL NOT NULL,
-    "propertyId" INTEGER NOT NULL,
-    "propertyCode" TEXT NOT NULL,
+    "id" TEXT NOT NULL,
+    "projectId" TEXT NOT NULL,
     "projectPropertyCode" TEXT NOT NULL,
-    "roomNumber" TEXT NOT NULL,
-    "projectId" INTEGER NOT NULL,
-    "projectName" TEXT NOT NULL,
-    "location" TEXT[],
-    "status" "public"."PropertyStatus" NOT NULL DEFAULT 'available',
-    "bedRoom" INTEGER NOT NULL,
-    "bathRoom" INTEGER NOT NULL,
-    "roomSize" DOUBLE PRECISION NOT NULL,
+    "addressNumber" TEXT,
+    "status" "public"."PropertyStatus" DEFAULT 'pending',
+    "bedRoom" INTEGER,
+    "bathRoom" INTEGER,
+    "roomSize" DOUBLE PRECISION,
     "rentalRate" DECIMAL(12,2),
-    "sell" DECIMAL(14,2),
-    "roomType" "public"."RoomType" NOT NULL,
+    "sellPrice" DECIMAL(14,2),
+    "roomType" "public"."RoomType" DEFAULT 'Condo',
     "phone" TEXT,
     "lineId" TEXT,
-    "indexFbUrl" TEXT,
-    "imageUrls" TEXT[],
-    "isPetFriendly" BOOLEAN NOT NULL DEFAULT false,
-    "isOwner" BOOLEAN NOT NULL DEFAULT false,
-    "distanceToStation" INTEGER,
-    "distanceStation" TEXT,
+    "fbUrl" TEXT,
+    "imageUrls" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "isPetFriendly" BOOLEAN DEFAULT false,
+    "isOwner" BOOLEAN DEFAULT false,
     "note" TEXT,
     "carPark" INTEGER,
     "messageToPost" TEXT,
-    "roomAmenities" TEXT[],
+    "roomAmenities" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "floor" INTEGER,
+    "building" TEXT,
     "whenAvailable" TEXT,
-    "isAcceptShortTerm" BOOLEAN NOT NULL DEFAULT false,
+    "isAcceptShortTerm" BOOLEAN DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -79,10 +84,7 @@ CREATE UNIQUE INDEX "users_email_key" ON "public"."users"("email");
 CREATE UNIQUE INDEX "projects_projectCode_key" ON "public"."projects"("projectCode");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "properties_propertyId_key" ON "public"."properties"("propertyId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "properties_propertyCode_key" ON "public"."properties"("propertyCode");
+CREATE UNIQUE INDEX "properties_projectId_key" ON "public"."properties"("projectId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "properties_projectPropertyCode_key" ON "public"."properties"("projectPropertyCode");

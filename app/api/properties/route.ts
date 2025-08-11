@@ -339,10 +339,10 @@ export async function GET(request: Request) {
     // Apply server-side filtering with OR operator for comma-separated search terms
     if (search) {
       // Parse comma-separated search terms
-      const searchTerms = search
-        .split(",")
-        .map((term) => term.trim().toLowerCase())
-        .filter(Boolean)
+      const searchTerms = [search]
+      //   .split(",")
+      //   .map((term) => term.trim().toLowerCase())
+      //   .filter(Boolean)
 
       if (searchTerms.length > 0) {
         filteredProperties = filteredProperties.filter((property) => {

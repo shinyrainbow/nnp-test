@@ -2063,9 +2063,23 @@ export function PropertyProvider({ children }: { children: ReactNode }) {
     setError(null)
 
     // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500))
-
+    // await new Promise((resolve) => setTimeout(resolve, 500))
+    // try {
+    //   const response = await fetch(`/api/search-properties?${params.toString()}`);
+    //   if (!response.ok) {
+    //     throw new Error('Failed to fetch data');
+    //   }
+    //   const data = await response.json();
+    //   setSearchResults(data.results);
+    // } catch (error) {
+    //   console.error('Search failed:', error);
+    //   setSearchResults([]);
+    // } finally {
+    //   setIsLoading(false);
+    // }
     try {
+      const response = await fetch(`/api/properties?${params.toString()}`);
+
       let filteredProperties = [...mockProperties]
 
       // Apply filters

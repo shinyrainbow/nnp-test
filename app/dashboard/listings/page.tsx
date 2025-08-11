@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Search,
   MapPin,
@@ -316,13 +316,20 @@ export default function PropertySearch() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     {t("searchByNameLocation")}
                   </label>
-                  <CommaSeparatedSearch
+                  <Input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Enter project name or location"
+                    className="w-full"
+                  />
+                  {/* <CommaSeparatedSearch
                     projects={projects}
                     value={searchTerm}
                     onChange={setSearchTerm}
                     placeholder={t("enterProjectName")}
                     locale={language}
-                  />
+                  /> */}
                 </div>
 
                 <div>
