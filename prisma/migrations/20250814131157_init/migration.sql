@@ -20,11 +20,13 @@ CREATE TABLE "public"."users" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."projects" (
+CREATE TABLE "public"."Project" (
     "id" TEXT NOT NULL,
-    "projectNameEn" TEXT,
+    "projectCode" INTEGER NOT NULL,
+    "projectNameEn" TEXT NOT NULL,
     "projectNameTh" TEXT,
-    "projectCode" TEXT,
+    "projectDescriptionEn" TEXT,
+    "projectDescriptionTh" TEXT,
     "projectLocation" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "projectImageUrl" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "projectFacilities" TEXT[] DEFAULT ARRAY[]::TEXT[],
@@ -34,44 +36,47 @@ CREATE TABLE "public"."projects" (
     "addressProvince" TEXT,
     "addressZipcode" TEXT,
     "completeYear" TEXT,
-    "distanceToStation" INTEGER[] DEFAULT ARRAY[]::INTEGER[],
+    "distanceToStation" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "priceRange" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "projects_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Project_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "public"."properties" (
+CREATE TABLE "public"."Property" (
     "id" TEXT NOT NULL,
-    "projectId" TEXT NOT NULL,
-    "projectPropertyCode" TEXT NOT NULL,
-    "addressNumber" TEXT,
+    "projectPropertyCode" TEXT,
     "status" "public"."PropertyStatus" DEFAULT 'pending',
+    "whenAvailable" TEXT,
+    "isAcceptShortTerm" BOOLEAN DEFAULT false,
+    "addressNumber" TEXT,
     "bedRoom" INTEGER,
     "bathRoom" INTEGER,
     "roomSize" DOUBLE PRECISION,
+    "floor" INTEGER,
+    "building" TEXT,
+    "roomType" "public"."RoomType" DEFAULT 'Condo',
+    "isPetFriendly" BOOLEAN DEFAULT false,
+    "carPark" INTEGER,
+    "imageUrls" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "roomAmenities" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "rentalRate" DECIMAL(12,2),
     "sellPrice" DECIMAL(14,2),
-    "roomType" "public"."RoomType" DEFAULT 'Condo',
     "phone" TEXT,
     "lineId" TEXT,
     "fbUrl" TEXT,
-    "imageUrls" TEXT[] DEFAULT ARRAY[]::TEXT[],
-    "isPetFriendly" BOOLEAN DEFAULT false,
     "isOwner" BOOLEAN DEFAULT false,
+    "postUserFb" TEXT,
     "note" TEXT,
-    "carPark" INTEGER,
+    "originalMessage" TEXT,
     "messageToPost" TEXT,
-    "roomAmenities" TEXT[] DEFAULT ARRAY[]::TEXT[],
-    "floor" INTEGER,
-    "building" TEXT,
-    "whenAvailable" TEXT,
-    "isAcceptShortTerm" BOOLEAN DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "projectCode" INTEGER NOT NULL,
 
-    CONSTRAINT "properties_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Property_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -81,19 +86,16 @@ CREATE UNIQUE INDEX "users_clerkId_key" ON "public"."users"("clerkId");
 CREATE UNIQUE INDEX "users_email_key" ON "public"."users"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "projects_projectCode_key" ON "public"."projects"("projectCode");
+CREATE UNIQUE INDEX "Project_projectCode_key" ON "public"."Project"("projectCode");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "properties_projectId_key" ON "public"."properties"("projectId");
+CREATE UNIQUE INDEX "Project_projectNameEn_key" ON "public"."Project"("projectNameEn");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "properties_projectPropertyCode_key" ON "public"."properties"("projectPropertyCode");
+CREATE UNIQUE INDEX "Property_projectPropertyCode_key" ON "public"."Property"("projectPropertyCode");
 
 -- CreateIndex
-CREATE INDEX "properties_projectId_idx" ON "public"."properties"("projectId");
-
--- CreateIndex
-CREATE INDEX "properties_status_idx" ON "public"."properties"("status");
+CREATE UNIQUE INDEX "Property_projectCode_key" ON "public"."Property"("projectCode");
 
 -- AddForeignKey
-ALTER TABLE "public"."properties" ADD CONSTRAINT "properties_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "public"."projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."Property" ADD CONSTRAINT "Property_projectCode_fkey" FOREIGN KEY ("projectCode") REFERENCES "public"."Project"("projectCode") ON DELETE RESTRICT ON UPDATE CASCADE;
