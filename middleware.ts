@@ -1,13 +1,19 @@
- // middleware.ts
- import { clerkMiddleware } from '@clerk/nextjs/server';
+import { clerkMiddleware } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
- export default clerkMiddleware();
+export default clerkMiddleware(async (auth, req) => {
+  const { userId } = await auth();
 
- export const config = {
-   matcher: [
-     // Skip Next.js internals and all static files, unless found in search params
-     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-     // Always run for API routes
-     '/(api|trpc)(.*)',
-   ],
- };
+  // Redirect unauthenticated users trying to access protected routes
+  if (!userId && req.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.redirect(new URL('/sign-in', req.url));
+  }
+
+  return NextResponse.next();
+});
+
+export const config = {
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico).*)', // Apply middleware to all routes except static files
+  ],
+};

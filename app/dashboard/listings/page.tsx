@@ -33,7 +33,6 @@ import { ImageSlider } from "@/components/image-slider"
 import { CopyButtons } from "@/components/copy-buttons"
 // import { CommaSeparatedSearch } from "@/components/comma-separated-search"
 import { useRouter } from "next/navigation"
-// import { useProperty } from "@/contexts/property-context"
 import { useLanguage } from "@/contexts/language-context"
 
 interface Property {
@@ -101,8 +100,6 @@ export default function PropertySearch() {
   const {t, language} = useLanguage()
   const [downloadingStates, setDownloadingStates] = useState<Record<number, boolean>>({})
 
-  // Use Property Context
-  // const { properties, projects, propertyTypes, loading, error, fetchProperties, clearError } = useProperty()
   const [properties, setProperties] = useState<Property[]>([])
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedRoomType, setSelectedRoomType] = useState("all")

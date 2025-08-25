@@ -10,7 +10,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { LanguageProvider } from "@/contexts/language-context";
-import { PropertyProvider } from "@/contexts/property-context";
+// import { PropertyProvider } from "@/contexts/property-context";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -31,10 +31,10 @@ export default function RootLayout({
         <LanguageProvider>
 
           <ClerkProvider>
-            <PropertyProvider>
+            {/* <PropertyProvider> */}
 
             {children}
-            </PropertyProvider>
+            {/* </PropertyProvider> */}
             </ClerkProvider>
         </LanguageProvider>
       </body>

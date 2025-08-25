@@ -20,7 +20,7 @@ import { languages } from '@/lib/i18n'
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: Home, language: 'dashboard' },
   { name: 'Listings', href: '/dashboard/listings', icon: Building2 , language: 'propertyListings'},
-  { name: 'AI Assistant', href: '/dashboard/ai-assistant', icon: MessageSquare , language: 'aiAssistant'},
+  // { name: 'AI Assistant', href: '/dashboard/ai-assistant', icon: MessageSquare , language: 'aiAssistant'},
   { name: 'Market Analysis', href: '/dashboard/market', icon: TrendingUp, language: 'marketInsights' },
   { name: 'Commission Track', href: '/dashboard/commission', icon: DollarSign, language: 'commissionTracker' },
   { name: 'Contract Builder', href: '/dashboard/contracts', icon: FileText , language: 'contractBuilderMenu'},
