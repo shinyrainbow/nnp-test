@@ -3,3 +3,5 @@ node_modules/
 build/
 .env
 .vercel/
+uploads/
+nextjs-iam_accessKeys.csv

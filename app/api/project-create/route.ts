@@ -3,12 +3,14 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import {projects} from "@/mock/projects";
+import { uuid } from "zod/v4";
+
 // Instantiate the Prisma client. This is a best practice to do outside the handler.
 const prisma = new PrismaClient();
 
 // This is the main API route handler function for POST requests.
 // In the App Router, the function name corresponds to the HTTP method.
-export async function POST(req) {
+export async function POST(req: Request) {
   // Use a try/catch block for robust error handling.
   try {
     // The request body needs to be read from the `req` object.
@@ -23,7 +25,7 @@ export async function POST(req) {
       // We also handle cases where the fields might be missing in the JSON.
       return prisma.project.create({
         data: {
-          projectCode: index,
+          projectCode: project.projectCode || "",
 
           projectNameEn: project.projectNameEn,
           projectNameTh: project.projectNameTh,
@@ -40,9 +42,9 @@ export async function POST(req) {
           addressProvince: project.addressProvince,
           addressZipcode: project.addressZipcode,
 
-          completeYear: project.completeYear || null, // Handle both possible keys
+          completeYear: project.completeYear || "", // Handle both possible keys
           distanceToStation: project.distanceToStation || [],
-          priceRange: project.priceRange || null,
+          priceRange: project.priceRange || "",
         },
       });
     });

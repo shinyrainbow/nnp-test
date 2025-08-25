@@ -44,7 +44,7 @@ interface CopyButtonsProps {
 }
 
 export function CopyButtons({ property, size = "sm", variant = "outline" }: CopyButtonsProps) {
-  const {t}= useLanguage()
+  const {t, language}= useLanguage()
   const [copiedStates, setCopiedStates] = useState({
     phone: false,
     line: false,
@@ -56,7 +56,7 @@ export function CopyButtons({ property, size = "sm", variant = "outline" }: Copy
   })
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat(locale === "th" ? "th-TH" : "en-US").format(price)
+    return new Intl.NumberFormat(language === "th" ? "th-TH" : "en-US").format(price)
   }
 
   const getLocalizedPropertyType = (type: string) => {
@@ -118,7 +118,7 @@ export function CopyButtons({ property, size = "sm", variant = "outline" }: Copy
 
   const handleCopyToPost = () => {
     const postText =
-      locale === "th"
+    language === "th"
         ? `🏠 ${property.projectName} - ${t("room")} ${property.roomNumber}
 
 📍 ${property.location.join(", ")}
@@ -167,33 +167,33 @@ Status: ${getLocalizedStatus(property.status)}${property.isPetFriendly ? "\n🐕
     <div className="grid grid-cols-2 gap-2">
       <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyPhone}>
         {copiedStates.phone ? <Check className="w-4 h-4 mr-1" /> : <Phone className="w-4 h-4 mr-1" />}
-        {copiedStates.phone ? (locale === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyPhone")}
+        {copiedStates.phone ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyPhone")}
       </Button>
 
       <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyLineId}>
         {copiedStates.line ? <Check className="w-4 h-4 mr-1" /> : <MessageCircle className="w-4 h-4 mr-1" />}
-        {copiedStates.line ? (locale === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyLineId")}
+        {copiedStates.line ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyLineId")}
       </Button>
 
       <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyFacebookUrl}>
         {copiedStates.facebook ? <Check className="w-4 h-4 mr-1" /> : <Facebook className="w-4 h-4 mr-1" />}
-        {copiedStates.facebook ? (locale === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyFacebookUrl")}
+        {copiedStates.facebook ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyFacebookUrl")}
       </Button>
 
       <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyMessage}>
         {copiedStates.message ? <Check className="w-4 h-4 mr-1" /> : <FileText className="w-4 h-4 mr-1" />}
-        {copiedStates.message ? (locale === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyMessage")}
+        {copiedStates.message ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyMessage")}
       </Button>
 
       <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyPropertyCode}>
         {copiedStates.propertyCode ? <Check className="w-4 h-4 mr-1" /> : <Copy className="w-4 h-4 mr-1" />}
-        {copiedStates.propertyCode ? (locale === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyPropertyCode")}
+        {copiedStates.propertyCode ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyPropertyCode")}
       </Button>
 
       <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyProjectPropertyCode}>
         {copiedStates.projectPropertyCode ? <Check className="w-4 h-4 mr-1" /> : <Copy className="w-4 h-4 mr-1" />}
         {copiedStates.projectPropertyCode
-          ? locale === "th"
+          ? language === "th"
             ? "คัดลอกแล้ว!"
             : "Copied!"
           : t("copyProjectPropertyCode")}
@@ -201,7 +201,7 @@ Status: ${getLocalizedStatus(property.status)}${property.isPetFriendly ? "\n🐕
 
       <Button variant={variant} size={size} className="col-span-2 bg-transparent" onClick={handleCopyToPost}>
         {copiedStates.post ? <Check className="w-4 h-4 mr-1" /> : <Copy className="w-4 h-4 mr-1" />}
-        {copiedStates.post ? (locale === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyToPost")}
+        {copiedStates.post ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyToPost")}
       </Button>
     </div>
   )

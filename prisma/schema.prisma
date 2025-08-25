@@ -17,8 +17,6 @@ model User {
   imageUrl  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@map("users")
 }
 
 enum PropertyStatus {
@@ -38,7 +36,7 @@ enum RoomType {
 
 model Project {
   id                 String   @id @default(uuid())
-  projectCode        Int   @unique 
+  projectCode        String     @unique
 
   projectNameEn      String
   projectNameTh      String?
@@ -67,7 +65,7 @@ model Project {
 
 model Property {
   id                  String @id @default(uuid())
-  projectPropertyCode String? @unique // RHB-1 (project-number) for agent
+  projectPropertyCode String? // RHB-1 (project-number) for agent
 
   // status
   status        PropertyStatus? @default(pending)
@@ -76,28 +74,28 @@ model Property {
 
   // details
   addressNumber String? // 42/188
-  bedRoom       Int?
-  bathRoom      Int?
-  roomSize      Float? // in sqm
-  floor         Int?
+  bedRoom       String?
+  bathRoom      String?
+  roomSize      String? // in sqm
+  floor         String?
   building      String?
   roomType      RoomType?       @default(Condo)
   isPetFriendly Boolean? @default(false)
-  carPark       Int?
+  carPark       String?
   imageUrls     String[] @default([])
   roomAmenities String[] @default([])
 
   // price
-  rentalRate    Decimal?        @db.Decimal(12, 2)
-  sellPrice     Decimal?        @db.Decimal(14, 2)
+  rentalRate    String?       
+  sellPrice     String?     
 
   // contact
   phone  String?
   lineId String?
-  fbUrl  String?
+  fbUser  String? // name and lasname 
   
   isOwner       Boolean? @default(false)
-  postUserFb    String?
+  linkPost    String?  //link of the post 
 
   // messages
   note          String? // for some more details
@@ -108,6 +106,6 @@ model Property {
   updatedAt DateTime @updatedAt
 
   // Relation
-  projectCode         Int @unique
+  projectCode         String
   project Project @relation(fields: [projectCode], references: [projectCode])
 }

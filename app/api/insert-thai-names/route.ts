@@ -13,7 +13,7 @@ export async function PUT(req) {
         console.log(dd, 11111)
             return prisma.project.update({
                 where: {
-                    projectCode: index,
+                    projectCode: index+1,
                 },
                 data: {
                     projectNameTh: dd,

@@ -129,7 +129,9 @@ export default function ProjectsPage() {
     fetchProjects();
   }, []);
 
-  const names = projects.map((project) => project.projectNameEn);
+  // const names = projects.map((project) => project.projectNameEn);
+  const newProjects = projects.sort((a, b) => a.projectNameEn.localeCompare(b.projectNameEn));
+console.log(newProjects, 4444444)
   // console.log(names);
   // const first = names.slice(0, 100);
   // console.log("first:", first);
@@ -186,14 +188,14 @@ export default function ProjectsPage() {
 //     }
 //   });
 
-//   console.log(xxx, 55555);
   return (
     <main className="container mx-auto py-8 px-4">
       <h1 className="text-2xl font-bold mb-4">Projects</h1>
+    
       <button onClick={insertThaiNames}>import thainames</button>
 
       <ul className="space-y-2">
-        {projects.map((project) => (
+        {newProjects.map((project) => (
           <li key={project.projectCode} className="flex gap-2">
             <span className="text-gray-600">{project.projectCode}</span>
             <span>{project.projectNameEn}</span>

@@ -22,7 +22,7 @@ CREATE TABLE "public"."users" (
 -- CreateTable
 CREATE TABLE "public"."Project" (
     "id" TEXT NOT NULL,
-    "projectCode" INTEGER NOT NULL,
+    "projectCode" TEXT NOT NULL,
     "projectNameEn" TEXT NOT NULL,
     "projectNameTh" TEXT,
     "projectDescriptionEn" TEXT,
@@ -52,29 +52,29 @@ CREATE TABLE "public"."Property" (
     "whenAvailable" TEXT,
     "isAcceptShortTerm" BOOLEAN DEFAULT false,
     "addressNumber" TEXT,
-    "bedRoom" INTEGER,
-    "bathRoom" INTEGER,
-    "roomSize" DOUBLE PRECISION,
-    "floor" INTEGER,
+    "bedRoom" TEXT,
+    "bathRoom" TEXT,
+    "roomSize" TEXT,
+    "floor" TEXT,
     "building" TEXT,
     "roomType" "public"."RoomType" DEFAULT 'Condo',
     "isPetFriendly" BOOLEAN DEFAULT false,
-    "carPark" INTEGER,
+    "carPark" TEXT,
     "imageUrls" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "roomAmenities" TEXT[] DEFAULT ARRAY[]::TEXT[],
-    "rentalRate" DECIMAL(12,2),
-    "sellPrice" DECIMAL(14,2),
+    "rentalRate" TEXT,
+    "sellPrice" TEXT,
     "phone" TEXT,
     "lineId" TEXT,
-    "fbUrl" TEXT,
+    "fbUser" TEXT,
     "isOwner" BOOLEAN DEFAULT false,
-    "postUserFb" TEXT,
+    "linkPost" TEXT,
     "note" TEXT,
     "originalMessage" TEXT,
     "messageToPost" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "projectCode" INTEGER NOT NULL,
+    "projectCode" TEXT NOT NULL,
 
     CONSTRAINT "Property_pkey" PRIMARY KEY ("id")
 );
@@ -87,15 +87,6 @@ CREATE UNIQUE INDEX "users_email_key" ON "public"."users"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Project_projectCode_key" ON "public"."Project"("projectCode");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Project_projectNameEn_key" ON "public"."Project"("projectNameEn");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Property_projectPropertyCode_key" ON "public"."Property"("projectPropertyCode");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Property_projectCode_key" ON "public"."Property"("projectCode");
 
 -- AddForeignKey
 ALTER TABLE "public"."Property" ADD CONSTRAINT "Property_projectCode_fkey" FOREIGN KEY ("projectCode") REFERENCES "public"."Project"("projectCode") ON DELETE RESTRICT ON UPDATE CASCADE;
