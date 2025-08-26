@@ -57,7 +57,7 @@ export default function ContactPage() {
               Get in Touch
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Have questions about NainaPro? We're here to help you succeed in your real estate business.
+              Have questions about Naina Hub? We're here to help you succeed in your real estate business.
             </p>
           </div>
 
@@ -70,8 +70,8 @@ export default function ContactPage() {
                   <Mail className="h-6 w-6 text-primary mt-1" />
                   <div>
                     <h3 className="font-semibold">Email</h3>
-                    <p className="text-gray-600">support@nainapro.com</p>
-                    <p className="text-gray-600">sales@nainapro.com</p>
+                    <p className="text-gray-600">nainahub.service@gmail.com</p>
+                    <p className="text-gray-600">nainahub.sales@gmail.com</p>
                   </div>
                 </div>
                 

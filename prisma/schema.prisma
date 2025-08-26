@@ -8,15 +8,18 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  clerkId   String   @unique
-  email     String?  @unique
-  firstName String?
-  lastName  String?
-  name      String?
-  imageUrl  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(uuid())
+  clerkId      String   @unique
+  email        String?  @unique
+  firstName    String?
+  lastName     String?
+  isPaid       Boolean  @default(false) 
+  currentExpireDate  DateTime?
+  imageUrl     String?
+  lineCode     Int      @default(2025)
+  isEnableLine Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 enum PropertyStatus {
@@ -35,42 +38,42 @@ enum RoomType {
 }
 
 model Project {
-  id                 String   @id @default(uuid())
-  projectCode        String     @unique
+  id          String @id @default(uuid())
+  projectCode String @unique
 
-  projectNameEn      String
-  projectNameTh      String?
+  projectNameEn        String
+  projectNameTh        String?
   projectDescriptionEn String?
   projectDescriptionTh String?
 
-  projectLocation    String[] @default([]) // ["Phetchaburi", "Makkasan", "Bangkok"]
-  projectImageUrl    String[] @default([]) // main building, facilities, etc.
-  projectFacilities  String[] @default([]) // list of facilities like "swimming pool", "gym", etc.
- 
+  projectLocation   String[] @default([]) // ["Phetchaburi", "Makkasan", "Bangkok"]
+  projectImageUrl   String[] @default([]) // main building, facilities, etc.
+  projectFacilities String[] @default([]) // list of facilities like "swimming pool", "gym", etc.
+
   addressNumberRoad  String? // 42 Sukhumvit 101/1
   addressSubDistrict String? // Makkasan
   addressDistrict    String?
   addressProvince    String?
   addressZipcode     String?
- 
-  completeYear       String? // January 2023
-  distanceToStation  String[]   @default([]) // ["300m to BTS Ekamai", "400m to MRT Thonglor"]
-  priceRange         String? // "1.5M - 3.5M THB"
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+
+  completeYear      String? // January 2023
+  distanceToStation String[] @default([]) // ["300m to BTS Ekamai", "400m to MRT Thonglor"]
+  priceRange        String? // "1.5M - 3.5M THB"
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   // Relation
   properties Property[]
 }
 
 model Property {
-  id                  String @id @default(uuid())
+  id                  String  @id @default(uuid())
   projectPropertyCode String? // RHB-1 (project-number) for agent
 
   // status
-  status        PropertyStatus? @default(pending)
+  status            PropertyStatus? @default(pending)
   whenAvailable     String?
-  isAcceptShortTerm Boolean? @default(false)
+  isAcceptShortTerm Boolean?        @default(false)
 
   // details
   addressNumber String? // 42/188
@@ -79,33 +82,33 @@ model Property {
   roomSize      String? // in sqm
   floor         String?
   building      String?
-  roomType      RoomType?       @default(Condo)
-  isPetFriendly Boolean? @default(false)
+  roomType      RoomType? @default(Condo)
+  isPetFriendly Boolean?  @default(false)
   carPark       String?
-  imageUrls     String[] @default([])
-  roomAmenities String[] @default([])
+  imageUrls     String[]  @default([])
+  roomAmenities String[]  @default([])
 
   // price
-  rentalRate    String?       
-  sellPrice     String?     
+  rentalRate String?
+  sellPrice  String?
 
   // contact
   phone  String?
   lineId String?
-  fbUser  String? // name and lasname 
-  
-  isOwner       Boolean? @default(false)
-  linkPost    String?  //link of the post 
+  fbUser String? // name and lasname 
+
+  isOwner  Boolean? @default(false)
+  linkPost String? //link of the post 
 
   // messages
-  note          String? // for some more details
+  note            String? // for some more details
   originalMessage String?
-  messageToPost String?
+  messageToPost   String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relation
-  projectCode         String
-  project Project @relation(fields: [projectCode], references: [projectCode])
+  projectCode String
+  project     Project @relation(fields: [projectCode], references: [projectCode])
 }

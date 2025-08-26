@@ -4,6 +4,9 @@
 import { Calendar, FileText, Users } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/language-context";
+import { currentUser } from "@clerk/nextjs";
+import { prisma } from "@/lib/prisma";
+import { useEffect, useState } from "react";
 
 const stats = [
   { title: "stats.sales", value: "34.5K", change: "+12%", icon: Calendar },
@@ -14,6 +17,15 @@ const stats = [
 
 export default function Dashboard() {
   const { t } = useLanguage();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    fetch("/api/me")
+      .then((res) => res.json())
+      .then(setUser);
+  }, []);
+
+  if (!user) return <div>Loading...</div>;
 
   return (
     <div className="space-y-6">

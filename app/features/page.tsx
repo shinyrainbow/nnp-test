@@ -55,7 +55,7 @@ export default function FeaturesPage() {
               Comprehensive Real Estate Tools
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover all the powerful features that make NainaPro the ultimate toolkit for real estate professionals
+              Discover all the powerful features that make Naina Hub the ultimate toolkit for real estate professionals
             </p>
           </div>
 

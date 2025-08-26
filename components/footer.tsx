@@ -9,7 +9,7 @@ export function Footer() {
           <div>
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <Building2 className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold">NainaPro</span>
+              <span className="text-2xl font-bold">Naina Hub</span>
             </Link>
             <p className="text-gray-400">
               Professional tools for real estate agents to work faster and more efficiently.
@@ -45,7 +45,7 @@ export function Footer() {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 NainaPro. All rights reserved.</p>
+          <p>&copy; 2024 Naina Hub. All rights reserved.</p>
         </div>
       </div>
     </footer>

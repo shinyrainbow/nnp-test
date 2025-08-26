@@ -7,7 +7,7 @@ import { I18nextProvider, initReactI18next } from "react-i18next"
 const resources = {
   en: {
     translation: {
-      brand: "NainaPro",
+      brand: "Naina Hub",
       nav: { features: "Features", pricing: "Pricing", contact: "Contact", dashboard: "Dashboard" },
       dashboard: {
         listing: "Listing",
@@ -23,7 +23,7 @@ const resources = {
   },
   es: {
     translation: {
-      brand: "NainaPro",
+      brand: "Naina Hub",
       nav: { features: "Funciones", pricing: "Precios", contact: "Contacto", dashboard: "Panel" },
       dashboard: {
         listing: "Listado",

@@ -20,6 +20,7 @@ import { languages } from '@/lib/i18n'
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: Home, language: 'dashboard' },
   { name: 'Listings', href: '/dashboard/listings', icon: Building2 , language: 'propertyListings'},
+  { name: 'Line Chat Bot', href: '/dashboard/line-chat-bot', icon: Building2 , language: 'lineChatBot'},
   // { name: 'AI Assistant', href: '/dashboard/ai-assistant', icon: MessageSquare , language: 'aiAssistant'},
   { name: 'Market Analysis', href: '/dashboard/market', icon: TrendingUp, language: 'marketInsights' },
   { name: 'Commission Track', href: '/dashboard/commission', icon: DollarSign, language: 'commissionTracker' },
@@ -40,7 +41,7 @@ export function DashboardSidebar() {
       <SidebarHeader>
         <Link href="/" className="flex items-center space-x-2 p-2">
           <Building2 className="h-8 w-8 text-primary" />
-          <span className="text-2xl font-bold text-primary">NainaPro</span>
+          <span className="text-2xl font-bold text-primary">Naina Hub</span>
         </Link>
       </SidebarHeader>
       

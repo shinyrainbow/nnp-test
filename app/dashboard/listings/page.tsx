@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import {
   Search,
   MapPin,
@@ -18,102 +18,107 @@ import {
   Calendar,
   Clock,
   Edit,
-} from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { PropertyTable } from "@/components/property-table"
-import { Pagination } from "@/components/pagination"
-// import { LanguageSwitcher } from "@/components/language-switcher"
-// import { Language } from "@/lib/i18n"
-import { ImageSlider } from "@/components/image-slider"
-import { CopyButtons } from "@/components/copy-buttons"
-// import { CommaSeparatedSearch } from "@/components/comma-separated-search"
-import { useRouter } from "next/navigation"
-import { useLanguage } from "@/contexts/language-context"
+} from "lucide-react";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { PropertyTable } from "@/components/property-table";
+import { Pagination } from "@/components/pagination";
+import { ImageSlider } from "@/components/image-slider";
+import { CopyButtons } from "@/components/copy-buttons";
+import { useRouter } from "next/navigation";
+import { useLanguage } from "@/contexts/language-context";
 
 interface Property {
-  id: number
-  projectPropertyCode: string
-  
-  status: string
-  whenAvailable: string
-  isAcceptShortTerm: boolean
+  id: number;
+  projectPropertyCode: string;
 
-  addressNumber: string
-  bedRoom: string
-  bathRoom: string
-  roomSize: string
-  floor: number
-  building: string
-  roomType: string
-  isPetFriendly: boolean
-  carPark: string
-  imageUrls: string[]
-  roomAmenities: string[]
+  status: string;
+  whenAvailable: string;
+  isAcceptShortTerm: boolean;
 
-  rentalRate: string
-  sellPrice: string
-  
-  phone: string
-  lineId: string
-  fbUser: string
+  addressNumber: string;
+  bedRoom: string;
+  bathRoom: string;
+  roomSize: string;
+  floor: number;
+  building: string;
+  roomType: string;
+  isPetFriendly: boolean;
+  carPark: string;
+  imageUrls: string[];
+  roomAmenities: string[];
 
-  isOwner: boolean
-  linkPost: string
+  rentalRate: string;
+  sellPrice: string;
 
-  note: string
-  originalMessage: string
-  messageToPost: string
+  phone: string;
+  lineId: string;
+  fbUser: string;
 
-  propertyCode: string
-  project: Project
+  isOwner: boolean;
+  linkPost: string;
+
+  note: string;
+  originalMessage: string;
+  messageToPost: string;
+
+  propertyCode: string;
+  project: Project;
 }
 
 interface Project {
-  id: number
-  projectCode: string
+  id: number;
+  projectCode: string;
 
-  projectNameEn: string
-  projectNameTh: string
-  projectDescriptionEn: string
-  projectDescriptionTh: string
+  projectNameEn: string;
+  projectNameTh: string;
+  projectDescriptionEn: string;
+  projectDescriptionTh: string;
 
-  projectLocation: string[]
-  projectImageUrl: string[]
-  projectFacilities: string[]
+  projectLocation: string[];
+  projectImageUrl: string[];
+  projectFacilities: string[];
 
-  addressNumber: string
-  addressSubDistrict: string
-  addressDistrict: string
-  addressProvince: string
-  addressZipcode: string
+  addressNumber: string;
+  addressSubDistrict: string;
+  addressDistrict: string;
+  addressProvince: string;
+  addressZipcode: string;
 }
 
-const propertyTypes = ["Condo", "Apartment", "Townhouse", "House"]
+const propertyTypes = ["Condo", "Apartment", "Townhouse", "House"];
 
 export default function PropertySearch() {
-  const router = useRouter()
-  const {t, language} = useLanguage()
-  const [downloadingStates, setDownloadingStates] = useState<Record<number, boolean>>({})
+  const router = useRouter();
+  const { t, language } = useLanguage();
+  const [downloadingStates, setDownloadingStates] = useState<
+    Record<number, boolean>
+  >({});
 
-  const [properties, setProperties] = useState<Property[]>([])
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedRoomType, setSelectedRoomType] = useState("all")
-  const [selectedBedRoom, setSelectedBedRoom] = useState("all")
-  const [minSize, setMinSize] = useState("")
-  const [maxSize, setMaxSize] = useState("")
-  const [minPrice, setMinPrice] = useState("")
-  const [maxPrice, setMaxPrice] = useState("")
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedRoomType, setSelectedRoomType] = useState("all");
+  const [selectedBedRoom, setSelectedBedRoom] = useState("all");
+  const [minSize, setMinSize] = useState("");
+  const [maxSize, setMaxSize] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
-  const [viewMode, setViewMode] = useState<"grid" | "table">("grid")
-  const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize, setPageSize] = useState(12)
-  const [totalPages, setTotalPages] = useState(0)
-  const [totalItems, setTotalItems] = useState(0)
+  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(12);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
 
   const [searchParams, setSearchParams] = useState({
     search: "",
@@ -123,7 +128,7 @@ export default function PropertySearch() {
     maxSize: "",
     minPrice: "",
     maxPrice: "",
-  })
+  });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -176,32 +181,34 @@ export default function PropertySearch() {
   // Download all images function
   const downloadAllImages = async (property: Property) => {
     try {
-      setDownloadingStates((prev) => ({ ...prev, [property.id]: true }))
+      setDownloadingStates((prev) => ({ ...prev, [property.id]: true }));
 
       for (let i = 0; i < property.imageUrls.length; i++) {
-        const imageUrl = property.imageUrls[i]
-        const response = await fetch(imageUrl)
-        const blob = await response.blob()
+        const imageUrl = property.imageUrls[i];
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
 
-        const url = window.URL.createObjectURL(blob)
-        const link = document.createElement("a")
-        link.href = url
-        link.download = `${property.propertyCode.replace(/\s+/g, "_")}_Image_${i + 1}.jpg`
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        window.URL.revokeObjectURL(url)
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${property.propertyCode.replace(/\s+/g, "_")}_Image_${
+          i + 1
+        }.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
 
         if (i < property.imageUrls.length - 1) {
-          await new Promise((resolve) => setTimeout(resolve, 500))
+          await new Promise((resolve) => setTimeout(resolve, 500));
         }
       }
     } catch (error) {
-      console.error("Error downloading images:", error)
+      console.error("Error downloading images:", error);
     } finally {
-      setDownloadingStates((prev) => ({ ...prev, [property.id]: false }))
+      setDownloadingStates((prev) => ({ ...prev, [property.id]: false }));
     }
-  }
+  };
 
   // Fetch properties using context
   // const fetchPropertiesData = async (page = 1, limit = pageSize, params = searchParams) => {
@@ -214,21 +221,23 @@ export default function PropertySearch() {
   // }
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat(language === "th" ? "th-TH" : "en-US").format(price)
-  }
+    return new Intl.NumberFormat(language === "th" ? "th-TH" : "en-US").format(
+      price
+    );
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "available":
-        return "bg-green-100 text-green-800"
+        return "bg-green-100 text-green-800";
       case "rented":
-        return "bg-yellow-100 text-yellow-800"
+        return "bg-yellow-100 text-yellow-800";
       case "sold":
-        return "bg-red-100 text-red-800"
+        return "bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800"
+        return "bg-gray-100 text-gray-800";
     }
-  }
+  };
 
   const getLocalizedPropertyType = (type: string) => {
     const typeMap: Record<string, string> = {
@@ -236,31 +245,31 @@ export default function PropertySearch() {
       Apartment: t("apartment"),
       Townhouse: t("townhouse"),
       House: t("house"),
-    }
-    return typeMap[type] || type
-  }
+    };
+    return typeMap[type] || type;
+  };
 
   const getLocalizedStatus = (status: string) => {
     const statusMap: Record<string, string> = {
       available: t("available"),
       rented: t("rented"),
       sold: t("sold"),
-    }
-    return statusMap[status] || status
-  }
+    };
+    return statusMap[status] || status;
+  };
 
   // const getCurrentProject = (projectId: number) => {
   //   return projects.find((project) => project.id === projectId)
   // }
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-  }
+    setCurrentPage(page);
+  };
 
   const handlePageSizeChange = (newPageSize: number) => {
-    setPageSize(newPageSize)
-    setCurrentPage(1)
-  }
+    setPageSize(newPageSize);
+    setCurrentPage(1);
+  };
 
   const handleSearch = () => {
     const newSearchParams = {
@@ -271,9 +280,8 @@ export default function PropertySearch() {
       maxSize,
       minPrice,
       maxPrice,
-    }
-    // console.log(newSearchParams, 66666)
-    // setSearchParams(newSearchParams)
+    };
+
     const searchParams = new URLSearchParams(
       Object.entries(newSearchParams).reduce((acc, [key, value]) => {
         if (value !== undefined && value !== null && value !== "") {
@@ -282,8 +290,8 @@ export default function PropertySearch() {
         return acc;
       }, {} as Record<string, string>)
     );
-    fetchData(searchParams.toString())
-  }
+    fetchData(searchParams.toString());
+  };
 
   // const handleClearFilters = () => {
   //   setSearchTerm("")
@@ -313,8 +321,8 @@ export default function PropertySearch() {
   // }
 
   const handleEditProperty = (propertyId: number) => {
-    router.push(`/dashboard/listings/${propertyId}`)
-  }
+    router.push(`/dashboard/listings/${propertyId}`);
+  };
 
   // useEffect(() => {
   //   fetchPropertiesData(currentPage, pageSize, searchParams)
@@ -331,22 +339,21 @@ export default function PropertySearch() {
   //   }
   // }, [error, clearError])
 
-  // if (loading && properties.length === 0) {
-  //   return (
-  //     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-  //       <div className="text-center">
-  //         <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
-  //         <p className="text-gray-600">{t("loadingProperties")}</p>
-  //       </div>
-  //     </div>
-  //   )
-  // }
+  if (loading && properties.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
+          <p className="text-gray-600">{t("loadingProperties")}</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-
-        {/* <div className="mb-8 flex justify-between items-start">
+    // <div className="min-h-screen bg-gray-50">
+    <div className="">
+      {/* <div className="mb-8 flex justify-between items-start">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">{t("title")}</h1>
             <p className="text-gray-600">{t("subtitle", { count: totalItems.toString() })}</p>
@@ -354,439 +361,505 @@ export default function PropertySearch() {
           <LanguageSwitcher onLocaleChange={handleLocaleChange} />
         </div> */}
 
-        {/* {error && (
+      {/* {error && (
           <Alert className="mb-6 border-red-200 bg-red-50">
             <AlertDescription className="text-red-800">{error}</AlertDescription>
           </Alert>
         )} */}
 
-        {/* Search and Filters */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Search className="w-5 h-5" />
-              {t("searchProperties")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                handleSearch()
-              }}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <div className="md:col-span-2 lg:col-span-3 xl:col-span-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t("searchByNameLocation")}
-                  </label>
-                  <Input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Enter project name or location"
-                    className="w-full"
-                  />
-                  {/* <CommaSeparatedSearch
+      {/* Search and Filters */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Search className="w-5 h-5" />
+            {t("searchProperties")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearch();
+            }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="md:col-span-2 lg:col-span-3 xl:col-span-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t("searchByNameLocation")}
+                </label>
+                <Input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Enter project name or location"
+                  className="w-full"
+                />
+                {/* <CommaSeparatedSearch
                     projects={projects}
                     value={searchTerm}
                     onChange={setSearchTerm}
                     placeholder={t("enterProjectName")}
                     locale={language}
                   /> */}
-                </div>
+              </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t("filterByRoomType")}
-                  </label>
-                  <Select value={selectedRoomType} onValueChange={setSelectedRoomType}>
-                    <SelectTrigger>
-                      <SelectValue placeholder={t("selectRoomType")} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">{t("allRoomTypes")}</SelectItem>
-                      {propertyTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {getLocalizedPropertyType(type)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t("filterByRoomType")}
+                </label>
+                <Select
+                  value={selectedRoomType}
+                  onValueChange={setSelectedRoomType}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={t("selectRoomType")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t("allRoomTypes")}</SelectItem>
+                    {propertyTypes.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {getLocalizedPropertyType(type)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t("filterByBedrooms")}
-                  </label>
-                  <Select value={selectedBedRoom} onValueChange={setSelectedBedRoom}>
-                    <SelectTrigger>
-                      <SelectValue placeholder={t("selectBedrooms")} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">{t("allBedrooms")}</SelectItem>
-                      {[1, 2, 3, 4, 5].map((bedCount) => (
-                        <SelectItem key={bedCount} value={bedCount.toString()}>
-                          {bedCount} {bedCount > 1 ? t("bedrooms") : t("bedroom")}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t("filterByBedrooms")}
+                </label>
+                <Select
+                  value={selectedBedRoom}
+                  onValueChange={setSelectedBedRoom}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={t("selectBedrooms")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t("allBedrooms")}</SelectItem>
+                    {[1, 2, 3, 4, 5].map((bedCount) => (
+                      <SelectItem key={bedCount} value={bedCount.toString()}>
+                        {bedCount} {bedCount > 1 ? t("bedrooms") : t("bedroom")}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-                <div className="md:col-span-2 lg:col-span-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t("sizeRange")}
-                  </label>
-                  <div className="flex gap-2">
-                    <Input
-                      placeholder={t("minSize")}
-                      type="number"
-                      min="20"
-                      max="400"
-                      step="1"
-                      value={minSize}
-                      onChange={(e) => {
-                        const value = e.target.value
-                        if (value === "" || (!isNaN(Number(value)) && Number(value) >= 0)) {
-                          setMinSize(value)
-                        }
-                      }}
-                      className="w-full"
-                    />
-                    <Input
-                      placeholder={t("maxSize")}
-                      type="number"
-                      min="20"
-                      max="400"
-                      step="1"
-                      value={maxSize}
-                      onChange={(e) => {
-                        const value = e.target.value
-                        if (value === "" || (!isNaN(Number(value)) && Number(value) >= 0)) {
-                          setMaxSize(value)
-                        }
-                      }}
-                      className="w-full"
-                    />
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">{t("sizeRangeHelper")}</p>
-                </div>
-
-                <div className="md:col-span-2 lg:col-span-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t("rentalPriceRange")}
-                  </label>
-                  <div className="flex gap-2">
-                    <Input
-                      placeholder={t("minPrice")}
-                      type="number"
-                      min="0"
-                      step="1"
-                      value={minPrice}
-                      onChange={(e) => {
-                        const value = e.target.value
-                        if (value === "" || (!isNaN(Number(value)) && Number(value) >= 0)) {
-                          setMinPrice(value)
-                        }
-                      }}
-                      className="w-full"
-                    />
-                    <Input
-                      placeholder={t("maxPrice")}
-                      type="number"
-                      min="0"
-                      step="1"
-                      value={maxPrice}
-                      onChange={(e) => {
-                        const value = e.target.value
-                        if (value === "" || (!isNaN(Number(value)) && Number(value) >= 0)) {
-                          setMaxPrice(value)
-                        }
-                      }}
-                      className="w-full"
-                    />
-                  </div>
-                  <p className="text-xs text-gray-500 mt-1">{t("priceRangeHelper")}</p>
-                </div>
-
-                <div className="md:col-span-2 lg:col-span-3 xl:col-span-4">
-                  <div className="flex gap-2 pt-6">
-                    <Button type="submit" className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700">
-                      <Search className="w-4 h-4" />
-                      {t("searchButton")}
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      // onClick={handleClearFilters}
-                      className="flex items-center gap-2 bg-transparent"
-                    >
-                      {t("clearFilters")}
-                    </Button>
-                    <div className="flex items-center text-sm text-gray-600">
-                      {t("activeFilters")}{" "}
-                      {
-                        [
-                          searchParams.search && "Search",
-                          searchParams.roomType !== "all" && "Room Type",
-                          searchParams.bedRoom !== "all" && "Bedrooms",
-                          searchParams.minSize && "Min Size",
-                          searchParams.maxSize && "Max Size",
-                          searchParams.minPrice && "Min Price",
-                          searchParams.maxPrice && "Max Price",
-                        ].filter(Boolean).length
+              <div className="md:col-span-2 lg:col-span-1">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t("sizeRange")}
+                </label>
+                <div className="flex gap-2">
+                  <Input
+                    placeholder={t("minSize")}
+                    type="number"
+                    min="20"
+                    max="400"
+                    step="1"
+                    value={minSize}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (
+                        value === "" ||
+                        (!isNaN(Number(value)) && Number(value) >= 0)
+                      ) {
+                        setMinSize(value);
                       }
-                    </div>
+                    }}
+                    className="w-full"
+                  />
+                  <Input
+                    placeholder={t("maxSize")}
+                    type="number"
+                    min="20"
+                    max="400"
+                    step="1"
+                    value={maxSize}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (
+                        value === "" ||
+                        (!isNaN(Number(value)) && Number(value) >= 0)
+                      ) {
+                        setMaxSize(value);
+                      }
+                    }}
+                    className="w-full"
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  {t("sizeRangeHelper")}
+                </p>
+              </div>
+
+              <div className="md:col-span-2 lg:col-span-1">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t("rentalPriceRange")}
+                </label>
+                <div className="flex gap-2">
+                  <Input
+                    placeholder={t("minPrice")}
+                    type="number"
+                    min="0"
+                    step="1"
+                    value={minPrice}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (
+                        value === "" ||
+                        (!isNaN(Number(value)) && Number(value) >= 0)
+                      ) {
+                        setMinPrice(value);
+                      }
+                    }}
+                    className="w-full"
+                  />
+                  <Input
+                    placeholder={t("maxPrice")}
+                    type="number"
+                    min="0"
+                    step="1"
+                    value={maxPrice}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (
+                        value === "" ||
+                        (!isNaN(Number(value)) && Number(value) >= 0)
+                      ) {
+                        setMaxPrice(value);
+                      }
+                    }}
+                    className="w-full"
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  {t("priceRangeHelper")}
+                </p>
+              </div>
+
+              <div className="md:col-span-2 lg:col-span-3 xl:col-span-4">
+                <div className="flex gap-2 pt-6">
+                  <Button
+                    type="submit"
+                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700"
+                  >
+                    <Search className="w-4 h-4" />
+                    {t("searchButton")}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    // onClick={handleClearFilters}
+                    className="flex items-center gap-2 bg-transparent"
+                  >
+                    {t("clearFilters")}
+                  </Button>
+                  <div className="flex items-center text-sm text-gray-600">
+                    {t("activeFilters")}{" "}
+                    {
+                      [
+                        searchParams.search && "Search",
+                        searchParams.roomType !== "all" && "Room Type",
+                        searchParams.bedRoom !== "all" && "Bedrooms",
+                        searchParams.minSize && "Min Size",
+                        searchParams.maxSize && "Max Size",
+                        searchParams.minPrice && "Min Price",
+                        searchParams.maxPrice && "Max Price",
+                      ].filter(Boolean).length
+                    }
                   </div>
                 </div>
               </div>
-            </form>
-          </CardContent>
-        </Card>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
 
-        {/* View Toggle and Results Count */}
-        <div className="flex justify-between items-center mb-6">
-          <p className="text-gray-600">{t("showing", { count: totalItems.toString() })}</p>
-          <div className="flex items-center gap-2">
-            <Button
-              variant={viewMode === "grid" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setViewMode("grid")}
-              className="flex items-center gap-2"
-            >
-              <Grid className="w-4 h-4" />
-              {t("grid")}
-            </Button>
-            <Button
-              variant={viewMode === "table" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setViewMode("table")}
-              className="flex items-center gap-2"
-            >
-              <List className="w-4 h-4" />
-              {t("table")}
-            </Button>
-          </div>
+      {/* View Toggle and Results Count */}
+      <div className="flex justify-between items-center mb-6">
+        <p className="text-gray-600">
+          {t("showing", { count: properties.length.toString() })}
+        </p>
+        <div className="flex items-center gap-2">
+          <Button
+            variant={viewMode === "grid" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setViewMode("grid")}
+            className="flex items-center gap-2"
+          >
+            <Grid className="w-4 h-4" />
+            {t("grid")}
+          </Button>
+          <Button
+            variant={viewMode === "table" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setViewMode("table")}
+            className="flex items-center gap-2"
+          >
+            <List className="w-4 h-4" />
+            {t("table")}
+          </Button>
         </div>
+      </div>
 
-        {/* Pagination - Top */}
-        {totalPages > 1 && (
-          <div className="mb-6">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              pageSize={pageSize}
-              totalItems={totalItems}
-              onPageChange={handlePageChange}
-              onPageSizeChange={handlePageSizeChange}
-              locale={language}
-            />
-          </div>
-        )}
+      {/* Pagination - Top */}
+      {totalPages > 1 && (
+        <div className="mb-6">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            totalItems={totalItems}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+            locale={language}
+          />
+        </div>
+      )}
 
-        {/* Property Display */}
-        {viewMode === "grid" ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {properties.map((property) => {
-              // const currentProject = getCurrentProject(property.projectId)
-              return (
-                <Card key={property.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader className="pb-3">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <CardTitle className="text-lg font-semibold text-gray-900">{property.project.projectNameEn}</CardTitle>
-                        <p className="text-sm text-gray-600 mt-1">
-                          {t("room")} {property.roomNumber} • {t("floor")}{" "}
-                          {property.floor}
-                        </p>
-                        {/* {currentProject && (
+      {/* Property Display */}
+      {viewMode === "grid" ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {properties.map((property) => {
+            // const currentProject = getCurrentProject(property.projectId)
+            return (
+              <Card
+                key={property.id}
+                className="hover:shadow-lg transition-shadow"
+              >
+                <CardHeader className="pb-3">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <CardTitle className="text-lg font-semibold text-gray-900">
+                        {property.project.projectNameEn}
+                      </CardTitle>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {t("room")} {property.roomNumber} • {t("floor")}{" "}
+                        {property.floor}
+                      </p>
+                      {/* {currentProject && (
                           <p className="text-xs text-blue-600 font-mono">{currentProject.projectCode}</p>
                         )} */}
-                        <div className="flex gap-2 text-xs font-mono">
-                          <span className="text-green-600">{property.projectCode}-{property.projectPropertyCode}</span>
-                          {/* <span className="text-purple-600"></span> */}
-                        </div>
-                      </div>
-                      <div className="flex gap-1">
-                        <Button variant="ghost" size="sm">
-                          <Heart className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleEditProperty(property.id)}
-                          className="text-blue-600 hover:text-blue-700"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Button>
+                      <div className="flex gap-2 text-xs font-mono">
+                        <span className="text-green-600">
+                          {property.projectCode}-{property.projectPropertyCode}
+                        </span>
+                        {/* <span className="text-purple-600"></span> */}
                       </div>
                     </div>
+                    <div className="flex gap-1">
+                      <Button variant="ghost" size="sm">
+                        <Heart className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEditProperty(property.id)}
+                        className="text-blue-600 hover:text-blue-700"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
 
-                    {/* <div className="flex items-center gap-1 text-sm text-gray-600">
+                  {/* <div className="flex items-center gap-1 text-sm text-gray-600">
                       <MapPin className="w-4 h-4" />
                       {property.location.join(", ")}
                     </div> */}
 
-                    <Badge className={getStatusColor(property.status)}>{getLocalizedStatus(property.status)}</Badge>
-                  </CardHeader>
+                  <Badge className={getStatusColor(property.status)}>
+                    {getLocalizedStatus(property.status)}
+                  </Badge>
+                </CardHeader>
 
-                  <div className="px-6 pb-2">
-                    <ImageSlider
-                      images={property.imageUrls}
-                      alt={`${property.projectName} - ${t("room")} ${property.roomNumber}`}
-                      className="w-full h-48"
-                    />
-                  </div>
+                <div className="px-6 pb-2">
+                  <ImageSlider
+                    images={property.imageUrls}
+                    alt={`${property.projectName} - ${t("room")} ${
+                      property.roomNumber
+                    }`}
+                    className="w-full h-48"
+                  />
+                </div>
 
-                  <CardContent className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-center gap-2">
-                        <Building className="w-4 h-4 text-gray-500" />
-                        <span>{getLocalizedPropertyType(property.roomType)}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Ruler className="w-4 h-4 text-gray-500" />
-                        <span>
-                          {property.roomSize} {language === "th" ? "ตร.ม." : "sqm"}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Bed className="w-4 h-4 text-gray-500" />
-                        <span>
-                          {property.bedRoom} {t("bed")}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Bath className="w-4 h-4 text-gray-500" />
-                        <span>
-                          {property.bathRoom} {t("bath")}
-                        </span>
-                      </div>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="flex items-center gap-2">
+                      <Building className="w-4 h-4 text-gray-500" />
+                      <span>{getLocalizedPropertyType(property.roomType)}</span>
                     </div>
-
-                    <div className="flex items-center gap-2 text-sm">
-                      <Car className="w-4 h-4 text-gray-500" />
+                    <div className="flex items-center gap-2">
+                      <Ruler className="w-4 h-4 text-gray-500" />
                       <span>
-                        {property.carPark}{" "}
-                        {property.carPark !== 1 ? t("parkingSpaces") : t("parkingSpace")}
+                        {property.roomSize}{" "}
+                        {language === "th" ? "ตร.ม." : "sqm"}
                       </span>
                     </div>
-
-                    <div className="text-sm text-gray-600">
-                      <span className="font-medium">{property.distanceToStation}m</span>{" "}
-                      {language === "th" ? "ถึง" : "to"} {property.distanceStation} {t("station")}
+                    <div className="flex items-center gap-2">
+                      <Bed className="w-4 h-4 text-gray-500" />
+                      <span>
+                        {property.bedRoom} {t("bed")}
+                      </span>
                     </div>
-
-                    {/* Availability */}
-                    <div className="text-sm">
-                      <div className="flex items-center gap-1 mb-1">
-                        <Calendar className="w-4 h-4 text-blue-500" />
-                        <span className="font-medium text-gray-700">{t("availability")}:</span>
-                      </div>
-                      <p className="text-gray-600">{property.whenAvailable}</p>
-                      {property.isAcceptShortTerm && (
-                        <div className="flex items-center gap-1 mt-1">
-                          <Clock className="w-3 h-3 text-green-500" />
-                          <span className="text-green-600 text-xs">{t("shortTermOk")}</span>
-                        </div>
-                      )}
+                    <div className="flex items-center gap-2">
+                      <Bath className="w-4 h-4 text-gray-500" />
+                      <span>
+                        {property.bathRoom} {t("bath")}
+                      </span>
                     </div>
+                  </div>
 
-                    {/* Room Amenities */}
-                    <div className="text-sm">
-                      <div className="flex items-center gap-1 mb-2">
-                        <Star className="w-4 h-4 text-yellow-500" />
-                        <span className="font-medium text-gray-700">{t("amenities")}:</span>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Car className="w-4 h-4 text-gray-500" />
+                    <span>
+                      {property.carPark}{" "}
+                      {property.carPark !== 1
+                        ? t("parkingSpaces")
+                        : t("parkingSpace")}
+                    </span>
+                  </div>
+
+                  <div className="text-sm text-gray-600">
+                    <span className="font-medium">
+                      {property.distanceToStation}m
+                    </span>{" "}
+                    {language === "th" ? "ถึง" : "to"}{" "}
+                    {property.distanceStation} {t("station")}
+                  </div>
+
+                  {/* Availability */}
+                  <div className="text-sm">
+                    <div className="flex items-center gap-1 mb-1">
+                      <Calendar className="w-4 h-4 text-blue-500" />
+                      <span className="font-medium text-gray-700">
+                        {t("availability")}:
+                      </span>
+                    </div>
+                    <p className="text-gray-600">{property.whenAvailable}</p>
+                    {property.isAcceptShortTerm && (
+                      <div className="flex items-center gap-1 mt-1">
+                        <Clock className="w-3 h-3 text-green-500" />
+                        <span className="text-green-600 text-xs">
+                          {t("shortTermOk")}
+                        </span>
                       </div>
-                      <div className="flex flex-wrap gap-1">
-                        {property.roomAmenities.slice(0, 4).map((amenity, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
+                    )}
+                  </div>
+
+                  {/* Room Amenities */}
+                  <div className="text-sm">
+                    <div className="flex items-center gap-1 mb-2">
+                      <Star className="w-4 h-4 text-yellow-500" />
+                      <span className="font-medium text-gray-700">
+                        {t("amenities")}:
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {property.roomAmenities
+                        .slice(0, 4)
+                        .map((amenity, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="text-xs"
+                          >
                             {amenity}
                           </Badge>
                         ))}
-                        {property.roomAmenities.length > 4 && (
-                          <Badge variant="secondary" className="text-xs">
-                            +{property.roomAmenities.length - 4} more
-                          </Badge>
-                        )}
+                      {property.roomAmenities.length > 4 && (
+                        <Badge variant="secondary" className="text-xs">
+                          +{property.roomAmenities.length - 4} more
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Note */}
+                  <div className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                    <span className="font-medium">{t("note")}:</span>{" "}
+                    {property.note}
+                  </div>
+
+                  {property.isPetFriendly && (
+                    <Badge variant="outline" className="text-xs">
+                      {t("petFriendly")}
+                    </Badge>
+                  )}
+
+                  {property.isOwner && (
+                    <Badge
+                      variant="outline"
+                      className="text-xs bg-blue-50 text-blue-700"
+                    >
+                      {t("ownerListed")}
+                    </Badge>
+                  )}
+
+                  <div className="border-t pt-4">
+                    <div className="flex justify-between items-center mb-3">
+                      <div>
+                        <p className="text-sm text-gray-600">{t("rent")}</p>
+                        <p className="text-lg font-bold text-blue-600">
+                          ฿{formatPrice(property.rentalRate)}
+                          {t("month")}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-gray-600">{t("sale")}</p>
+                        <p className="text-lg font-bold text-green-600">
+                          ฿{formatPrice(property.sell)}
+                        </p>
                       </div>
                     </div>
 
-                    {/* Note */}
-                    <div className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
-                      <span className="font-medium">{t("note")}:</span> {property.note}
-                    </div>
+                    <CopyButtons property={property} locale={language} />
 
-                    {property.isPetFriendly && (
-                      <Badge variant="outline" className="text-xs">
-                        {t("petFriendly")}
-                      </Badge>
-                    )}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full mt-2 bg-transparent"
+                      onClick={() => downloadAllImages(property)}
+                      disabled={downloadingStates[property.id]}
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      {downloadingStates[property.id]
+                        ? t("downloadingImages")
+                        : t("downloadImages")}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="mb-8">
+          <PropertyTable
+            properties={properties}
+            locale={language}
+            onEdit={handleEditProperty}
+          />
+        </div>
+      )}
 
-                    {property.isOwner && (
-                      <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700">
-                        {t("ownerListed")}
-                      </Badge>
-                    )}
+      {/* Pagination - Bottom */}
+      {totalPages > 1 && (
+        <div className="mt-8">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            totalItems={totalItems}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+            locale={language}
+          />
+        </div>
+      )}
 
-                    <div className="border-t pt-4">
-                      <div className="flex justify-between items-center mb-3">
-                        <div>
-                          <p className="text-sm text-gray-600">{t("rent")}</p>
-                          <p className="text-lg font-bold text-blue-600">
-                            ฿{formatPrice(property.rentalRate)}
-                            {t("month")}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-sm text-gray-600">{t("sale")}</p>
-                          <p className="text-lg font-bold text-green-600">฿{formatPrice(property.sell)}</p>
-                        </div>
-                      </div>
-
-                      <CopyButtons property={property} locale={language} />
-
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-full mt-2 bg-transparent"
-                        onClick={() => downloadAllImages(property)}
-                        disabled={downloadingStates[property.id]}
-                      >
-                        <Download className="w-4 h-4 mr-2" />
-                        {downloadingStates[property.id]
-                          ? t("downloadingImages")
-                          : t("downloadImages")}
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
-        ) : (
-          <div className="mb-8">
-            <PropertyTable properties={properties} locale={language} onEdit={handleEditProperty} />
-          </div>
-        )}
-
-        {/* Pagination - Bottom */}
-        {totalPages > 1 && (
-          <div className="mt-8">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              pageSize={pageSize}
-              totalItems={totalItems}
-              onPageChange={handlePageChange}
-              onPageSizeChange={handlePageSizeChange}
-              locale={language}
-            />
-          </div>
-        )}
-
-        {/* {properties.length === 0 && !loading && (
+      {/* {properties.length === 0 && !loading && (
           <div className="text-center py-12">
             <div className="text-gray-500 mb-4">
               <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
@@ -795,7 +868,7 @@ export default function PropertySearch() {
             </div>
           </div>
         )} */}
-      </div>
     </div>
-  )
+    // </div>
+  );
 }

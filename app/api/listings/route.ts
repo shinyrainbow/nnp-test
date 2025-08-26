@@ -20,7 +20,6 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
   
-    console.log(searchParams, 5555555)
     const projectName = searchParams.get("projectName") || "";
     const roomType = searchParams.get("roomType");
     const minPrice = searchParams.get("minPrice")

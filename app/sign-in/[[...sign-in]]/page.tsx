@@ -7,11 +7,12 @@ export default function SignInPage() {
  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full">
+      <div className="max-w-md w-ful">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
-          <p className="text-gray-600 mt-2">Sign in to your NainaPro account</p>
+          <p className="text-gray-600 mt-2">Sign in to your Naina Hub account</p>
         </div>
+        <div className="flex justify-center">
         <SignIn 
           appearance={{
             elements: {
@@ -23,6 +24,7 @@ export default function SignInPage() {
             }
           }}
         />
+        </div>
       </div>
     </div>
   )
