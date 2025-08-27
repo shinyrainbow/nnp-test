@@ -5,18 +5,21 @@ CREATE TYPE "public"."PropertyStatus" AS ENUM ('available', 'sold', 'rented', 'p
 CREATE TYPE "public"."RoomType" AS ENUM ('Condo', 'Townhouse', 'SingleHouse', 'Apartment', 'Other');
 
 -- CreateTable
-CREATE TABLE "public"."users" (
-    "id" SERIAL NOT NULL,
+CREATE TABLE "public"."User" (
+    "id" TEXT NOT NULL,
     "clerkId" TEXT NOT NULL,
     "email" TEXT,
     "firstName" TEXT,
     "lastName" TEXT,
-    "name" TEXT,
+    "isPaid" BOOLEAN NOT NULL DEFAULT false,
+    "currentExpireDate" TIMESTAMP(3),
     "imageUrl" TEXT,
+    "lineCode" INTEGER NOT NULL DEFAULT 2025,
+    "isEnableLine" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -80,10 +83,10 @@ CREATE TABLE "public"."Property" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_clerkId_key" ON "public"."users"("clerkId");
+CREATE UNIQUE INDEX "User_clerkId_key" ON "public"."User"("clerkId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_email_key" ON "public"."users"("email");
+CREATE UNIQUE INDEX "User_email_key" ON "public"."User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Project_projectCode_key" ON "public"."Project"("projectCode");

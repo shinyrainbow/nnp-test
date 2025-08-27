@@ -15,7 +15,7 @@ async function deleteImagesFromS3(imageUrls: string[]) {
     const Key = url.split(".amazonaws.com/")[1]; // extract key after bucket
     await s3.send(
       new DeleteObjectCommand({
-        Bucket: process.env.S3_BUCKET_NAME!,
+        Bucket: process.env.AWS_S3_BUCKET_NAME!,
         Key,
       })
     );
@@ -29,11 +29,11 @@ async function uploadImagesToS3(files: File[], propertyId: string) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const Key = `properties/${projectCode}/${projectCode}-${projectPropertyCode}`;
+    const Key = `properties/${projectCode}/${projectCode}-${projectPropertyCode}`
 
     await s3.send(
       new PutObjectCommand({
-        Bucket: process.env.S3_BUCKET_NAME!,
+        Bucket: process.env.AWS_S3_BUCKET_NAME!,
         Key,
         Body: buffer,
         ContentType: file.type,
@@ -41,7 +41,7 @@ async function uploadImagesToS3(files: File[], propertyId: string) {
     );
 
     uploadedUrls.push(
-      `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${Key}`
+      `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${Key}`
     );
   }
 
@@ -174,7 +174,7 @@ export async function PUT(
 
         await s3.send(
           new PutObjectCommand({
-            Bucket: process.env.S3_BUCKET_NAME!,
+            Bucket: process.env.AWS_S3_BUCKET_NAME!,
             Key,
             Body: buffer,
             ContentType: file.type,
@@ -182,7 +182,7 @@ export async function PUT(
         );
 
         newImageUrls.push(
-          `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${Key}`
+          `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${Key}`
         );
       }
     }
