@@ -7,6 +7,18 @@ export type Language = keyof typeof languages;
 
 export const translations = {
   en: {
+    "home.banner": "Naina Hub Professional Tools for",
+    "home.subBanner": "Real Estate Agent",
+    "home.description":
+      "Access 10,000+ Listings, Build Contracts Instantly, Send & Save Messages in One Click — Everything Agents Need to Close Deals Faster.",
+    
+    "home.viewDashboard": "View Dashboard",
+    "home.more": "See more",
+    "home.adTitle": "Everything You Need to Succeed",
+    "home.adDescription":
+      "Our comprehensive toolkit helps real estate agents work more efficiently and close more deals",
+    
+
     subtitle: "Find your perfect property from {count} available listings",
 
     // Navigation
@@ -27,12 +39,26 @@ export const translations = {
     watchDemo: "Watch Demo",
 
     // Features
+    listings: "Listings",
+    listingsDesc: "Property listings with filters — easy to find, fast, and convenient.",
+    lineChatBot: "Line Chat Bot",
+    lineChatBotDesc: "LINE bot to notify tenants about rent, water, and electricity bills.",
+    postBuilder: "Auto Post Builder",
+    postBuilderDesc: "Create ready-to-post messages for social media and easily link them to your listings.",
     contractBuilder: "Contract Builder",
-    contractBuilderDesc: "Generate professional rental contracts in minutes",
+    contractBuilderDesc: "Create professional rental contracts in just minutes.",
+   
     propertyAnalytics: "Property Analytics",
-    propertyAnalyticsDesc: "Track performance and market trends",
+    propertyAnalyticsDesc: "Track performance and property market trends",
+    
     clientManagement: "Client Management",
-    clientManagementDesc: "Organize leads and maintain relationships",
+    clientManagementDesc: "Manage leads and nurture relationships",
+
+    calendar: "Appointment Management",
+    calendarDesc : "Manage leads and nurture relationships",
+
+    // clientManagement: "Client Management",
+    // clientManagementDesc: "Manage leads and nurture relationships",
 
     // Dashboard
     "dashboard.title": "Dashboard",
@@ -68,7 +94,8 @@ export const translations = {
     "line.howToUse": "How to Use in Line Chat Bot",
     "line.explain": "Follow these steps to paste the code in your Line group",
     "line.step1": "Open Line Group",
-    "line.step1explain": "Navigate to your Line group where the chat bot is active",
+    "line.step1explain":
+      "Navigate to your Line group where the chat bot is active",
     "line.step2": "Tap Message Input",
     "line.step2explain":
       "Tap on the message input field at the bottom of the screen",
@@ -535,10 +562,20 @@ export const translations = {
     // }
   },
   th: {
+    "home.banner": "Naina Hub เครื่องมือสำหรับ",
+    "home.subBanner": "นายหน้าอสังหาริมทรัพย์",
+    "home.description":
+    "เครื่องมือที่เอเจนต์เลือกใช้: เข้าถึง 10,000+ รายการทรัพย์ สร้างสัญญาอัตโนมัติ เก็บข้อความและรูปภาพในคลิกเดียว พร้อมโพส — เร็วกว่า ง่ายกว่า ปิดดีลได้ไวกว่า",
+   
+    "home.viewDashboard": "เข้าสู่แดชบอร์ด",
+    "home.more": "เพิ่มเติม",
+    "home.adTitle": "ทุกสิ่งที่คุณต้องการเพื่อความสำเร็จ",
+    "home.adDescription":
+    "ชุดเครื่องมือครบวงจรที่จะช่วยให้เอเจนต์อสังหาฯ ทำงานได้มีประสิทธิภาพยิ่งขึ้น และปิดดีลได้มากกว่าเดิม",
+    
     subtitle: "ค้นหาอสังหาริมทรัพย์ที่เหมาะกับคุณจาก {count} รายการที่มีอยู่",
-
     // Navigation
-    features: "คุณสมบัติ",
+    features: "บริการของเรา",
     pricing: "ราคา",
     contact: "ติดต่อ",
     dashboard: "แดชบอร์ด",
@@ -555,10 +592,18 @@ export const translations = {
     watchDemo: "ดูการสาธิต",
 
     // Features
+    listings: "รายการทรัพย์",
+    listingsDesc: "รายการทรัพย์ พร้อมฟิลเตอร์ หาง่าย ได้ไว สะดวกรวดเร็ว",
+    lineChatBot: "Line Chat Bot",
+    lineChatBotDesc: "บอทไลน์แจ้งเตือนค่าเช่า ค่าน้ำ ค่าไฟ ให้ลูกค้า",
+    postBuilder: "สร้าง Template โพส",
+    postBuilderDesc: "สร้างข้อความไว้โพส เชื่อมกับทรัพย์ของเราได้ง่ายๆ",
     contractBuilder: "เครื่องมือสร้างสัญญา",
     contractBuilderDesc: "สร้างสัญญาเช่าระดับมืออาชีพในไม่กี่นาที",
+   
     propertyAnalytics: "การวิเคราะห์ทรัพย์สิน",
     propertyAnalyticsDesc: "ติดตามประสิทธิภาพและแนวโน้มตลาด",
+
     clientManagement: "การจัดการลูกค้า",
     clientManagementDesc: "จัดระเบียบลูกค้าเป้าหมายและรักษาความสัมพันธ์",
 
@@ -586,26 +631,27 @@ export const translations = {
     "tasks.followUp": "ติดตามลูกค้าเป้าหมาย",
     "tasks.friday": "วันศุกร์",
 
-     // line chat bot
-     "line.title": "รหัสเข้าใช้งาน",
-     "line.description": "รหัสยืนยันตัวตนใช้ครั้งเดียว",
-     "line.copy": "คัดลอกรหัส",
-     "line.copied": "คัดลองสำเร็จ!",
-     "line.instruction": "คลิกปุ่มด้านบนเพื่อคัดลอกรหัสของคุณ",
-     "line.warning": "⚠️ รหัสนี้หมดอายุหลังจากใช้งานครั้งเดียว",
-     "line.howToUse": "วิธีใช้งานใน Line Chat Bot",
-     "line.explain": "ทำตามขั้นตอนเหล่านี้เพื่อวางรหัสในกลุ่ม Line ของคุณ",
-     "line.step1": "เปิดกลุ่ม Line",
-     "line.step1explain": "ไปที่กลุ่ม Line ของคุณที่มี Chat Bot ทำงานอยู่",
-     "line.step2": "แตะช่องพิมพ์ข้อความ",
-     "line.step2explain": "แตะที่ช่องพิมพ์ข้อความด้านล่างของหน้าจอ",
-     "line.step3": "วางรหัส",
-     "line.step3explain": "กดค้างในช่องพิมพ์ข้อความและเลือก \"วาง\" เพื่อใส่รหัสที่คัดลอกไว้",
-     "line.step4": "ส่งข้อความ",
-     "line.step4explain": "แตะปุ่มส่งเพื่อส่งรหัสของคุณไปยัง Chat Bot",
-     "line.tips": "เคล็ดลับ",
-     "line.tipsexplain": "ตรวจสอบให้แน่ใจว่าได้วางรหัสตรงตามที่คัดลอกมา Chat Bot จะประมวลผลรหัสของคุณโดยอัตโนมัติเมื่อส่งแล้ว",
- 
+    // line chat bot
+    "line.title": "รหัสเข้าใช้งาน",
+    "line.description": "รหัสยืนยันตัวตนใช้ครั้งเดียว",
+    "line.copy": "คัดลอกรหัส",
+    "line.copied": "คัดลองสำเร็จ!",
+    "line.instruction": "คลิกปุ่มด้านบนเพื่อคัดลอกรหัสของคุณ",
+    "line.warning": "⚠️ รหัสนี้หมดอายุหลังจากใช้งานครั้งเดียว",
+    "line.howToUse": "วิธีใช้งานใน Line Chat Bot",
+    "line.explain": "ทำตามขั้นตอนเหล่านี้เพื่อวางรหัสในกลุ่ม Line ของคุณ",
+    "line.step1": "เปิดกลุ่ม Line",
+    "line.step1explain": "ไปที่กลุ่ม Line ของคุณที่มี Chat Bot ทำงานอยู่",
+    "line.step2": "แตะช่องพิมพ์ข้อความ",
+    "line.step2explain": "แตะที่ช่องพิมพ์ข้อความด้านล่างของหน้าจอ",
+    "line.step3": "วางรหัส",
+    "line.step3explain":
+      'กดค้างในช่องพิมพ์ข้อความและเลือก "วาง" เพื่อใส่รหัสที่คัดลอกไว้',
+    "line.step4": "ส่งข้อความ",
+    "line.step4explain": "แตะปุ่มส่งเพื่อส่งรหัสของคุณไปยัง Chat Bot",
+    "line.tips": "เคล็ดลับ",
+    "line.tipsexplain":
+      "ตรวจสอบให้แน่ใจว่าได้วางรหัสตรงตามที่คัดลอกมา Chat Bot จะประมวลผลรหัสของคุณโดยอัตโนมัติเมื่อส่งแล้ว",
 
     // commission
     "commissionTracker.title": "ตัวติดตามค่าคอมมิชชั่น",

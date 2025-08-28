@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import {
   ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
 } from "@clerk/nextjs";
 import { LanguageProvider } from "@/contexts/language-context";
-const inter = Inter({ subsets: ["latin"] });
+import { Kanit } from "next/font/google";
+
+const kanit = Kanit({
+  subsets: ["thai"],
+  weight: ["400", "500", "700"], // choose weights you need
+});
 
 export const metadata: Metadata = {
   title: "Naina Hub - Real Estate Agent Tools",
@@ -26,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={kanit.className}>
         <LanguageProvider>
           <ClerkProvider>
             {children}
