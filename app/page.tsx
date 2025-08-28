@@ -6,11 +6,6 @@ import { Footer } from '@/components/footer'
 import { useUser } from '@clerk/nextjs';
 
 export default function Home() {
-  const { isLoaded, isSignedIn, user } = useUser();
-
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="min-h-screen">

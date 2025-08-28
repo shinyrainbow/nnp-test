@@ -1,6 +1,5 @@
 "use client";
 
-// import { useTranslation } from "react-i18next";
 import { Calendar, FileText, Loader2, Users } from "lucide-react";
 import {
   Card,
@@ -10,8 +9,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/language-context";
-import { currentUser } from "@clerk/nextjs";
-import { prisma } from "@/lib/prisma";
 import { useEffect, useState } from "react";
 
 const stats = [
@@ -53,7 +50,6 @@ export default function Dashboard() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
-          {/* <p className="text-gray-600"></p> */}
         </div>
       </div>
     );
