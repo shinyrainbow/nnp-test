@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Building2, Home, FileText, Users, Calculator, MessageSquare, BarChart3, Calendar, MapPin, Settings, TrendingUp, DollarSign } from 'lucide-react'
+import { Building2, Home, FileText, Users, Calculator, MessageSquare, BarChart3, Calendar, MapPin, Settings, TrendingUp, DollarSign, TableProperties, MessageSquareText, Newspaper } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
@@ -18,17 +18,18 @@ import { useLanguage } from '@/contexts/language-context'
 import { languages } from '@/lib/i18n'
 
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: Home, language: 'dashboard' },
-  { name: 'Listings', href: '/dashboard/listings', icon: Building2 , language: 'propertyListings'},
-  { name: 'Line Chat Bot', href: '/dashboard/line-chat-bot', icon: Building2 , language: 'lineChatBot'},
+  { name: 'Dashboard', href: '/dashboard', icon: Home, language: 'menu.dashboard' },
+  { name: 'Listings', href: '/dashboard/listings', icon: TableProperties , language: 'menu.propertyListings'},
+  { name: 'Line Chat Bot', href: '/dashboard/line-chat-bot', icon: MessageSquare , language: 'menu.lineChatBot'},
+  { name: 'Post Builder', href: '/dashboard/post-builder', icon: MessageSquareText , language: 'menu.postBuilder'},
+  { name: 'Contract Builder', href: '/dashboard/contract-builder', icon: Newspaper , language: 'menu.contractBuilder'},
+  { name: 'Calendar', href: '/dashboard/calendar', icon: Calendar, language: 'menu.calendar' },
+ 
   // { name: 'AI Assistant', href: '/dashboard/ai-assistant', icon: MessageSquare , language: 'aiAssistant'},
-  { name: 'Market Analysis', href: '/dashboard/market', icon: TrendingUp, language: 'marketInsights' },
-  { name: 'Commission Track', href: '/dashboard/commission', icon: DollarSign, language: 'commissionTracker' },
-  { name: 'Contract Builder', href: '/dashboard/contracts', icon: FileText , language: 'contractBuilderMenu'},
-  { name: 'Calendar', href: '/dashboard/calendar', icon: Calendar, language: 'calendar' },
+  // { name: 'Market Analysis', href: '/dashboard/market', icon: TrendingUp, language: 'marketInsights' },
+  // { name: 'Commission Track', href: '/dashboard/commission', icon: DollarSign, language: 'commissionTracker' },
   // { name: 'Price Calculator', href: '/dashboard/calculator', icon: Calculator, language: 'propertyListings' },
-  { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3, language: 'analytics' },
-
+  // { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3, language: 'analytics' },
   // { name: 'Settings', href: '/dashboard/settings', icon: Settings , language: 'analytics'},
 ]
 

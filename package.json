@@ -12,6 +12,7 @@
   "dependencies": {
     "@ai-sdk/openai": "latest",
     "@aws-sdk/client-s3": "^3.864.0",
+    "@clerk/clerk-sdk-node": "^4.13.23",
     "@clerk/nextjs": "^6.30.0",
     "@faker-js/faker": "^7.0.0",
     "@hookform/resolvers": "latest",

@@ -11,13 +11,12 @@ export const translations = {
     "home.subBanner": "Real Estate Agent",
     "home.description":
       "Access 10,000+ Listings, Build Contracts Instantly, Send & Save Messages in One Click — Everything Agents Need to Close Deals Faster.",
-    
+
     "home.viewDashboard": "View Dashboard",
     "home.more": "See more",
     "home.adTitle": "Everything You Need to Succeed",
     "home.adDescription":
       "Our comprehensive toolkit helps real estate agents work more efficiently and close more deals",
-    
 
     subtitle: "Find your perfect property from {count} available listings",
 
@@ -40,22 +39,26 @@ export const translations = {
 
     // Features
     listings: "Listings",
-    listingsDesc: "Property listings with filters — easy to find, fast, and convenient.",
+    listingsDesc:
+      "Property listings with filters — easy to find, fast, and convenient.",
     lineChatBot: "Line Chat Bot",
-    lineChatBotDesc: "LINE bot to notify tenants about rent, water, and electricity bills.",
+    lineChatBotDesc:
+      "LINE bot to notify tenants about rent, water, and electricity bills.",
     postBuilder: "Auto Post Builder",
-    postBuilderDesc: "Create ready-to-post messages for social media and easily link them to your listings.",
+    postBuilderDesc:
+      "Create ready-to-post messages for social media and easily link them to your listings.",
     contractBuilder: "Contract Builder",
-    contractBuilderDesc: "Create professional rental contracts in just minutes.",
-   
+    contractBuilderDesc:
+      "Create professional rental contracts in just minutes.",
+
     propertyAnalytics: "Property Analytics",
     propertyAnalyticsDesc: "Track performance and property market trends",
-    
+
     clientManagement: "Client Management",
     clientManagementDesc: "Manage leads and nurture relationships",
 
     calendar: "Appointment Management",
-    calendarDesc : "Manage leads and nurture relationships",
+    calendarDesc: "Manage leads and nurture relationships",
 
     // clientManagement: "Client Management",
     // clientManagementDesc: "Manage leads and nurture relationships",
@@ -108,6 +111,23 @@ export const translations = {
     "line.tips": "Pro Tip",
     "line.tipsexplain":
       "Make sure to paste the code exactly as copied. The chat bot will process your code automatically once sent.",
+
+    // post builder
+    "post.title": "Property Post Creator",
+    "post.badge": "Real Estate Tool",
+    "post.formatEditor": "Message Format Editor",
+    "post.formatEditorDesc":
+      "Create your custom property post format. Click the field tags below to insert them into your template.",
+    "post.postFormatTemplate": "Post Format Template",
+    "post.fieldTags": "Available Field Tags (click to insert):",
+    "post.emojiTags": "Available Emoji Tags (click to insert):",
+
+    "post.propertyData": "Property Data",
+    "post.propertyDataDesc": "Sample property data for testing your format.",
+    "post.loadData": "Load Mock Data",
+    "post.generatePreview": "Generated Post Preview",
+    "post.review": "Review your property post and copy it to your clipboard.",
+    "post.copy": "Copy to Clipboard",
 
     // commission
     "commissionTracker.title": "Commission Tracker",
@@ -250,17 +270,20 @@ export const translations = {
       "This would show appointments in a monthly/weekly grid format",
 
     // Dashboard Menu
-    propertyListings: "Listings",
-    lineChatBot: "Setup Line Chat Bot",
-    contractBuilderMenu: "Contract Builder",
-    clientManagementMenu: "Client Management",
-    calendar: "Calendar",
-    analytics: "Analytics",
-    commissionTracker: "Commission Tracker",
-    marketInsights: "Market Insights",
-    messages: "Messages",
-    settings: "Settings",
-    aiAssistant: "AI Assistant",
+    "menu.dashboard": "Dashboard",
+    "menu.propertyListings": "Listings",
+    "menu.lineChatBot": "Setup Line Chat Bot",
+    "menu.postBuilder": "Post Builder",
+    "menu.contractBuilder": "Contract Builder",
+    "menu.calendar": "Calendar",
+
+    // "menu.clientManagement": "Client Management",
+    // "menu.analytics": "Analytics",
+    // "menu.commissionTracker": "Commission Tracker",
+    // "menu.marketInsights": "Market Insights",
+    // "menu.messages": "Messages",
+    // "menu.settings": "Settings",
+    // "menu.aiAssistant": "AI Assistant",
 
     // Search Form
     searchProperties: "Search Properties",
@@ -565,14 +588,14 @@ export const translations = {
     "home.banner": "Naina Hub เครื่องมือสำหรับ",
     "home.subBanner": "นายหน้าอสังหาริมทรัพย์",
     "home.description":
-    "เครื่องมือที่เอเจนต์เลือกใช้: เข้าถึง 10,000+ รายการทรัพย์ สร้างสัญญาอัตโนมัติ เก็บข้อความและรูปภาพในคลิกเดียว พร้อมโพส — เร็วกว่า ง่ายกว่า ปิดดีลได้ไวกว่า",
-   
+      "เครื่องมือที่เอเจนต์เลือกใช้: เข้าถึง 10,000+ รายการทรัพย์ สร้างสัญญาอัตโนมัติ เก็บข้อความและรูปภาพในคลิกเดียว พร้อมโพส — เร็วกว่า ง่ายกว่า ปิดดีลได้ไวกว่า",
+
     "home.viewDashboard": "เข้าสู่แดชบอร์ด",
     "home.more": "เพิ่มเติม",
     "home.adTitle": "ทุกสิ่งที่คุณต้องการเพื่อความสำเร็จ",
     "home.adDescription":
-    "ชุดเครื่องมือครบวงจรที่จะช่วยให้เอเจนต์อสังหาฯ ทำงานได้มีประสิทธิภาพยิ่งขึ้น และปิดดีลได้มากกว่าเดิม",
-    
+      "ชุดเครื่องมือครบวงจรที่จะช่วยให้เอเจนต์อสังหาฯ ทำงานได้มีประสิทธิภาพยิ่งขึ้น และปิดดีลได้มากกว่าเดิม",
+
     subtitle: "ค้นหาอสังหาริมทรัพย์ที่เหมาะกับคุณจาก {count} รายการที่มีอยู่",
     // Navigation
     features: "บริการของเรา",
@@ -600,7 +623,7 @@ export const translations = {
     postBuilderDesc: "สร้างข้อความไว้โพส เชื่อมกับทรัพย์ของเราได้ง่ายๆ",
     contractBuilder: "เครื่องมือสร้างสัญญา",
     contractBuilderDesc: "สร้างสัญญาเช่าระดับมืออาชีพในไม่กี่นาที",
-   
+
     propertyAnalytics: "การวิเคราะห์ทรัพย์สิน",
     propertyAnalyticsDesc: "ติดตามประสิทธิภาพและแนวโน้มตลาด",
 
@@ -652,6 +675,23 @@ export const translations = {
     "line.tips": "เคล็ดลับ",
     "line.tipsexplain":
       "ตรวจสอบให้แน่ใจว่าได้วางรหัสตรงตามที่คัดลอกมา Chat Bot จะประมวลผลรหัสของคุณโดยอัตโนมัติเมื่อส่งแล้ว",
+
+    // post builder
+    "post.title": "ตัวสร้างโพสต์ทรัพย์",
+    "post.badge": "เครื่องมืออสังหาริมทรัพย์",
+    "post.formatEditor": "แก้ไขรูปแบบข้อความ",
+    "post.formatEditorDesc":
+      "สร้างรูปแบบโพสต์ทรัพย์ของคุณเอง คลิกแท็กฟิลด์ หรือ พิมพ์ข้อความด้านล่างเพื่อนำไปใช้ในเทมเพลตของคุณ",
+    "post.postFormatTemplate": "เทมเพลตรูปแบบโพสต์",
+    "post.fieldTags": "แท็กฟิลด์ที่ใช้ได้ (คลิกเพื่อใส่):",
+    "post.emojiTags": "แท็กอีโมจิที่ใช้ได้ (คลิกเพื่อใส่):",
+
+    "post.propertyData": "ข้อมูลทรัพย์",
+    "post.propertyDataDesc": "ตัวอย่างข้อมูลทรัพย์สำหรับทดสอบรูปแบบของคุณ",
+    "post.loadData": "โหลดข้อมูลตัวอย่าง",
+    "post.generatePreview": "ตัวอย่างโพสต์ที่สร้างแล้ว",
+    "post.review": "ตรวจสอบโพสต์ทรัพย์ของคุณและคัดลอกไปยังคลิปบอร์ด",
+    "post.copy": "คัดลอก",
 
     // commission
     "commissionTracker.title": "ตัวติดตามค่าคอมมิชชั่น",
@@ -792,17 +832,32 @@ export const translations = {
       "จะแสดงนัดหมายในรูปแบบตารางรายเดือน/รายสัปดาห์",
 
     // Dashboard Menu
-    propertyListings: "รายการทรัพย์สิน",
-    lineChatBot: "ใช้งานไลน์แจ้งเตือน",
-    contractBuilderMenu: "เครื่องมือสร้างสัญญา",
-    clientManagementMenu: "การจัดการลูกค้า",
-    calendar: "ปฏิทิน",
-    analytics: "การวิเคราะห์",
-    commissionTracker: "ติดตามค่าคอมมิชชั่น",
-    marketInsights: "ข้อมูลเชิงลึกตลาด",
-    messages: "ข้อความ",
-    settings: "การตั้งค่า",
-    aiAssistant: "ผู้ช่วย AI",
+    "menu.dashboard": "แดชบอร์ด",
+    "menu.propertyListings": "รายการทรัพย์สิน",
+    "menu.lineChatBot": "ไลน์บอทแจ้งเตือน",
+    "menu.postBuilder": "สร้างโพสอัตโนมัติ",
+    "menu.contractBuilder": "สร้างสัญญา ซื้อ-ขาย/เช่า",
+    "menu.calendar": "การนัดหมาย",
+
+    // "menu.clientManagement": "Ct",
+    // "menu.analytics": "Analytics",
+    // "menu.commissionTracker": "Commission Tracker",
+    // "menu.marketInsights": "Market Insights",
+    // "menu.messages": "Messages",
+    // "menu.settings": "Settings",
+    // "menu.aiAssistant": "AI Assistant",
+
+    // propertyListings: "รายการทรัพย์สิน",
+    // lineChatBot: "ไลน์บอทแจ้งเตือน",
+    // contractBuilderMenu: "เครื่องมือสร้างสัญญา",
+    // clientManagementMenu: "การจัดการลูกค้า",
+    // calendar: "ปฏิทิน",
+    // analytics: "การวิเคราะห์",
+    // commissionTracker: "ติดตามค่าคอมมิชชั่น",
+    // marketInsights: "ข้อมูลเชิงลึกตลาด",
+    // messages: "ข้อความ",
+    // settings: "การตั้งค่า",
+    // aiAssistant: "ผู้ช่วย AI",
 
     // Search Form
     searchProperties: "ค้นหาอสังหาริมทรัพย์",
@@ -838,8 +893,8 @@ export const translations = {
 
     // Property Details
     room: "ห้อง",
-    bed: "ห้องนอน",
-    bath: "ห้องน้ำ",
+    bed: "นอน",
+    bath: "น้ำ",
     parkingSpace: "ที่จอดรถ",
     parkingSpaces: "ที่จอดรถ",
     station: "สถานี",

@@ -454,7 +454,7 @@ export default function PropertySearch() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">{t("allBedrooms")}</SelectItem>
-                    {[1, 2, 3,].map((bedCount) => (
+                    {[1, 2, 3].map((bedCount) => (
                       <SelectItem key={bedCount} value={bedCount.toString()}>
                         {bedCount} {bedCount > 1 ? t("bedrooms") : t("bedroom")}
                       </SelectItem>
@@ -700,6 +700,7 @@ export default function PropertySearch() {
                     {language === "th" ? "ถึง" : "to"}{" "}
                     {property.distanceStation} {t("station")}
                   </div>
+
                   {/* <Badge className={getStatusColor(property.status)}>
                     {getLocalizedStatus(property.status)}
                   </Badge> */}
@@ -715,8 +716,8 @@ export default function PropertySearch() {
                   />
                 </div>
 
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-4 gap-3 text-sm text-[10px]">
+                <CardContent className="space-y-2">
+                  <div className="grid grid-cols-4 gap-1 text-sm text-[10px]">
                     <div className="flex items-center gap-1">
                       <Building className="w-4 h-4 text-gray-500" />
                       <span>
@@ -740,8 +741,7 @@ export default function PropertySearch() {
                     <div className="flex items-center gap-1">
                       <Bath className="w-4 h-4 text-gray-500" />
                       <span>
-                        {property.bathRoom}
-                         {t("bath")}
+                        {property.bathRoom} {t("bath")}
                       </span>
                     </div>
                   </div>
@@ -773,25 +773,25 @@ export default function PropertySearch() {
                       </span>
                     </div>
                     <p className="text-gray-600">{property.whenAvailable}</p>
-                    {property.isAcceptShortTerm && (
+                    {/* {property.isAcceptShortTerm && (
                       <div className="flex items-center gap-1 mt-1">
                         <Clock className="w-3 h-3 text-green-500" />
                         <span className="text-green-600 text-xs">
                           {t("shortTermOk")}
                         </span>
                       </div>
-                    )}
+                    )} */}
                   </div>
 
                   {/* Room Amenities */}
                   <div className="text-sm">
-                    <div className="flex items-center gap-1 mb-2">
+                    {/* <div className="flex items-center gap-1 mb-2">
                       <Star className="w-4 h-4 text-yellow-500" />
                       <span className="font-medium text-gray-700">
                         {t("amenities")}:
                       </span>
-                    </div>
-                    <div className="flex flex-wrap gap-1">
+                    </div> */}
+                    {/* <div className="flex flex-wrap gap-1">
                       {property.roomAmenities
                         .slice(0, 4)
                         .map((amenity, index) => (
@@ -808,7 +808,7 @@ export default function PropertySearch() {
                           +{property.roomAmenities.length - 4} more
                         </Badge>
                       )}
-                    </div>
+                    </div> */}
                   </div>
 
                   {/* Note */}
@@ -833,7 +833,7 @@ export default function PropertySearch() {
                   )}
 
                   <div className="border-t pt-4">
-                    <div className="flex justify-between items-center mb-3">
+                    <div className="flex justify-between items-center mb-1">
                       <div>
                         <p className="text-sm text-gray-600">{t("rent")}</p>
                         <p className="text-lg font-bold text-blue-600">
@@ -842,12 +842,12 @@ export default function PropertySearch() {
                         </p>
                       </div>
                     </div>
-                      <div className="text-left">
-                        <p className="text-sm text-gray-600">{t("sale")}</p>
-                        <p className="text-lg font-bold text-green-600">
-                          ฿{formattedSellPrice}
-                        </p>
-                      </div>
+                    <div className="text-left">
+                      <p className="text-sm text-gray-600">{t("sale")}</p>
+                      <p className="text-lg font-bold text-green-600">
+                        ฿{formattedSellPrice}
+                      </p>
+                    </div>
 
                     <CopyButtons property={property} locale={language} />
 

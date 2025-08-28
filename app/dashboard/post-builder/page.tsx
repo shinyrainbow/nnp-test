@@ -10,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { Copy, Trash2, Home, Eye, FileText, Save, Edit } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { t } from "i18next"
+import { useLanguage } from "@/contexts/language-context"
 
 interface PropertyTemplate {
   id: string
@@ -73,6 +75,7 @@ export default function PropertyPostCreator() {
   const { toast } = useToast()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+const {t} = useLanguage()
 
   useEffect(() => {
     loadTemplates()
@@ -358,9 +361,9 @@ export default function PropertyPostCreator() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Home className="h-6 w-6 text-primary" />
-              <h1 className="text-2xl font-bold text-foreground">Property Post Creator</h1>
+              <h1 className="text-2xl font-bold text-foreground">{t("post.title")}</h1>
             </div>
-            <Badge variant="secondary">Real Estate Tool</Badge>
+            <Badge variant="secondary">{t("post.badge")}</Badge>
           </div>
         </div>
       </header>
@@ -368,7 +371,7 @@ export default function PropertyPostCreator() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-6">
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="h-5 w-5" />
@@ -446,21 +449,21 @@ export default function PropertyPostCreator() {
                   </Button>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileText className="h-5 w-5" />
-                  Message Format Editor
+                  {t("post.formatEditor")}
                 </CardTitle>
                 <CardDescription>
-                  Create your custom property post format. Click the field tags below to insert them into your template.
+                 {t("post.formatEditorDesc")}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="format">Post Format Template</Label>
+                  <Label htmlFor="format">{t("post.postFormatTemplate")}</Label>
                   <Textarea
                     ref={textareaRef}
                     id="format"
@@ -472,7 +475,7 @@ export default function PropertyPostCreator() {
                 </div>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium mb-2 text-sm">Available Field Tags (click to insert):</p>
+                    <p className="font-medium mb-2 text-sm">{t("post.fieldTags")}</p>
                     <div className="flex flex-wrap gap-2">
                       {defaultFields.map((field) => (
                         <Button
@@ -482,13 +485,14 @@ export default function PropertyPostCreator() {
                           onClick={() => insertFieldTag(field.id)}
                           className="text-xs h-7 px-2 hover:bg-primary hover:text-primary-foreground"
                         >
-                          {field.emoji} {`{${field.id}}`}
+                          {/* {field.emoji} */}
+                           {`{${field.id}}`}
                         </Button>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <p className="font-medium mb-2 text-sm">Available Emoji Tags (click to insert):</p>
+                    <p className="font-medium mb-2 text-sm">{t("post.emojiTags")}</p>
                     <div className="flex flex-wrap gap-2">
                       {defaultFields
                         .filter((field) => field.emoji)
@@ -500,7 +504,7 @@ export default function PropertyPostCreator() {
                             onClick={() => insertFieldTag(field.id, true)}
                             className="text-xs h-7 px-2 hover:bg-secondary hover:text-secondary-foreground"
                           >
-                            {field.emoji} {`{emoji:${field.id}}`}
+                            {field.emoji} 
                           </Button>
                         ))}
                     </div>
@@ -513,13 +517,13 @@ export default function PropertyPostCreator() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Home className="h-5 w-5" />
-                  Property Data
+                  {t("post.propertyData")}
                 </CardTitle>
                 <CardDescription>
                   <div className="flex items-center justify-between">
-                    <span>Sample property data for testing your format.</span>
+                    <span>{t("post.propertyDataDesc")}</span>
                     <Button onClick={loadMockData} variant="outline" size="sm">
-                      Load Mock Data
+                    {t("post.loadData")}
                     </Button>
                   </div>
                 </CardDescription>
@@ -576,9 +580,11 @@ export default function PropertyPostCreator() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Eye className="h-5 w-5" />
-                  Generated Post Preview
+                  {t("post.generatePreview")}
                 </CardTitle>
-                <CardDescription>Review your property post and copy it to your clipboard.</CardDescription>
+                <CardDescription>
+                {t("post.review")}
+                  </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="bg-muted p-4 rounded-lg min-h-[300px]">
@@ -588,7 +594,7 @@ export default function PropertyPostCreator() {
                 </div>
                 <Button onClick={copyToClipboard} className="w-full" disabled={!generatePost()}>
                   <Copy className="h-4 w-4 mr-2" />
-                  Copy to Clipboard
+                  {t("post.copy")}
                 </Button>
               </CardContent>
             </Card>
