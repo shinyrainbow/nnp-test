@@ -38,6 +38,8 @@ export const translations = {
     watchDemo: "Watch Demo",
 
     // Features
+    // dashboard: "",
+
     listings: "Listings",
     listingsDesc:
       "Property listings with filters — easy to find, fast, and convenient.",
@@ -624,9 +626,10 @@ export const translations = {
     contractBuilder: "เครื่องมือสร้างสัญญา",
     contractBuilderDesc: "สร้างสัญญาเช่าระดับมืออาชีพในไม่กี่นาที",
 
-    propertyAnalytics: "การวิเคราะห์ทรัพย์สิน",
+    calendar: "นัดลูกค้า",
+    calendarDesc: "ผูกทรัพย์กับเรา ไม่พลาดนัดหมายสำคัญ",
+    propertyAnalytics: "กราฟวิเคราะห์ทรัพย์",
     propertyAnalyticsDesc: "ติดตามประสิทธิภาพและแนวโน้มตลาด",
-
     clientManagement: "การจัดการลูกค้า",
     clientManagementDesc: "จัดระเบียบลูกค้าเป้าหมายและรักษาความสัมพันธ์",
 

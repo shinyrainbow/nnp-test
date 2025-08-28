@@ -1,3 +1,6 @@
+"use client";
+
+import Dashboard from "@/app/dashboard/page";
 import {
   Card,
   CardContent,
@@ -7,21 +10,20 @@ import {
 } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/language-context";
 import {
-  FileText,
-  Calculator,
   MessageSquare,
-  BarChart3,
-  Calendar,
-  MapPin,
   Newspaper,
   TableProperties,
-  FileUser,
   MessageSquareText,
   ChartNoAxesCombined,
-  Calendar1,
+  Calendar,
 } from "lucide-react";
 
 const features = [
+  // {
+  //   icon: Dashboard,
+  //   title: "dashboard",
+  //   description: "dashboardDesc",
+  // },
   {
     icon: TableProperties,
     title: "listings",
@@ -43,15 +45,15 @@ const features = [
     description: "contractBuilderDesc",
   },
   {
+    icon: Calendar,
+    title: "calendar",
+    description: "contractBuilderDesc",
+  },
+  {
     icon: ChartNoAxesCombined,
     title: "propertyAnalytics",
     description: "propertyAnalyticsDesc",
   },
-  // {
-  //   icon: Calendar,
-  //   title: "contractBuilder",
-  //   description: "contractBuilderDesc",
-  // },
   // {
   //   icon: MapPin,
   //   title: "contractBuilder",
@@ -82,8 +84,8 @@ export function FeaturesSection() {
               <CardHeader>
                 <feature.icon className="h-12 w-12 text-primary mb-4" />
                 <CardTitle className="text-xl">
-                {t(`${feature.title}`)}
-                  </CardTitle>
+                  {t(`${feature.title}`)}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-base">
