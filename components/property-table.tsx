@@ -199,7 +199,7 @@ const {t} = useLanguage()
               <TableCell>
                 <div className="flex items-center gap-1 text-sm">
                   <MapPin className="w-3 h-3" />
-                  {property.location.join(", ")}
+                  {property.location?.join(", ")}
                 </div>
               </TableCell>
               <TableCell>

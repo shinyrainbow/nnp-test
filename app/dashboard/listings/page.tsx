@@ -117,19 +117,10 @@ export default function PropertySearch() {
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
+
   const [totalPages, setTotalPages] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
-
-  const [searchParams, setSearchParams] = useState({
-    search: "",
-    roomType: "all",
-    bedRoom: "all",
-    minSize: "",
-    maxSize: "",
-    minPrice: "",
-    maxPrice: "",
-  });
-
+  const [totalSearchResults, setTotalSearchResults] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -143,8 +134,14 @@ export default function PropertySearch() {
         throw new Error(`Failed to fetch: ${res.status}`);
       }
 
-      const data = await res.json();
-      setProperties(data.data);
+      const response = await res.json();
+      const { data, limit, total, page } = response;
+      setProperties(data);
+      setTotalSearchResults(total);
+      const totalPageButton = Math.ceil(parseInt(total) / parseInt(limit));
+      setTotalPages(totalPageButton);
+      setTotalItems(limit);
+      setCurrentPage(page);
     } catch (err: any) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -157,26 +154,9 @@ export default function PropertySearch() {
     fetchData(`page=${currentPage}&limit=${pageSize}&
       projectName=${searchTerm}&
       minPrice=${minPrice}&maxPrice=${maxPrice}&
-      roomType=${selectedRoomType}&
+      roomType=${selectedRoomType}&bedRoom=${selectedBedRoom}&
       minSize=${minSize}&maxSize=${maxSize}`);
   }, []);
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const res = await fetch(
-  //       "/api/listings?projectName=28&roomType=Condo&minPrice=0&maxPrice=4000000&page=1&limit=12"
-  //     );
-  //     const data = await res.json();
-  //     console.log(data.data, 5555555)
-  //     setProperties(data.data);
-  //   }
-  //   console.log('whatttt')
-  //   fetchData();
-  // }, []);
-
-  // Update current locale when locale changes
-  // useEffect(() => {
-  //   setCurrentLocale(locale)
-  // }, [locale])
 
   // Download all images function
   const downloadAllImages = async (property: Property) => {
@@ -209,16 +189,6 @@ export default function PropertySearch() {
       setDownloadingStates((prev) => ({ ...prev, [property.id]: false }));
     }
   };
-
-  // Fetch properties using context
-  // const fetchPropertiesData = async (page = 1, limit = pageSize, params = searchParams) => {
-  //   const result = await fetchProperties(page, limit, params)
-  //   if (result.success) {
-  //     setTotalPages(result.totalPages)
-  //     setTotalItems(result.total)
-  //     setCurrentPage(result.page)
-  //   }
-  // }
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat(language === "th" ? "th-TH" : "en-US").format(
@@ -261,25 +231,24 @@ export default function PropertySearch() {
   // const getCurrentProject = (projectId: number) => {
   //   return projects.find((project) => project.id === projectId)
   // }
+  const parsePrice = (value: string) => {
+    if (!value) return 0;
+    return Number(value.replace(/,/g, ""));
+  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-  };
 
-  const handlePageSizeChange = (newPageSize: number) => {
-    setPageSize(newPageSize);
-    setCurrentPage(1);
-  };
-
-  const handleSearch = () => {
     const newSearchParams = {
       projectName: searchTerm,
-      roomType: selectedRoomType,
-      bedRoom: selectedBedRoom,
-      minSize,
-      maxSize,
       minPrice,
       maxPrice,
+      minSize,
+      maxSize,
+      roomType: selectedRoomType,
+      bedRoom: selectedBedRoom,
+      page,
+      limit: pageSize,
     };
 
     const searchParams = new URLSearchParams(
@@ -293,51 +262,99 @@ export default function PropertySearch() {
     fetchData(searchParams.toString());
   };
 
-  // const handleClearFilters = () => {
-  //   setSearchTerm("")
-  //   setSelectedRoomType("all")
-  //   setSelectedBedRoom("all")
-  //   setMinSize("")
-  //   setMaxSize("")
-  //   setMinPrice("")
-  //   setMaxPrice("")
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize);
+    setCurrentPage(1);
 
-  //   const clearedParams = {
-  //     search: "",
-  //     roomType: "all",
-  //     bedRoom: "all",
-  //     minSize: "",
-  //     maxSize: "",
-  //     minPrice: "",
-  //     maxPrice: "",
-  //   }
-  //   setSearchParams(clearedParams)
-  //   setCurrentPage(1)
-  //   fetchPropertiesData(1, pageSize, clearedParams)
-  // }
+    const newSearchParams = {
+      projectName: searchTerm,
+      minPrice,
+      maxPrice,
+      minSize,
+      maxSize,
+      roomType: selectedRoomType,
+      bedRoom: selectedBedRoom,
+      page: 1,
+      limit: newPageSize,
+    };
 
-  // const handleLocaleChange = (newLocale: Language) => {
-  //   setCurrentLocale(newLocale)
-  // }
+    const searchParams = new URLSearchParams(
+      Object.entries(newSearchParams).reduce((acc, [key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+          acc[key] = String(value);
+        }
+        return acc;
+      }, {} as Record<string, string>)
+    );
+    fetchData(searchParams.toString());
+  };
+
+  const handleSearch = () => {
+    const newSearchParams = {
+      projectName: searchTerm,
+      minPrice,
+      maxPrice,
+      minSize,
+      maxSize,
+      roomType: selectedRoomType,
+      bedRoom: selectedBedRoom,
+      page: 1,
+    };
+
+    const searchParams = new URLSearchParams(
+      Object.entries(newSearchParams).reduce((acc, [key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+          acc[key] = String(value);
+        }
+        return acc;
+      }, {} as Record<string, string>)
+    );
+    fetchData(searchParams.toString());
+  };
+
+  const handleClearFilters = () => {
+    setSearchTerm((prev) => "");
+    setMinPrice((prev) => "");
+    setMaxPrice((prev) => "");
+    setMinSize((prev) => "");
+    setMaxSize((prev) => "");
+    setSelectedRoomType((prev) => "all");
+    setSelectedBedRoom((prev) => "all");
+    setCurrentPage(1);
+
+    const newSearchParams = {
+      projectName: "",
+      minPrice: "",
+      maxPrice: "",
+      minSize: "",
+      maxSize: "",
+      roomType: "all",
+      bedRoom: "all",
+    };
+
+    const searchParams = new URLSearchParams(
+      Object.entries(newSearchParams).reduce((acc, [key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+          acc[key] = String(value);
+        }
+        return acc;
+      }, {} as Record<string, string>)
+    );
+    fetchData(searchParams.toString());
+  };
 
   const handleEditProperty = (propertyId: number) => {
     router.push(`/dashboard/listings/${propertyId}`);
   };
 
-  // useEffect(() => {
-  //   fetchPropertiesData(currentPage, pageSize, searchParams)
-  // }, [currentPage, pageSize])
-
-  // Clear error when component unmounts or error changes
-
-  // useEffect(() => {
-  //   if (error) {
-  //     const timer = setTimeout(() => {
-  //       clearError()
-  //     }, 5000)
-  //     return () => clearTimeout(timer)
-  //   }
-  // }, [error, clearError])
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError("");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error, setError]);
 
   if (loading && properties.length === 0) {
     return (
@@ -347,7 +364,7 @@ export default function PropertySearch() {
           <p className="text-gray-600">{t("loadingProperties")}</p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -358,14 +375,13 @@ export default function PropertySearch() {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">{t("title")}</h1>
             <p className="text-gray-600">{t("subtitle", { count: totalItems.toString() })}</p>
           </div>
-          <LanguageSwitcher onLocaleChange={handleLocaleChange} />
         </div> */}
 
-      {/* {error && (
-          <Alert className="mb-6 border-red-200 bg-red-50">
-            <AlertDescription className="text-red-800">{error}</AlertDescription>
-          </Alert>
-        )} */}
+      {error && (
+        <Alert className="mb-6 border-red-200 bg-red-50">
+          <AlertDescription className="text-red-800">{error}</AlertDescription>
+        </Alert>
+      )}
 
       {/* Search and Filters */}
       <Card className="mb-8">
@@ -438,7 +454,7 @@ export default function PropertySearch() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">{t("allBedrooms")}</SelectItem>
-                    {[1, 2, 3, 4, 5].map((bedCount) => (
+                    {[1, 2, 3,].map((bedCount) => (
                       <SelectItem key={bedCount} value={bedCount.toString()}>
                         {bedCount} {bedCount > 1 ? t("bedrooms") : t("bedroom")}
                       </SelectItem>
@@ -551,7 +567,7 @@ export default function PropertySearch() {
                   <Button
                     type="button"
                     variant="outline"
-                    // onClick={handleClearFilters}
+                    onClick={handleClearFilters}
                     className="flex items-center gap-2 bg-transparent"
                   >
                     {t("clearFilters")}
@@ -560,13 +576,13 @@ export default function PropertySearch() {
                     {t("activeFilters")}{" "}
                     {
                       [
-                        searchParams.search && "Search",
-                        searchParams.roomType !== "all" && "Room Type",
-                        searchParams.bedRoom !== "all" && "Bedrooms",
-                        searchParams.minSize && "Min Size",
-                        searchParams.maxSize && "Max Size",
-                        searchParams.minPrice && "Min Price",
-                        searchParams.maxPrice && "Max Price",
+                        searchTerm && "Search",
+                        selectedRoomType !== "all" && "Room Type",
+                        selectedBedRoom !== "all" && "Bedrooms",
+                        minSize && "Min Size",
+                        maxSize && "Max Size",
+                        minPrice && "Min Price",
+                        maxPrice && "Max Price",
                       ].filter(Boolean).length
                     }
                   </div>
@@ -580,7 +596,8 @@ export default function PropertySearch() {
       {/* View Toggle and Results Count */}
       <div className="flex justify-between items-center mb-6">
         <p className="text-gray-600">
-          {t("showing", { count: properties.length.toString() })}
+          Showing {totalSearchResults} properties
+          {/* {t("showing", { count: properties.length.toString() })} */}
         </p>
         <div className="flex items-center gap-2">
           <Button
@@ -605,24 +622,30 @@ export default function PropertySearch() {
       </div>
 
       {/* Pagination - Top */}
-      {totalPages > 1 && (
-        <div className="mb-6">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            pageSize={pageSize}
-            totalItems={totalItems}
-            onPageChange={handlePageChange}
-            onPageSizeChange={handlePageSizeChange}
-            locale={language}
-          />
-        </div>
-      )}
+      {/* {totalPages > 1 && ( */}
+      <div className="mb-6">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalSearchResults={totalSearchResults}
+          pageSize={pageSize}
+          totalItems={totalItems}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+          locale={language}
+        />
+      </div>
+      {/* )} */}
 
       {/* Property Display */}
       {viewMode === "grid" ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
           {properties.map((property) => {
+            const priceRentalNumber = parsePrice(property.rentalRate);
+            const formattedRentalPrice = formatPrice(priceRentalNumber);
+
+            const priceSellNumber = parsePrice(property.sellPrice);
+            const formattedSellPrice = formatPrice(priceSellNumber);
             // const currentProject = getCurrentProject(property.projectId)
             return (
               <Card
@@ -635,20 +658,21 @@ export default function PropertySearch() {
                       <CardTitle className="text-lg font-semibold text-gray-900">
                         {property.project.projectNameEn}
                       </CardTitle>
-                      <p className="text-sm text-gray-600 mt-1">
-                        {t("room")} {property.roomNumber} • {t("floor")}{" "}
-                        {property.floor}
-                      </p>
+                      {/* <p className="text-sm text-gray-600 mt-1">
+                        {t("room")} {property.roomNumber} • 
+                        {t("floor")}{" "} {property.floor}
+                      </p> */}
                       {/* {currentProject && (
                           <p className="text-xs text-blue-600 font-mono">{currentProject.projectCode}</p>
                         )} */}
-                      <div className="flex gap-2 text-xs font-mono">
+                      {/* <div className="flex gap-2 text-xs font-mono">
                         <span className="text-green-600">
                           {property.projectCode}-{property.projectPropertyCode}
                         </span>
-                        {/* <span className="text-purple-600"></span> */}
-                      </div>
+                        <span className="text-purple-600"></span>
+                      </div> */}
                     </div>
+
                     <div className="flex gap-1">
                       <Button variant="ghost" size="sm">
                         <Heart className="w-4 h-4" />
@@ -669,9 +693,16 @@ export default function PropertySearch() {
                       {property.location.join(", ")}
                     </div> */}
 
-                  <Badge className={getStatusColor(property.status)}>
+                  <div className="text-sm text-gray-600">
+                    <span className="font-medium">
+                      {property.distanceToStation}m
+                    </span>{" "}
+                    {language === "th" ? "ถึง" : "to"}{" "}
+                    {property.distanceStation} {t("station")}
+                  </div>
+                  {/* <Badge className={getStatusColor(property.status)}>
                     {getLocalizedStatus(property.status)}
-                  </Badge>
+                  </Badge> */}
                 </CardHeader>
 
                 <div className="px-6 pb-2">
@@ -685,33 +716,37 @@ export default function PropertySearch() {
                 </div>
 
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div className="flex items-center gap-2">
+                  <div className="grid grid-cols-4 gap-3 text-sm text-[10px]">
+                    <div className="flex items-center gap-1">
                       <Building className="w-4 h-4 text-gray-500" />
-                      <span>{getLocalizedPropertyType(property.roomType)}</span>
+                      <span>
+                        Fl. {property.floor}
+                        {/* {getLocalizedPropertyType(property.roomType)} */}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                       <Ruler className="w-4 h-4 text-gray-500" />
                       <span>
                         {property.roomSize}{" "}
                         {language === "th" ? "ตร.ม." : "sqm"}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                       <Bed className="w-4 h-4 text-gray-500" />
                       <span>
                         {property.bedRoom} {t("bed")}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                       <Bath className="w-4 h-4 text-gray-500" />
                       <span>
-                        {property.bathRoom} {t("bath")}
+                        {property.bathRoom}
+                         {t("bath")}
                       </span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 text-sm">
+                  {/* <div className="flex items-center gap-2 text-sm">
                     <Car className="w-4 h-4 text-gray-500" />
                     <span>
                       {property.carPark}{" "}
@@ -719,15 +754,15 @@ export default function PropertySearch() {
                         ? t("parkingSpaces")
                         : t("parkingSpace")}
                     </span>
-                  </div>
+                  </div> */}
 
-                  <div className="text-sm text-gray-600">
+                  {/* <div className="text-sm text-gray-600">
                     <span className="font-medium">
                       {property.distanceToStation}m
                     </span>{" "}
                     {language === "th" ? "ถึง" : "to"}{" "}
                     {property.distanceStation} {t("station")}
-                  </div>
+                  </div> */}
 
                   {/* Availability */}
                   <div className="text-sm">
@@ -777,10 +812,10 @@ export default function PropertySearch() {
                   </div>
 
                   {/* Note */}
-                  <div className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                  {/* <div className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
                     <span className="font-medium">{t("note")}:</span>{" "}
                     {property.note}
-                  </div>
+                  </div> */}
 
                   {property.isPetFriendly && (
                     <Badge variant="outline" className="text-xs">
@@ -802,17 +837,17 @@ export default function PropertySearch() {
                       <div>
                         <p className="text-sm text-gray-600">{t("rent")}</p>
                         <p className="text-lg font-bold text-blue-600">
-                          ฿{formatPrice(property.rentalRate)}
+                          ฿{formattedRentalPrice}
                           {t("month")}
                         </p>
                       </div>
-                      <div className="text-right">
+                    </div>
+                      <div className="text-left">
                         <p className="text-sm text-gray-600">{t("sale")}</p>
                         <p className="text-lg font-bold text-green-600">
-                          ฿{formatPrice(property.sell)}
+                          ฿{formattedSellPrice}
                         </p>
                       </div>
-                    </div>
 
                     <CopyButtons property={property} locale={language} />
 
@@ -852,6 +887,7 @@ export default function PropertySearch() {
             totalPages={totalPages}
             pageSize={pageSize}
             totalItems={totalItems}
+            totalSearchResults={totalSearchResults}
             onPageChange={handlePageChange}
             onPageSizeChange={handlePageSizeChange}
             locale={language}

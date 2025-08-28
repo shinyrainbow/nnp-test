@@ -104,17 +104,17 @@ export function CopyButtons({ property, size = "sm", variant = "outline" }: Copy
     copyToClipboard(property.indexFbUrl, "facebook")
   }
 
-  const handleCopyMessage = () => {
-    copyToClipboard(property.messageToPost, "message")
-  }
+  // const handleCopyMessage = () => {
+  //   copyToClipboard("aoyyyyy", "message")
+  // }
 
-  const handleCopyPropertyCode = () => {
-    copyToClipboard(property.propertyCode, "propertyCode")
-  }
+  // const handleCopyPropertyCode = () => {
+  //   copyToClipboard(property.propertyCode, "propertyCode")
+  // }
 
-  const handleCopyProjectPropertyCode = () => {
-    copyToClipboard(property.projectPropertyCode, "projectPropertyCode")
-  }
+  // const handleCopyProjectPropertyCode = () => {
+  //   copyToClipboard(property.projectPropertyCode, "projectPropertyCode")
+  // }
 
   const handleCopyToPost = () => {
     const postText =
@@ -141,7 +141,7 @@ export function CopyButtons({ property, size = "sm", variant = "outline" }: Copy
 สถานะ: ${getLocalizedStatus(property.status)}${property.isPetFriendly ? "\n🐕 เลี้ยงสัตว์ได้" : ""}${property.isOwner ? "\n👤 เจ้าของลงขาย" : ""}`
         : `🏠 ${property.projectName} - ${t("room")} ${property.roomNumber}
 
-📍 ${property.location.join(", ")}
+📍 ${property.location?.join(", ")}
 🏢 ${getLocalizedPropertyType(property.roomType)}
 📐 ${property.roomSize} sqm
 🛏️ ${property.bedRoom} ${property.bedRoom > 1 ? "bedrooms" : "bedroom"}
@@ -164,28 +164,28 @@ Status: ${getLocalizedStatus(property.status)}${property.isPetFriendly ? "\n🐕
   }
 
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-4 gap-2">
       <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyPhone}>
         {copiedStates.phone ? <Check className="w-4 h-4 mr-1" /> : <Phone className="w-4 h-4 mr-1" />}
-        {copiedStates.phone ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyPhone")}
+        {/* {copiedStates.phone ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyPhone")} */}
       </Button>
 
       <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyLineId}>
         {copiedStates.line ? <Check className="w-4 h-4 mr-1" /> : <MessageCircle className="w-4 h-4 mr-1" />}
-        {copiedStates.line ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyLineId")}
+        {/* {copiedStates.line ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyLineId")} */}
       </Button>
 
       <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyFacebookUrl}>
         {copiedStates.facebook ? <Check className="w-4 h-4 mr-1" /> : <Facebook className="w-4 h-4 mr-1" />}
-        {copiedStates.facebook ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyFacebookUrl")}
+        {/* {copiedStates.facebook ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyFacebookUrl")} */}
       </Button>
 
-      <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyMessage}>
+      <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyToPost}>
         {copiedStates.message ? <Check className="w-4 h-4 mr-1" /> : <FileText className="w-4 h-4 mr-1" />}
-        {copiedStates.message ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyMessage")}
+        {/* {copiedStates.message ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyMessage")} */}
       </Button>
 
-      <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyPropertyCode}>
+      {/* <Button variant={variant} size={size} className="bg-transparent" onClick={handleCopyPropertyCode}>
         {copiedStates.propertyCode ? <Check className="w-4 h-4 mr-1" /> : <Copy className="w-4 h-4 mr-1" />}
         {copiedStates.propertyCode ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyPropertyCode")}
       </Button>
@@ -202,7 +202,7 @@ Status: ${getLocalizedStatus(property.status)}${property.isPetFriendly ? "\n🐕
       <Button variant={variant} size={size} className="col-span-2 bg-transparent" onClick={handleCopyToPost}>
         {copiedStates.post ? <Check className="w-4 h-4 mr-1" /> : <Copy className="w-4 h-4 mr-1" />}
         {copiedStates.post ? (language === "th" ? "คัดลอกแล้ว!" : "Copied!") : t("copyToPost")}
-      </Button>
+      </Button> */}
     </div>
   )
 }

@@ -11,6 +11,7 @@ interface PaginationProps {
   totalPages: number
   pageSize: number
   totalItems: number
+  totalSearchResults: number
   onPageChange: (page: number) => void
   onPageSizeChange: (pageSize: number) => void
   locale?: Language
@@ -21,12 +22,13 @@ export function Pagination({
   totalPages,
   pageSize,
   totalItems,
+  totalSearchResults,
   onPageChange,
   onPageSizeChange,
   locale = "en",
 }: PaginationProps) {
   const startItem = (currentPage - 1) * pageSize + 1
-  const endItem = Math.min(currentPage * pageSize, totalItems)
+  const endItem = Math.min(currentPage * pageSize, totalSearchResults)
 const {t, language} = useLanguage()
   const getVisiblePages = () => {
     const delta = 2
@@ -74,7 +76,7 @@ const {t, language} = useLanguage()
 
       <div className="flex items-center space-x-2">
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          {totalItems > 0 ? `${startItem}-${endItem} of ${totalItems}` : "0 of 0"}
+          {totalItems > 0 ? `${startItem}-${endItem} of ${totalSearchResults}` : "0 of 0"}
         </div>
 
         <div className="flex items-center space-x-2">

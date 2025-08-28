@@ -287,13 +287,13 @@ export const translations = {
     shortTermOk: "Short-term OK",
 
     // Contact - Updated
-    copyPhone: "Copy Phone",
-    copyLineId: "Copy Line ID",
-    copyFacebookUrl: "Copy FB URL",
-    copyToPost: "Copy to Post",
-    copyMessage: "Copy Message",
-    copyPropertyCode: "Copy Property Code",
-    copyProjectPropertyCode: "Copy Project Property Code",
+    copyPhone: "Phone",
+    copyLineId: "Line ID",
+    copyFacebookUrl: "FB URL",
+    copyToPost: "Post",
+    copyMessage: "Message",
+    copyPropertyCode: "Property Code",
+    copyProjectPropertyCode: "Project Property Code",
 
     // Copy Messages
     phoneCopied: "Phone number copied!",
