@@ -1,6 +1,8 @@
+'use client'
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight, Building2, Users, TrendingUp } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
 
 export function HeroSection() {

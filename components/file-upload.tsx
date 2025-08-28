@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Upload, X, FileImage } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
-// import { useTranslations } from "next-intl"
 
 interface FileUploadProps {
   onFileUpload: (file: File | null) => void

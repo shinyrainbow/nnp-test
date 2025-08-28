@@ -3,7 +3,6 @@ import { Header } from '@/components/header'
 import { HeroSection } from '@/components/hero-section'
 import { FeaturesSection } from '@/components/features-section'
 import { Footer } from '@/components/footer'
-import { useUser } from '@clerk/nextjs';
 
 export default function Home() {
 
