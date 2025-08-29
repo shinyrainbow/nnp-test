@@ -85,7 +85,7 @@ export default function LineChatBot() {
   return (
     <div className="w-full pt-4 space-y-6">
       <Card className="shadow-xl border-0 bg-white backdrop-blur-sm overflow-hidden">
-        <div className="bg-gradient-to-r from-cyan-600 to-cyan-700 px-6 py-8">
+        <div className="bg-gradient-to-r from-[#16a29d] to-cyan-700 px-6 py-8">
           <CardTitle className="text-3xl font-bold text-white mb-2">
             {t("line.title")}
           </CardTitle>

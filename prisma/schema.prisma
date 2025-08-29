@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(uuid())
-  clerkId      String   @unique
-  email        String?  @unique
-  firstName    String?
-  lastName     String?
-  isPaid       Boolean  @default(false) 
-  currentExpireDate  DateTime?
-  imageUrl     String?
-  lineCode     Int      @default(2025)
-  isEnableLine Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id                String         @id @default(uuid())
+  clerkId           String         @unique
+  email             String?        @unique
+  firstName         String?
+  lastName          String?
+  isPaid            Boolean        @default(false)
+  currentExpireDate DateTime?
+  imageUrl          String?
+  lineCode          Int            @default(2025)
+  isEnableLine      Boolean        @default(false)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  PostTemplate      PostTemplate[]
 }
 
 enum PropertyStatus {
@@ -111,4 +112,12 @@ model Property {
   // Relation
   projectCode String
   project     Project @relation(fields: [projectCode], references: [projectCode])
+}
+
+model PostTemplate {
+  id       String @id @default(uuid())
+  template String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 }
