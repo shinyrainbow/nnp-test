@@ -11,6 +11,20 @@ interface PropertyTemplate {
 }
 const prisma = new PrismaClient();
 
+const defaultFormat = `{emoji:projectName} {projectName} - Room {roomNumber}
+
+{emoji:location} {location}
+{emoji:roomType} {roomType}
+{emoji:roomSize} {roomSize} sqm
+{emoji:bedRoom} {bedRoom} bedroom(s)
+{emoji:bathRoom} {bathRoom} bathroom(s)
+{emoji:carPark} {carPark} parking space(s)
+
+{emoji:rentalRate} Rent: ฿{rentalRate}/month
+{emoji:sellPrice} Sale: ฿{sellPrice}
+
+{emoji:phone} Phone: {phone}
+{emoji:lineId} Line: {lineId}`;
 // POST - Create a new template
 export async function GET(request: NextRequest) {
   try {
@@ -23,7 +37,7 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    const template = await prisma.postTemplate.findFirst({
+    const postTemplate = await prisma.postTemplate.findFirst({
       where: {
         // id: randomUUID(),
         userId,
@@ -31,8 +45,14 @@ export async function GET(request: NextRequest) {
       },
     });
 
+    let format = "";
+    if (!postTemplate) {
+      format = defaultFormat;
+    } else {
+      format = postTemplate.template;
+    }
     return NextResponse.json({
-      template: template,
+      template: format,
       message: "Get Template successfully",
     });
   } catch (err) {}
@@ -50,29 +70,29 @@ export async function PUT(request: NextRequest) {
       });
     }
 
-    if (!name || !format) {
-      return NextResponse.json(
-        { error: "Name and format are required" },
-        { status: 400 }
-      );
-    }
+    // if (!name || !format) {
+    //   return NextResponse.json(
+    //     { error: "Name and format are required" },
+    //     { status: 400 }
+    //   );
+    // }
 
-    const newTemplate: PropertyTemplate = {
-      id: Date.now().toString(),
-      name: name.trim(),
-      format: format.trim(),
-    };
+    // const newTemplate: PropertyTemplate = {
+    //   id: Date.now().toString(),
+    //   name: name.trim(),
+    //   format: format.trim(),
+    // };
 
-    await prisma.postTemplate.create({
-      data: {
-        id: randomUUID(),
-        userId,
-        template: format,
-      },
-    });
+    // await prisma.postTemplate.create({
+    //   data: {
+    //     id: randomUUID(),
+    //     userId,
+    //     template: format,
+    //   },
+    // });
 
     return NextResponse.json({
-      template: newTemplate,
+      template: format,
       message: "Template created successfully",
     });
   } catch (error) {

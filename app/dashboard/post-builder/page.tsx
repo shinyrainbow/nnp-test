@@ -164,17 +164,18 @@ export default function PropertyPostCreator() {
   useEffect(() => {
     loadTemplates();
   }, []);
+  const [template, setTemplate] = useState("");
 
   const loadTemplates = async () => {
     try {
-      const response = await fetch("/api/message-templates");
+      const response = await fetch("/api/post-builder");
       const data = await response.json();
 
       if (response.ok) {
-        setTemplates(data.templates);
-        if (data.templates.length > 0 && !selectedTemplate) {
-          setSelectedTemplate(data.templates[0]);
-        }
+        setTemplate(data.template);
+        // if (data.templates.length > 0 && !selectedTemplate) {
+        //   setSelectedTemplate(data.templates[0]);
+        // }
       } else {
         toast({
           title: "Failed to load templates",
@@ -192,9 +193,10 @@ export default function PropertyPostCreator() {
   };
 
   const generatePost = () => {
-    if (!selectedTemplate) return "";
+    if (!template) return "";
 
-    let post = selectedTemplate.format;
+    let post = template;
+    // selectedTemplate.format;
 
     defaultFields.forEach((field) => {
       const value = propertyData[field.id] || "";
@@ -209,7 +211,7 @@ export default function PropertyPostCreator() {
 
   const copyToClipboard = async () => {
     const post = generatePost();
-    console.log(post, 666666);
+    // console.log(post, 666666);
     try {
       await navigator.clipboard.writeText(post);
       console.log("helloooooo");
@@ -255,16 +257,16 @@ export default function PropertyPostCreator() {
         },
         body: JSON.stringify({
           name: "Main template",
-          format: selectedTemplate?.format,
+          format: template,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setTemplates([...templates, data.template]);
-        setSelectedTemplate(data.template);
-        setNewTemplateName("");
+        // setTemplates([...templates, data.template]);
+        // setSelectedTemplate(data.template);
+        // setNewTemplateName("");
 
         toast({
           title: "Template saved!",
@@ -284,7 +286,7 @@ export default function PropertyPostCreator() {
         variant: "destructive",
       });
     }
-  }
+  };
 
   // const saveNewTemplate = async () => {
   //   if (!newTemplateName.trim() || !selectedTemplate?.format.trim()) {
@@ -426,18 +428,20 @@ export default function PropertyPostCreator() {
   // };
 
   const updateTemplateFormatDebounced = async (format: string) => {
-    if (!selectedTemplate) return;
+    // if (!template) return;
 
+    console.log('jjjjjjjjj')
     // Update local state immediately for better UX
-    const updatedTemplate = {
-      ...selectedTemplate,
-      format,
-    };
+    // const updatedTemplate = {
+    //   ...template,
+    //   format,
+    // };
+    setTemplate(format);
+    // setSelectedTemplate(updatedTemplate);
 
-    setSelectedTemplate(updatedTemplate);
-    setTemplates(
-      templates.map((t) => (t.id === selectedTemplate.id ? updatedTemplate : t))
-    );
+    // setTemplates(
+    //   templates.map((t) => (t.id === selectedTemplate.id ? updatedTemplate : t))
+    // );
 
     // Debounce API call to avoid too many requests
     if (updateTimeoutRef.current) {
@@ -446,13 +450,13 @@ export default function PropertyPostCreator() {
 
     updateTimeoutRef.current = setTimeout(async () => {
       try {
-        await fetch(`/api/message-templates/${selectedTemplate.id}`, {
+        await fetch(`/api/post-builder`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            format,
+            format: template,
           }),
         });
       } catch (error) {
@@ -471,13 +475,14 @@ export default function PropertyPostCreator() {
   };
 
   const insertFieldTag = (fieldId: string, isEmoji = false) => {
-    if (!selectedTemplate || !textareaRef.current) return;
+    if (!template || !textareaRef.current) return;
 
     const textarea = textareaRef.current;
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    const currentFormat = selectedTemplate.format;
+    // const currentFormat = selectedTemplate.format;
 
+    const currentFormat = template;
     const tagToInsert = isEmoji ? `{emoji:${fieldId}}` : `{${fieldId}}`;
     const newFormat =
       currentFormat.slice(0, start) + tagToInsert + currentFormat.slice(end);
@@ -608,7 +613,7 @@ export default function PropertyPostCreator() {
                   <Textarea
                     ref={textareaRef}
                     id="format"
-                    value={selectedTemplate?.format || ""}
+                    value={template || ""}
                     onChange={(e) =>
                       updateTemplateFormatDebounced(e.target.value)
                     }
@@ -659,10 +664,9 @@ export default function PropertyPostCreator() {
                   </div>
                 </div>
 
-                <Button
-                onClick={saveTemplate}
-                  className="w-full"
-                >Save template</Button>
+                <Button onClick={saveTemplate} className="w-full">
+                  Save template
+                </Button>
               </CardContent>
             </Card>
 

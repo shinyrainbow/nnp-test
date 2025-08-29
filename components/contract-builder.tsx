@@ -3,11 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -121,29 +117,30 @@ export function ContractBuilder() {
       setIsGenerating(false);
     }, 2000);
   };
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
-  const { toast } = useToast()
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const { toast } = useToast();
 
   const handleDownloadPDF = async () => {
     try {
-      setIsGeneratingPDF(true)
-      await generateContractPDF(contractData)
+      setIsGeneratingPDF(true);
+      await generateContractPDF(contractData);
       toast({
         title: "success",
         // getTranslation("common.success", language),
         description: "Your rental contract has been downloaded.",
-      })
+      });
     } catch (error) {
-      console.error("Error generating PDF:", error)
+      console.error("Error generating PDF:", error);
       toast({
         title: "PDF Generation Failed",
-        description: "There was an error generating your PDF. Please try again.",
+        description:
+          "There was an error generating your PDF. Please try again.",
         variant: "destructive",
-      })
+      });
     } finally {
-      setIsGeneratingPDF(false)
+      setIsGeneratingPDF(false);
     }
-  }
+  };
   return (
     <div className="space-y-6">
       {/* top */}
@@ -995,28 +992,30 @@ export function ContractBuilder() {
         <PDFPreview contractData={contractData} />
       </div>
 
-      <Button
-  onClick={() => window.open("/api/contract-preview", "_blank")}
->
-  Preview PDF
-</Button>
+      <Button onClick={() => window.open("/api/contract-preview", "_blank")}>
+        Preview PDF
+      </Button>
 
-       {/* PDF Download */}
-       <Button onClick={handleDownloadPDF} className="flex items-center gap-2" disabled={isGeneratingPDF}>
-                {isGeneratingPDF ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    "Generating PDF..."
-                    {/* {language === "th" ? "กำลังสร้าง PDF..." : "Generating PDF..."} */}
-                  </>
-                ) : (
-                  <>
-                    <Download className="h-4 w-4" />
-                    Download PDF
-                    {/* {getTranslation("common.download", language)} */}
-                  </>
-                )}
-              </Button>
+      {/* PDF Download */}
+      <Button
+        onClick={handleDownloadPDF}
+        className="flex items-center gap-2"
+        disabled={isGeneratingPDF}
+      >
+        {isGeneratingPDF ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" />
+            "Generating PDF..."
+            {/* {language === "th" ? "กำลังสร้าง PDF..." : "Generating PDF..."} */}
+          </>
+        ) : (
+          <>
+            <Download className="h-4 w-4" />
+            Download PDF
+            {/* {getTranslation("common.download", language)} */}
+          </>
+        )}
+      </Button>
     </div>
   );
 }
