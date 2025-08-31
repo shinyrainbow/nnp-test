@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 export async function PUT(request: NextRequest) {
     try {
-      const { name, format } = await request.json();
+      const { templateId, template } = await request.json();
       const { userId } = await auth(); // Get authenticated user ID
   
       if (!userId) {
@@ -16,16 +16,16 @@ export async function PUT(request: NextRequest) {
         });
       }
 
-      await prisma.postTemplate.create({
+      await prisma.postTemplate.update({
+        where: {
+          id: templateId,
+        },
         data: {
-          id: randomUUID(),
-          userId,
-          template: format,
+          template,
         },
       });
   
       return NextResponse.json({
-        template: format,
         message: "Template saved successfully",
       });
     } catch (error) {

@@ -131,6 +131,8 @@ export const translations = {
     "post.review": "Review your property post and copy it to your clipboard.",
     "post.copy": "Copy to Clipboard",
     "post.copied": "Copied",
+    "post.saveTemplate": "Save Template",
+    "post.savedTemplate": "Saved Template",
 
     // commission
     "commissionTracker.title": "Commission Tracker",
@@ -375,6 +377,7 @@ export const translations = {
 
     // Loading
     loadingProperties: "Loading properties...",
+    loadingPostTemplate: "Loading post template...",
 
     // Language
     language: "Language",
@@ -435,7 +438,8 @@ export const translations = {
     // features page (home)
     "features.badge": "Features",
     "features.title": "Comprehensive Real Estate Tools",
-    "features.subtitle": "Discover all the powerful features that make Naina Hub the ultimate toolkit for real estate professionals",
+    "features.subtitle":
+      "Discover all the powerful features that make Naina Hub the ultimate toolkit for real estate professionals",
 
     "features.category.property": "Property Management",
     "features.category.contract": "Contract & Documentation",
@@ -443,7 +447,8 @@ export const translations = {
     "features.category.ai": "AI-Powered Tools",
 
     "features.categoryDesc.property": "Essential tools for property management",
-    "features.categoryDesc.contract": "Essential tools for contract & documentation",
+    "features.categoryDesc.contract":
+      "Essential tools for contract & documentation",
     "features.categoryDesc.client": "Essential tools for client management",
     "features.categoryDesc.ai": "Essential tools for AI-powered tools",
 
@@ -466,7 +471,6 @@ export const translations = {
     "features.ai.2": "Market trend analysis",
     "features.ai.3": "Price prediction algorithms",
     "features.ai.4": "Chatbot for client inquiries",
-
 
     // Pricing
     pricingTitle: "Simple, Transparent Pricing",
@@ -626,7 +630,8 @@ export const translations = {
     // contact page
     "contact.badge": "Contact",
     "contact.title": "Get in Touch",
-    "contact.subtitle": "Have questions about Naina Hub? We're here to help you succeed in your real estate business.",
+    "contact.subtitle":
+      "Have questions about Naina Hub? We're here to help you succeed in your real estate business.",
 
     "contact.info": "Contact Information",
     "contact.email": "Email",
@@ -634,7 +639,8 @@ export const translations = {
     "contact.office": "Office",
 
     "contact.formTitle": "Send us a Message",
-    "contact.formDescription": "Fill out the form below and we'll get back to you within 24 hours.",
+    "contact.formDescription":
+      "Fill out the form below and we'll get back to you within 24 hours.",
 
     "contact.name": "Name *",
     "contact.namePlaceholder": "Your full name",
@@ -650,11 +656,14 @@ export const translations = {
     "contact.address2": "Bang Chak Subdistrict, Phra Khanong District",
     "contact.address3": "Bangkok",
 
-
     // contract-builder
-    "contracts.title": "Rental Contracts",
-    "contracts.subtitle": "Manage your rental agreements and tenant information",
-
+    "contracts.title": "Contract Creator",
+    "contracts.title.rent": "Rental Contracts",
+    "contracts.title.buySell": "Buy/Sell Contracts",
+    "contracts.subtitle.rent":
+      "Manage your rental agreements and tenant information",
+    "contracts.subtitle.buySell":
+      "Manage your Buy/Sell agreements and tenant information",
     "contracts.createNew": "Create New Contract",
 
     "contracts.stats.total": "Total Contracts",
@@ -662,8 +671,10 @@ export const translations = {
     "contracts.stats.revenue": "Monthly Revenue",
 
     "contracts.recent.title": "Recent Contracts",
-    "contracts.recent.desc": "A list of your rental contracts and their current status",
-
+    "contracts.recent.rent.desc":
+      "A list of your rental contracts and their current status",
+    "contracts.recent.buySell.desc":
+      "A list of your Buy/Sell contracts and their current status",
     "contracts.status.active": "Active",
     "contracts.status.expired": "Expired",
 
@@ -671,7 +682,8 @@ export const translations = {
 
     // newContract
     "newContract.title": "Contract Builder",
-    "newContract.subtitle": "Fill out tenant, property, and lease details to generate a rental contract.",
+    "newContract.subtitle":
+      "Fill out tenant, property, and lease details to generate a rental contract.",
 
     "newContract.navigation.backToDashboard": "Back to contract list",
 
@@ -682,10 +694,12 @@ export const translations = {
     "newContract.tenantInformation.phone": "Phone Number",
     "newContract.tenantInformation.currentAddress": "Current Address",
     "newContract.tenantInformation.passportPhoto": "Passport Photo",
-    "newContract.tenantInformation.placeholders.fullName": "Enter tenant's full name",
+    "newContract.tenantInformation.placeholders.fullName":
+      "Enter tenant's full name",
     "newContract.tenantInformation.placeholders.email": "Enter tenant's email",
     "newContract.tenantInformation.placeholders.phone": "Enter phone number",
-    "newContract.tenantInformation.placeholders.currentAddress": "Enter tenant's current address",
+    "newContract.tenantInformation.placeholders.currentAddress":
+      "Enter tenant's current address",
 
     "newContract.propertyInformation.title": "Property Information",
     "newContract.propertyInformation.subtitle": "Enter property details",
@@ -696,7 +710,8 @@ export const translations = {
     "newContract.propertyInformation.types.house": "House",
     "newContract.propertyInformation.types.condo": "Condominium",
     "newContract.propertyInformation.types.townhouse": "Townhouse",
-    "newContract.propertyInformation.placeholders.propertyAddress": "Enter full property address",
+    "newContract.propertyInformation.placeholders.propertyAddress":
+      "Enter full property address",
 
     "newContract.leaseTerms.title": "Lease Terms",
     "newContract.leaseTerms.subtitle": "Set the lease duration and dates",
@@ -714,24 +729,29 @@ export const translations = {
     "newContract.financialTerms.monthlyRent": "Monthly Rent",
     "newContract.financialTerms.securityDeposit": "Security Deposit",
     "newContract.financialTerms.placeholders.monthlyRent": "Enter monthly rent",
-    "newContract.financialTerms.placeholders.securityDeposit": "Enter deposit amount",
+    "newContract.financialTerms.placeholders.securityDeposit":
+      "Enter deposit amount",
 
     "newContract.additionalTerms.title": "Additional Terms & Policies",
-    "newContract.additionalTerms.subtitle": "Set specific policies and additional terms",
+    "newContract.additionalTerms.subtitle":
+      "Set specific policies and additional terms",
     "newContract.additionalTerms.petPolicy": "Pet Policy",
     "newContract.additionalTerms.smokingPolicy": "Smoking Policy",
-    "newContract.additionalTerms.additionalTerms": "Additional Terms & Conditions",
-    "newContract.additionalTerms.placeholders.additionalTerms": "Enter any additional terms, conditions, or special agreements...",
+    "newContract.additionalTerms.additionalTerms":
+      "Additional Terms & Conditions",
+    "newContract.additionalTerms.placeholders.additionalTerms":
+      "Enter any additional terms, conditions, or special agreements...",
     "newContract.additionalTerms.petOptions.noPets": "No Pets Allowed",
     "newContract.additionalTerms.petOptions.catsOnly": "Cats Only",
     "newContract.additionalTerms.petOptions.dogsOnly": "Dogs Only",
     "newContract.additionalTerms.petOptions.petsAllowed": "Pets Allowed",
     "newContract.additionalTerms.smokingOptions.noSmoking": "No Smoking",
     "newContract.additionalTerms.smokingOptions.outdoorOnly": "Outdoor Only",
-    "newContract.additionalTerms.smokingOptions.smokingAllowed": "Smoking Allowed",
+    "newContract.additionalTerms.smokingOptions.smokingAllowed":
+      "Smoking Allowed",
 
     "newContract.generateContract": "Generate Contract",
-    "newContract.generatingContract": "Generating Contract..."
+    "newContract.generatingContract": "Generating Contract...",
   },
   th: {
     "home.banner": "Naina Hub เครื่องมือสำหรับ",
@@ -828,7 +848,7 @@ export const translations = {
 
     // post builder
     "post.title": "ตัวสร้างโพสต์ทรัพย์",
-    "post.badge": "เครื่องมืออสังหาริมทรัพย์",
+    "post.badge": "สร้างโพสไว",
     "post.formatEditor": "แก้ไขรูปแบบข้อความ",
     "post.formatEditorDesc":
       "สร้างรูปแบบโพสต์ทรัพย์ของคุณเอง คลิกแท็กฟิลด์ หรือ พิมพ์ข้อความด้านล่างเพื่อนำไปใช้ในเทมเพลตของคุณ",
@@ -843,6 +863,8 @@ export const translations = {
     "post.review": "ตรวจสอบโพสต์ทรัพย์ของคุณและคัดลอกไปยังคลิปบอร์ด",
     "post.copy": "คัดลอก",
     "post.copied": "คัดลอกแล้ว",
+    "post.saveTemplate": "บันทึก",
+    "post.savedTemplate": "บันทึกแล้ว",
 
     // commission
     "commissionTracker.title": "ตัวติดตามค่าคอมมิชชั่น",
@@ -1097,6 +1119,7 @@ export const translations = {
 
     // Loading
     loadingProperties: "กำลังโหลดอสังหาริมทรัพย์...",
+    loadingPostTemplate: "กำลังโหลดรูปแปบบโพสต์...",
 
     // Language
     language: "ภาษา",
@@ -1157,7 +1180,8 @@ export const translations = {
     // Feature page (home)
     "features.badge": "คุณสมบัติ",
     "features.title": "เครื่องมืออสังหาริมทรัพย์แบบครบวงจร",
-    "features.subtitle": "ค้นพบคุณสมบัติอันทรงพลังทั้งหมดที่ทำให้ Naina Hub เป็นเครื่องมือที่สมบูรณ์แบบสำหรับมืออาชีพด้านอสังหาริมทรัพย์",
+    "features.subtitle":
+      "ค้นพบคุณสมบัติอันทรงพลังทั้งหมดที่ทำให้ Naina Hub เป็นเครื่องมือที่สมบูรณ์แบบสำหรับมืออาชีพด้านอสังหาริมทรัพย์",
 
     "features.category.property": "การจัดการทรัพย์สิน",
     "features.category.contract": "สัญญาและเอกสาร",
@@ -1165,7 +1189,8 @@ export const translations = {
     "features.category.ai": "เครื่องมือ AI",
 
     "features.categoryDesc.property": "เครื่องมือสำคัญสำหรับการจัดการทรัพย์สิน",
-    "features.categoryDesc.contract": "เครื่องมือสำคัญสำหรับการทำสัญญาและเอกสาร",
+    "features.categoryDesc.contract":
+      "เครื่องมือสำคัญสำหรับการทำสัญญาและเอกสาร",
     "features.categoryDesc.client": "เครื่องมือสำคัญสำหรับการจัดการลูกค้า",
     "features.categoryDesc.ai": "เครื่องมือสำคัญที่ขับเคลื่อนด้วย AI",
 
@@ -1342,7 +1367,8 @@ export const translations = {
     // contact page
     "contact.badge": "ติดต่อ",
     "contact.title": "ติดต่อเรา",
-    "contact.subtitle": "มีคำถามเกี่ยวกับ Naina Hub ใช่ไหม? เราพร้อมช่วยให้คุณประสบความสำเร็จในธุรกิจอสังหาริมทรัพย์ของคุณ",
+    "contact.subtitle":
+      "มีคำถามเกี่ยวกับ Naina Hub ใช่ไหม? เราพร้อมช่วยให้คุณประสบความสำเร็จในธุรกิจอสังหาริมทรัพย์ของคุณ",
 
     "contact.info": "ข้อมูลการติดต่อ",
     "contact.email": "อีเมล",
@@ -1350,7 +1376,8 @@ export const translations = {
     "contact.office": "สำนักงาน",
 
     "contact.formTitle": "ส่งข้อความถึงเรา",
-    "contact.formDescription": "กรอกแบบฟอร์มด้านล่าง แล้วเราจะติดต่อกลับภายใน 24 ชั่วโมง",
+    "contact.formDescription":
+      "กรอกแบบฟอร์มด้านล่าง แล้วเราจะติดต่อกลับภายใน 24 ชั่วโมง",
 
     "contact.name": "ชื่อ *",
     "contact.namePlaceholder": "ชื่อ-นามสกุลของคุณ",
@@ -1367,8 +1394,11 @@ export const translations = {
     "contact.address3": "กรุงเทพฯ ",
 
     // contract-builder
-    "contracts.title": "สัญญาเช่า",
-    "contracts.subtitle": "จัดการสัญญาเช่าและข้อมูลผู้เช่า",
+    "contracts.title": "เครื่องมือสร้างสัญญา",
+    "contracts.title.rent": "สัญญาเช่า",
+    "contracts.title.buySell": "สัญญาซื้อ-ขาย",
+    "contracts.subtitle.rent": "จัดการสัญญาเช่าและข้อมูลผู้เช่า",
+    "contracts.subtitle.buySell": "จัดการสัญญาซื้อ/ขายและข้อมูลผู้ซื้อขาย",
 
     "contracts.createNew": "สร้างสัญญาใหม่",
 
@@ -1377,8 +1407,9 @@ export const translations = {
     "contracts.stats.revenue": "รายได้ต่อเดือน",
 
     "contracts.recent.title": "สัญญาล่าสุด",
-    "contracts.recent.desc": "รายการสัญญาเช่าของคุณและสถานะปัจจุบัน",
-
+    "contracts.recent.rent.desc": "รายการสัญญาเช่าของคุณและสถานะปัจจุบัน",
+    "contracts.recent.buySell.desc":
+      "รายการสัญญาซื้อ/ขายของคุณและสถานะปัจจุบัน",
     "contracts.status.active": "ใช้งานอยู่",
     "contracts.status.expired": "หมดอายุ",
 
@@ -1386,7 +1417,8 @@ export const translations = {
 
     // newContract
     "newContract.title": "สร้างสัญญาเช่า",
-    "newContract.subtitle": "กรอกรายละเอียดผู้เช่า ทรัพย์สิน และเงื่อนไขการเช่าเพื่อสร้างสัญญาเช่า",
+    "newContract.subtitle":
+      "กรอกรายละเอียดผู้เช่า ทรัพย์สิน และเงื่อนไขการเช่าเพื่อสร้างสัญญาเช่า",
 
     "newContract.navigation.backToDashboard": "กลับไปที่รายการสัญญา",
 
@@ -1397,10 +1429,12 @@ export const translations = {
     "newContract.tenantInformation.phone": "เบอร์โทรศัพท์",
     "newContract.tenantInformation.currentAddress": "ที่อยู่ปัจจุบัน",
     "newContract.tenantInformation.passportPhoto": "รูปถ่ายหนังสือเดินทาง",
-    "newContract.tenantInformation.placeholders.fullName": "กรอกชื่อ-นามสกุลผู้เช่า",
+    "newContract.tenantInformation.placeholders.fullName":
+      "กรอกชื่อ-นามสกุลผู้เช่า",
     "newContract.tenantInformation.placeholders.email": "กรอกอีเมลผู้เช่า",
     "newContract.tenantInformation.placeholders.phone": "กรอกเบอร์โทรศัพท์",
-    "newContract.tenantInformation.placeholders.currentAddress": "กรอกที่อยู่ปัจจุบันของผู้เช่า",
+    "newContract.tenantInformation.placeholders.currentAddress":
+      "กรอกที่อยู่ปัจจุบันของผู้เช่า",
 
     "newContract.propertyInformation.title": "ข้อมูลทรัพย์สิน",
     "newContract.propertyInformation.subtitle": "กรอกรายละเอียดทรัพย์สิน",
@@ -1411,10 +1445,12 @@ export const translations = {
     "newContract.propertyInformation.types.house": "บ้าน",
     "newContract.propertyInformation.types.condo": "คอนโดมิเนียม",
     "newContract.propertyInformation.types.townhouse": "ทาวน์เฮ้าส์",
-    "newContract.propertyInformation.placeholders.propertyAddress": "กรอกที่อยู่ของทรัพย์สิน",
+    "newContract.propertyInformation.placeholders.propertyAddress":
+      "กรอกที่อยู่ของทรัพย์สิน",
 
     "newContract.leaseTerms.title": "เงื่อนไขการเช่า",
-    "newContract.leaseTerms.subtitle": "กำหนดระยะเวลาและวันที่เริ่ม-สิ้นสุดสัญญา",
+    "newContract.leaseTerms.subtitle":
+      "กำหนดระยะเวลาและวันที่เริ่ม-สิ้นสุดสัญญา",
     "newContract.leaseTerms.startDate": "วันที่เริ่มต้น",
     "newContract.leaseTerms.endDate": "วันที่สิ้นสุด",
     "newContract.leaseTerms.leaseTerm": "ระยะเวลาเช่า",
@@ -1428,25 +1464,33 @@ export const translations = {
     "newContract.financialTerms.subtitle": "กำหนดค่าเช่าและเงินมัดจำ",
     "newContract.financialTerms.monthlyRent": "ค่าเช่ารายเดือน",
     "newContract.financialTerms.securityDeposit": "เงินมัดจำ",
-    "newContract.financialTerms.placeholders.monthlyRent": "กรอกจำนวนค่าเช่ารายเดือน",
-    "newContract.financialTerms.placeholders.securityDeposit": "กรอกจำนวนเงินมัดจำ",
+    "newContract.financialTerms.placeholders.monthlyRent":
+      "กรอกจำนวนค่าเช่ารายเดือน",
+    "newContract.financialTerms.placeholders.securityDeposit":
+      "กรอกจำนวนเงินมัดจำ",
 
     "newContract.additionalTerms.title": "เงื่อนไขและนโยบายเพิ่มเติม",
-    "newContract.additionalTerms.subtitle": "กำหนดนโยบายเฉพาะและเงื่อนไขเพิ่มเติม",
+    "newContract.additionalTerms.subtitle":
+      "กำหนดนโยบายเฉพาะและเงื่อนไขเพิ่มเติม",
     "newContract.additionalTerms.petPolicy": "นโยบายสัตว์เลี้ยง",
     "newContract.additionalTerms.smokingPolicy": "นโยบายการสูบบุหรี่",
-    "newContract.additionalTerms.additionalTerms": "เงื่อนไขและข้อกำหนดเพิ่มเติม",
-    "newContract.additionalTerms.placeholders.additionalTerms": "กรอกเงื่อนไข ข้อกำหนด หรือข้อตกลงพิเศษ...",
+    "newContract.additionalTerms.additionalTerms":
+      "เงื่อนไขและข้อกำหนดเพิ่มเติม",
+    "newContract.additionalTerms.placeholders.additionalTerms":
+      "กรอกเงื่อนไข ข้อกำหนด หรือข้อตกลงพิเศษ...",
     "newContract.additionalTerms.petOptions.noPets": "ห้ามเลี้ยงสัตว์",
     "newContract.additionalTerms.petOptions.catsOnly": "เลี้ยงแมวเท่านั้น",
     "newContract.additionalTerms.petOptions.dogsOnly": "เลี้ยงสุนัขเท่านั้น",
-    "newContract.additionalTerms.petOptions.petsAllowed": "อนุญาตให้เลี้ยงสัตว์",
+    "newContract.additionalTerms.petOptions.petsAllowed":
+      "อนุญาตให้เลี้ยงสัตว์",
     "newContract.additionalTerms.smokingOptions.noSmoking": "ห้ามสูบบุหรี่",
-    "newContract.additionalTerms.smokingOptions.outdoorOnly": "สูบบุหรี่ได้เฉพาะด้านนอก",
-    "newContract.additionalTerms.smokingOptions.smokingAllowed": "อนุญาตให้สูบบุหรี่",
+    "newContract.additionalTerms.smokingOptions.outdoorOnly":
+      "สูบบุหรี่ได้เฉพาะด้านนอก",
+    "newContract.additionalTerms.smokingOptions.smokingAllowed":
+      "อนุญาตให้สูบบุหรี่",
 
     "newContract.generateContract": "สร้างสัญญา",
-    "newContract.generatingContract": "กำลังสร้างสัญญา..."
+    "newContract.generatingContract": "กำลังสร้างสัญญา...",
   },
 } as const;
 

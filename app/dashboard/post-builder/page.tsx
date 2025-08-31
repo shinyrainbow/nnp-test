@@ -29,6 +29,7 @@ import {
   Save,
   Edit,
   Check,
+  Loader2,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { t } from "i18next";
@@ -161,17 +162,25 @@ export default function PropertyPostCreator() {
   const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { t } = useLanguage();
   const [copiedStates, setCopiedStates] = useState(false);
+  const [templateId, setTemplateId] = useState();
+  const [saved, setSaved] = useState(false);
   useEffect(() => {
-    loadTemplates();
+    loadTemplate();
   }, []);
   const [template, setTemplate] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const loadTemplates = async () => {
+  const loadTemplate = async () => {
     try {
+      setLoading(true);
+      setError(null);
+
       const response = await fetch("/api/post-builder");
       const data = await response.json();
 
       if (response.ok) {
+        setTemplateId(data.templateId);
         setTemplate(data.template);
         // if (data.templates.length > 0 && !selectedTemplate) {
         //   setSelectedTemplate(data.templates[0]);
@@ -189,6 +198,10 @@ export default function PropertyPostCreator() {
         description: "Please check your connection and try again.",
         variant: "destructive",
       });
+
+      setError(error.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -211,10 +224,10 @@ export default function PropertyPostCreator() {
 
   const copyToClipboard = async () => {
     const post = generatePost();
-    // console.log(post, 666666);
+
     try {
       await navigator.clipboard.writeText(post);
-      console.log("helloooooo");
+      // console.log("helloooooo");
       setCopiedStates(true);
 
       // Reset the copied state after 2 seconds
@@ -250,24 +263,23 @@ export default function PropertyPostCreator() {
 
   const saveTemplate = async () => {
     try {
-      const response = await fetch("/api/post-builder", {
+      setSaved(true);
+      const response = await fetch("/api/save-post-template", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: "Main template",
-          format: template,
+          templateId,
+          template,
         }),
       });
 
       const data = await response.json();
-
+      setTimeout(() => {
+        setSaved(false);
+      }, 1000);
       if (response.ok) {
-        // setTemplates([...templates, data.template]);
-        // setSelectedTemplate(data.template);
-        // setNewTemplateName("");
-
         toast({
           title: "Template saved!",
           description: `Template "${data.template.name}" has been saved successfully.`,
@@ -288,160 +300,8 @@ export default function PropertyPostCreator() {
     }
   };
 
-  // const saveNewTemplate = async () => {
-  //   if (!newTemplateName.trim() || !selectedTemplate?.format.trim()) {
-  //     toast({
-  //       title: "Missing information",
-  //       description: "Please enter a template name and format.",
-  //       variant: "destructive",
-  //     });
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await fetch("/api/message-templates", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         name: newTemplateName.trim(),
-  //         format: selectedTemplate.format,
-  //       }),
-  //     });
-
-  //     const data = await response.json();
-
-  //     if (response.ok) {
-  //       setTemplates([...templates, data.template]);
-  //       setSelectedTemplate(data.template);
-  //       setNewTemplateName("");
-
-  //       toast({
-  //         title: "Template saved!",
-  //         description: `Template "${data.template.name}" has been saved successfully.`,
-  //       });
-  //     } else {
-  //       toast({
-  //         title: "Failed to save template",
-  //         description: data.error || "Please try again.",
-  //         variant: "destructive",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     toast({
-  //       title: "Failed to save template",
-  //       description: "Please check your connection and try again.",
-  //       variant: "destructive",
-  //     });
-  //   }
-  // };
-
-  // const updateTemplateName = async (templateId: string, newName: string) => {
-  //   try {
-  //     const response = await fetch(`/api/message-templates/${templateId}`, {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         name: newName,
-  //       }),
-  //     });
-
-  //     const data = await response.json();
-
-  //     if (response.ok) {
-  //       const updatedTemplates = templates.map((t) =>
-  //         t.id === templateId ? data.template : t
-  //       );
-  //       setTemplates(updatedTemplates);
-
-  //       if (selectedTemplate?.id === templateId) {
-  //         setSelectedTemplate(data.template);
-  //       }
-
-  //       setIsEditingName(false);
-  //       toast({
-  //         title: "Template renamed!",
-  //         description: "Template name has been updated successfully.",
-  //       });
-  //     } else {
-  //       toast({
-  //         title: "Failed to update template",
-  //         description: data.error || "Please try again.",
-  //         variant: "destructive",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     toast({
-  //       title: "Failed to update template",
-  //       description: "Please check your connection and try again.",
-  //       variant: "destructive",
-  //     });
-  //   }
-  // };
-
-  // const deleteTemplate = async (templateId: string) => {
-  //   if (templates.length === 1) {
-  //     toast({
-  //       title: "Cannot delete",
-  //       description: "You must have at least one template.",
-  //       variant: "destructive",
-  //     });
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await fetch(`/api/message-templates/${templateId}`, {
-  //       method: "DELETE",
-  //     });
-
-  //     const data = await response.json();
-
-  //     if (response.ok) {
-  //       const updatedTemplates = templates.filter((t) => t.id !== templateId);
-  //       setTemplates(updatedTemplates);
-
-  //       if (selectedTemplate?.id === templateId) {
-  //         setSelectedTemplate(updatedTemplates[0]);
-  //       }
-
-  //       toast({
-  //         title: "Template deleted!",
-  //         description: "Template has been removed successfully.",
-  //       });
-  //     } else {
-  //       toast({
-  //         title: "Failed to delete template",
-  //         description: data.error || "Please try again.",
-  //         variant: "destructive",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     toast({
-  //       title: "Failed to delete template",
-  //       description: "Please check your connection and try again.",
-  //       variant: "destructive",
-  //     });
-  //   }
-  // };
-
   const updateTemplateFormatDebounced = async (format: string) => {
-    // if (!template) return;
-
-    console.log('jjjjjjjjj')
-    // Update local state immediately for better UX
-    // const updatedTemplate = {
-    //   ...template,
-    //   format,
-    // };
     setTemplate(format);
-    // setSelectedTemplate(updatedTemplate);
-
-    // setTemplates(
-    //   templates.map((t) => (t.id === selectedTemplate.id ? updatedTemplate : t))
-    // );
 
     // Debounce API call to avoid too many requests
     if (updateTimeoutRef.current) {
@@ -510,283 +370,306 @@ export default function PropertyPostCreator() {
                 {t("post.title")}
               </h1>
             </div>
-            <Badge variant="secondary">{t("post.badge")}</Badge>
+            {/* <Badge variant="secondary">{t("post.badge")}</Badge> */}
           </div>
         </div>
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-6">
-            {/* <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
-                  My Templates
-                </CardTitle>
-                <CardDescription>Manage your saved message templates.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  {templates.map((template) => (
-                    <div key={template.id} className="flex items-center gap-2 p-3 border rounded-lg">
-                      <div className="flex-1">
-                        {isEditingName && selectedTemplate?.id === template.id ? (
-                          <Input
-                            value={template.name}
-                            onChange={(e) => {
-                              const updatedTemplates = templates.map((t) =>
-                                t.id === template.id ? { ...t, name: e.target.value } : t,
-                              )
-                              setTemplates(updatedTemplates)
-                              if (selectedTemplate?.id === template.id) {
-                                setSelectedTemplate({ ...selectedTemplate, name: e.target.value })
-                              }
-                            }}
-                            onBlur={() => setIsEditingName(false)}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                setIsEditingName(false)
-                              }
-                            }}
-                            autoFocus
-                          />
-                        ) : (
-                          <span
-                            className={`font-medium cursor-pointer ${
-                              selectedTemplate?.id === template.id ? "text-primary" : ""
-                            }`}
-                            onClick={() => setSelectedTemplate(template)}
-                          >
-                            {template.name}
-                          </span>
-                        )}
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => {
-                          setSelectedTemplate(template)
-                          setIsEditingName(true)
-                        }}
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => deleteTemplate(template.id)}
-                        className="text-destructive hover:text-destructive"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="New template name..."
-                    value={newTemplateName}
-                    onChange={(e) => setNewTemplateName(e.target.value)}
-                  />
-                  <Button onClick={saveNewTemplate} variant="outline">
-                    <Save className="h-4 w-4 mr-2" />
-                    Save
-                  </Button>
-                </div>
-              </CardContent>
-            </Card> */}
-
-            {/* Edit part */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
-                  {t("post.formatEditor")}
-                </CardTitle>
-                <CardDescription>{t("post.formatEditorDesc")}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="format">{t("post.postFormatTemplate")}</Label>
-                  <Textarea
-                    ref={textareaRef}
-                    id="format"
-                    value={template || ""}
-                    onChange={(e) =>
-                      updateTemplateFormatDebounced(e.target.value)
-                    }
-                    placeholder="Enter your custom format here..."
-                    className="min-h-[200px] font-mono text-sm"
-                  />
-                </div>
-
-                <div className="space-y-3">
-                  <div>
-                    <p className="font-medium mb-2 text-sm">
-                      {t("post.fieldTags")}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {defaultFields.map((field) => (
-                        <Button
-                          key={field.id}
-                          variant="outline"
-                          size="sm"
-                          onClick={() => insertFieldTag(field.id)}
-                          className="text-xs h-7 px-2 hover:bg-primary hover:text-primary-foreground"
-                        >
-                          {/* {field.emoji} */}
-                          {`{${field.id}}`}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="font-medium mb-2 text-sm">
-                      {t("post.emojiTags")}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {defaultFields
-                        .filter((field) => field.emoji)
-                        .map((field) => (
-                          <Button
-                            key={`emoji-${field.id}`}
-                            variant="outline"
-                            size="sm"
-                            onClick={() => insertFieldTag(field.id, true)}
-                            className="text-xs h-7 px-2 hover:bg-secondary hover:text-secondary-foreground"
-                          >
-                            {field.emoji}
-                          </Button>
-                        ))}
-                    </div>
-                  </div>
-                </div>
-
-                <Button onClick={saveTemplate} className="w-full">
-                  Save template
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Property Data */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Home className="h-5 w-5" />
-                  {t("post.propertyData")}
-                </CardTitle>
-                <CardDescription>
-                  <div className="flex items-center justify-between">
-                    <span>{t("post.propertyDataDesc")}</span>
-                    <Button onClick={loadMockData} variant="outline" size="sm">
-                      {t("post.loadData")}
-                    </Button>
-                  </div>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 gap-4 max-h-[400px] overflow-y-auto">
-                  {defaultFields.map((field) => (
-                    <div key={field.id}>
-                      <Label
-                        htmlFor={field.id}
-                        className="flex items-center gap-2"
-                      >
-                        {field.emoji} {field.label}
-                        {field.required && (
-                          <span className="text-destructive">*</span>
-                        )}
-                      </Label>
-                      {field.type === "textarea" ? (
-                        <Textarea
-                          id={field.id}
-                          value={propertyData[field.id] || ""}
-                          onChange={(e) =>
-                            setPropertyData({
-                              ...propertyData,
-                              [field.id]: e.target.value,
-                            })
-                          }
-                          placeholder={field.placeholder}
-                        />
-                      ) : field.type === "select" ? (
-                        <Select
-                          value={propertyData[field.id] || ""}
-                          onValueChange={(value) =>
-                            setPropertyData({
-                              ...propertyData,
-                              [field.id]: value,
-                            })
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue
-                              placeholder={`Select ${field.label}`}
-                            />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {field.options?.map((option) => (
-                              <SelectItem key={option} value={option}>
-                                {option}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      ) : (
+        {loading ? (
+          <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="text-center">
+              <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
+              <p className="text-gray-600">{t("loadingPostTemplate")}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="space-y-6">
+              {/* <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                My Templates
+              </CardTitle>
+              <CardDescription>Manage your saved message templates.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                {templates.map((template) => (
+                  <div key={template.id} className="flex items-center gap-2 p-3 border rounded-lg">
+                    <div className="flex-1">
+                      {isEditingName && selectedTemplate?.id === template.id ? (
                         <Input
-                          id={field.id}
-                          type={field.type}
-                          value={propertyData[field.id] || ""}
-                          onChange={(e) =>
-                            setPropertyData({
-                              ...propertyData,
-                              [field.id]: e.target.value,
-                            })
-                          }
-                          placeholder={field.placeholder}
+                          value={template.name}
+                          onChange={(e) => {
+                            const updatedTemplates = templates.map((t) =>
+                              t.id === template.id ? { ...t, name: e.target.value } : t,
+                            )
+                            setTemplates(updatedTemplates)
+                            if (selectedTemplate?.id === template.id) {
+                              setSelectedTemplate({ ...selectedTemplate, name: e.target.value })
+                            }
+                          }}
+                          onBlur={() => setIsEditingName(false)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              setIsEditingName(false)
+                            }
+                          }}
+                          autoFocus
                         />
+                      ) : (
+                        <span
+                          className={`font-medium cursor-pointer ${
+                            selectedTemplate?.id === template.id ? "text-primary" : ""
+                          }`}
+                          onClick={() => setSelectedTemplate(template)}
+                        >
+                          {template.name}
+                        </span>
                       )}
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setSelectedTemplate(template)
+                        setIsEditingName(true)
+                      }}
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => deleteTemplate(template.id)}
+                      className="text-destructive hover:text-destructive"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
 
-          <div className="space-y-6">
-            <Card className="sticky top-4">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Eye className="h-5 w-5" />
-                  {t("post.generatePreview")}
-                </CardTitle>
-                <CardDescription>{t("post.review")}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-muted p-4 rounded-lg min-h-[300px]">
-                  <pre className="whitespace-pre-wrap text-sm font-mono">
-                    {generatePost() ||
-                      "Create your format template to see the preview..."}
-                  </pre>
-                </div>
-                <Button
-                  onClick={copyToClipboard}
-                  className="w-full"
-                  disabled={!generatePost()}
-                >
-                  {copiedStates ? (
-                    <Check className="w-4 h-4 mr-1" />
-                  ) : (
-                    <Copy className="h-4 w-4 mr-2" />
-                  )}
-                  {copiedStates ? t("post.copied") : t("post.copy")}
+              <div className="flex gap-2">
+                <Input
+                  placeholder="New template name..."
+                  value={newTemplateName}
+                  onChange={(e) => setNewTemplateName(e.target.value)}
+                />
+                <Button onClick={saveNewTemplate} variant="outline">
+                  <Save className="h-4 w-4 mr-2" />
+                  Save
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </CardContent>
+          </Card> */}
+
+              {/* Edit part */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileText className="h-5 w-5" />
+                    {t("post.formatEditor")}
+                  </CardTitle>
+                  <CardDescription>
+                    {t("post.formatEditorDesc")}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="format">
+                      {t("post.postFormatTemplate")}
+                    </Label>
+                    <Textarea
+                      ref={textareaRef}
+                      id="format"
+                      value={template || ""}
+                      onChange={(e) =>
+                        updateTemplateFormatDebounced(e.target.value)
+                      }
+                      placeholder="Enter your custom format here..."
+                      className="min-h-[200px] font-mono text-sm"
+                    />
+                  </div>
+
+                  <div className="space-y-3">
+                    <div>
+                      <p className="font-medium mb-2 text-sm">
+                        {t("post.fieldTags")}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {defaultFields.map((field) => (
+                          <Button
+                            key={field.id}
+                            variant="outline"
+                            size="sm"
+                            onClick={() => insertFieldTag(field.id)}
+                            className="text-xs h-7 px-2 hover:bg-primary hover:text-primary-foreground"
+                          >
+                            {`{${field.id}}`}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-medium mb-2 text-sm">
+                        {t("post.emojiTags")}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {defaultFields
+                          .filter((field) => field.emoji)
+                          .map((field) => (
+                            <Button
+                              key={`emoji-${field.id}`}
+                              variant="outline"
+                              size="sm"
+                              onClick={() => insertFieldTag(field.id, true)}
+                              className="text-xs h-7 px-2 hover:bg-secondary hover:text-secondary-foreground"
+                            >
+                              {field.emoji}
+                            </Button>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <Button onClick={saveTemplate} className="w-full">
+                    {saved ? (
+                      <>
+                        <Check className="w-4 h-4 mr-1" />{" "}
+                        {t("post.savedTemplate")}
+                      </>
+                    ) : (
+                      t("post.saveTemplate")
+                    )}
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Property Data */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Home className="h-5 w-5" />
+                    {t("post.propertyData")}
+                  </CardTitle>
+                  <CardDescription>
+                    <div className="flex items-center justify-between">
+                      <span>{t("post.propertyDataDesc")}</span>
+                      <Button
+                        onClick={loadMockData}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {t("post.loadData")}
+                      </Button>
+                    </div>
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 gap-4 max-h-[400px] overflow-y-auto">
+                    {defaultFields.map((field) => (
+                      <div key={field.id}>
+                        <Label
+                          htmlFor={field.id}
+                          className="flex items-center gap-2"
+                        >
+                          {field.emoji} {field.label}
+                          {field.required && (
+                            <span className="text-destructive">*</span>
+                          )}
+                        </Label>
+                        {field.type === "textarea" ? (
+                          <Textarea
+                            id={field.id}
+                            value={propertyData[field.id] || ""}
+                            onChange={(e) =>
+                              setPropertyData({
+                                ...propertyData,
+                                [field.id]: e.target.value,
+                              })
+                            }
+                            placeholder={field.placeholder}
+                          />
+                        ) : field.type === "select" ? (
+                          <Select
+                            value={propertyData[field.id] || ""}
+                            onValueChange={(value) =>
+                              setPropertyData({
+                                ...propertyData,
+                                [field.id]: value,
+                              })
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue
+                                placeholder={`Select ${field.label}`}
+                              />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {field.options?.map((option) => (
+                                <SelectItem key={option} value={option}>
+                                  {option}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        ) : (
+                          <Input
+                            id={field.id}
+                            type={field.type}
+                            value={propertyData[field.id] || ""}
+                            onChange={(e) =>
+                              setPropertyData({
+                                ...propertyData,
+                                [field.id]: e.target.value,
+                              })
+                            }
+                            placeholder={field.placeholder}
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="space-y-6">
+              <Card className="sticky top-4">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Eye className="h-5 w-5" />
+                    {t("post.generatePreview")}
+                  </CardTitle>
+                  <CardDescription>{t("post.review")}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="bg-muted p-4 rounded-lg min-h-[300px]">
+                    <pre className="whitespace-pre-wrap text-sm font-mono">
+                      {generatePost() ||
+                        "Create your format template to see the preview..."}
+                    </pre>
+                  </div>
+                  <Button
+                    onClick={copyToClipboard}
+                    className="w-full"
+                    disabled={!generatePost()}
+                  >
+                    {copiedStates ? (
+                      <Check className="w-4 h-4 mr-1" />
+                    ) : (
+                      <Copy className="h-4 w-4 mr-2" />
+                    )}
+                    {copiedStates ? t("post.copied") : t("post.copy")}
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

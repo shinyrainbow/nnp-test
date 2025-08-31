@@ -36,23 +36,30 @@ export async function GET(request: NextRequest) {
         status: 401,
       });
     }
+    const userDb = await prisma.user.findFirst({
+      where: {
+        clerkId: userId
+      }
+    })
 
     const postTemplate = await prisma.postTemplate.findFirst({
       where: {
         // id: randomUUID(),
-        userId,
+        userId: userDb?.id,
         // template: format
       },
     });
 
-    let format = "";
-    if (!postTemplate) {
-      format = defaultFormat;
-    } else {
-      format = postTemplate.template;
-    }
+    // let format = "";
+    // if (!postTemplate) {
+    //   format = defaultFormat;
+    // } else {
+    //   format = postTemplate.template;
+    // }
+    console.log(postTemplate, 88888)
     return NextResponse.json({
-      template: format,
+      templateId: postTemplate?.id,
+      template: postTemplate?.template,
       message: "Get Template successfully",
     });
   } catch (err) {}

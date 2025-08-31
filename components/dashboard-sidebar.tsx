@@ -26,9 +26,9 @@ const navigation = [
   { name: 'Calendar', href: '/dashboard/calendar', icon: Calendar, language: 'menu.calendar' },
  
   // { name: 'AI Assistant', href: '/dashboard/ai-assistant', icon: MessageSquare , language: 'aiAssistant'},
-  // { name: 'Market Analysis', href: '/dashboard/market', icon: TrendingUp, language: 'marketInsights' },
   // { name: 'Commission Track', href: '/dashboard/commission', icon: DollarSign, language: 'commissionTracker' },
   // { name: 'Price Calculator', href: '/dashboard/calculator', icon: Calculator, language: 'propertyListings' },
+  // { name: 'Market Analysis', href: '/dashboard/market', icon: TrendingUp, language: 'marketInsights' },
   // { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3, language: 'analytics' },
   // { name: 'Settings', href: '/dashboard/settings', icon: Settings , language: 'analytics'},
 ]

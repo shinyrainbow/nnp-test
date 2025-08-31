@@ -31,7 +31,6 @@ import { useLanguage } from "@/contexts/language-context";
 import ExpandableCard from "./expandableCard";
 import { useToast } from "@/hooks/use-toast";
 import { generateContractPDF } from "@/lib/pdf-generator";
-// import { useTranslations, useLocale } from "next-intl"
 
 interface ContractData {
   // Tenant Information
@@ -60,7 +59,7 @@ interface ContractData {
   additionalTerms: string;
 }
 
-export function ContractBuilder() {
+export function RentalContractBuilder() {
   // const t = useTranslations("contractBuilder")
   // const locale = useLocale()
   const { t } = useLanguage();
@@ -126,7 +125,6 @@ export function ContractBuilder() {
       await generateContractPDF(contractData);
       toast({
         title: "success",
-        // getTranslation("common.success", language),
         description: "Your rental contract has been downloaded.",
       });
     } catch (error) {

@@ -1,11 +1,11 @@
 "use client";
-import { ContractBuilder } from "@/components/contract-builder";
+import { BuySellContractBuilder } from "@/components/buySell-contract-builder";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/language-context";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
-export default function NewContractPage() {
+export default function NewBuySellContractPage() {
   const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-gray-50">
@@ -26,7 +26,7 @@ export default function NewContractPage() {
             Fill in the details below to generate a rental agreement
           </p>
         </div>
-        <ContractBuilder />
+        <BuySellContractBuilder />
       </div>
     </div>
   );
