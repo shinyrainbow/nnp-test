@@ -663,8 +663,15 @@ export const translations = {
     "contracts.subtitle.rent":
       "Manage your rental agreements and tenant information",
     "contracts.subtitle.buySell":
-      "Manage your Buy/Sell agreements and tenant information",
-    "contracts.createNew": "Create New Contract",
+      "Manage your purchase and sell agreements",
+'contract.languageTH':"Thai version",
+ 'contract.languageEN':"English version",
+
+
+    "contracts.createNew.rental": "Create New Rental Contract",
+   "contracts.createNew.rentalDesc":  "Fill in the details below to generate a rental agreement",
+    "contracts.createNew.buySell": "Create New Purchase and Sell Contract",
+    "contracts.createNew.buySellDesc": "Fill in the details below to generate a purchase and sell agreement",
 
     "contracts.stats.total": "Total Contracts",
     "contracts.stats.active": "Active Contracts",
@@ -1396,11 +1403,16 @@ export const translations = {
     // contract-builder
     "contracts.title": "เครื่องมือสร้างสัญญา",
     "contracts.title.rent": "สัญญาเช่า",
-    "contracts.title.buySell": "สัญญาซื้อ-ขาย",
+    "contracts.title.buySell": "สัญญาจะซื้อจะขาย",
     "contracts.subtitle.rent": "จัดการสัญญาเช่าและข้อมูลผู้เช่า",
     "contracts.subtitle.buySell": "จัดการสัญญาซื้อ/ขายและข้อมูลผู้ซื้อขาย",
+'contract.languageTH':"ภาษาไทย",
+ 'contract.languageEN':"ภาษาอังกฤษ",
 
-    "contracts.createNew": "สร้างสัญญาใหม่",
+    "contracts.createNew.rental": "สร้างสัญญาเช่าใหม่",
+    "contracts.createNew.rentalDesc": "พิมพ์รายละเอียดในช่องว่างเพื่อสร้างสัญญาเช่าใหม่",
+    "contracts.createNew.buySell": "สร้างสัญญาจะซื้อจะขายใหม่",
+    "contracts.createNew.buySellDesc":"พิมพ์รายละเอียดในช่องว่างเพื่อสร้างสัญญาจะซื้อจะขายใหม่",
 
     "contracts.stats.total": "จำนวนสัญญาทั้งหมด",
     "contracts.stats.active": "สัญญาที่ใช้งานอยู่",
@@ -1416,6 +1428,10 @@ export const translations = {
     "contracts.download": "ดาวน์โหลด",
 
     // newContract
+    // contract thai version
+
+    // contract english version
+
     "newContract.title": "สร้างสัญญาเช่า",
     "newContract.subtitle":
       "กรอกรายละเอียดผู้เช่า ทรัพย์สิน และเงื่อนไขการเช่าเพื่อสร้างสัญญาเช่า",

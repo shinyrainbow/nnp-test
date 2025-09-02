@@ -3,7 +3,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { randomUUID } from "crypto";
 
 const defaultTemplate = 
-`{emoji:projectName} {projectName} - Room {roomNumber}
+`{emoji:projectNameEn} {projectNameEn} - Room {roomNumber}
 
 {emoji:location} {location}
 {emoji:roomType} {roomType}

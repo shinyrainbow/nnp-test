@@ -12,7 +12,7 @@ const templates: PropertyTemplate[] = [
   {
     id: "1",
     name: "Standard Property Post",
-    format: `{emoji:projectName} {projectName} - Room {roomNumber}
+    format: `{emoji:projectNameEn} {projectName} - Room {roomNumber}
 
 {emoji:location} {location}
 {emoji:roomType} {roomType}

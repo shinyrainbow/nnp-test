@@ -12,7 +12,7 @@ export default function ExpandableCard({ title, subtitle, icon: Icon, children }
 
   return (
     <Card className="lg:col-span-2">
-      <CardHeader
+      {/* <CardHeader
         className="flex flex-row items-center justify-between cursor-pointer"
         onClick={() => setOpen(!open)}
       >
@@ -28,7 +28,7 @@ export default function ExpandableCard({ title, subtitle, icon: Icon, children }
         ) : (
           <ChevronRight className="w-5 h-5 text-gray-500" />
         )}
-      </CardHeader>
+      </CardHeader> */}
       {open && <CardContent className="space-y-4">{children}</CardContent>}
     </Card>
   )

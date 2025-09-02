@@ -19,20 +19,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 import {
   Copy,
-  Trash2,
   Home,
   Eye,
   FileText,
-  Save,
-  Edit,
   Check,
   Loader2,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { t } from "i18next";
 import { useLanguage } from "@/contexts/language-context";
 
 interface PropertyTemplate {
@@ -41,7 +36,7 @@ interface PropertyTemplate {
   format: string;
 }
 
-interface TemplateField {
+export interface TemplateField {
   id: string;
   label: string;
   type: "text" | "number" | "select" | "multiselect" | "textarea";
@@ -51,9 +46,9 @@ interface TemplateField {
   required: boolean;
 }
 
-const defaultFields: TemplateField[] = [
+export const defaultFields: TemplateField[] = [
   {
-    id: "projectName",
+    id: "projectNameEn",
     label: "Project Name",
     type: "text",
     emoji: "🏠",
@@ -134,7 +129,7 @@ const defaultFields: TemplateField[] = [
 ];
 
 const mockPropertyData = {
-  projectName: "Luxury Condo Central",
+  projectNameEn: "Luxury Condo Central",
   roomNumber: "A-1205",
   location:
     "Sukhumvit Road, Bangkok\nNear BTS Asok Station\nClose to Terminal 21 Shopping Mall",
@@ -207,8 +202,9 @@ export default function PropertyPostCreator() {
 
   const generatePost = () => {
     if (!template) return "";
-
+console.log(propertyData, 22333344)
     let post = template;
+    console.log(post, 111111)
     // selectedTemplate.format;
 
     defaultFields.forEach((field) => {
@@ -218,7 +214,7 @@ export default function PropertyPostCreator() {
       post = post.replace(new RegExp(`{${field.id}}`, "g"), value);
       post = post.replace(new RegExp(`{emoji:${field.id}}`, "g"), emoji);
     });
-
+console.log(post, 2222)
     return post;
   };
 

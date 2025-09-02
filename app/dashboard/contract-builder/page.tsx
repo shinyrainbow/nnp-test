@@ -16,12 +16,7 @@ import { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  TrendingUp,
-  TrendingDown,
   Home,
-  DollarSign,
-  BarChart3,
-  AlertTriangle,
 } from "lucide-react";
 // Mock data for demonstration
 const contracts = [
@@ -95,7 +90,7 @@ export default function Contracts() {
                   <Button asChild size="lg" className="gap-2">
                     <Link href="/dashboard/contract-builder/new-rental-contract">
                       <Plus className="w-5 h-5" />
-                      {t("contracts.createNew")}
+                      {t("contracts.createNew.rental")}
                     </Link>
                   </Button>
                 </div>
@@ -237,7 +232,7 @@ export default function Contracts() {
                   <Button asChild size="lg" className="gap-2">
                     <Link href="/dashboard/contract-builder/new-buySell-contract">
                       <Plus className="w-5 h-5" />
-                      {t("contracts.createNew")}
+                      {t("contracts.createNew.buySell")}
                     </Link>
                   </Button>
                 </div>

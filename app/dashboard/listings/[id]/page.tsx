@@ -69,7 +69,7 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
   const [uploadProgress, setUploadProgress] = useState(0)
   const [newAmenity, setNewAmenity] = useState("")
   const { id } = React.use(params);
-// console.log(property, 6666)
+
   useEffect(() => {
     fetchProperty()
   }, [id])

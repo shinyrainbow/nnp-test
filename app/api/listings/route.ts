@@ -58,7 +58,6 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    console.log("WHAT>>>>>>", projects);
     const projectCodes = projects.map((p) => p.projectCode);
 
     const roomTypeFilter: any = {};

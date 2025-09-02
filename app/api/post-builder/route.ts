@@ -11,7 +11,7 @@ interface PropertyTemplate {
 }
 const prisma = new PrismaClient();
 
-const defaultFormat = `{emoji:projectName} {projectName} - Room {roomNumber}
+const defaultFormat = `{emoji:projectNameEn} {projectName} - Room {roomNumber}
 
 {emoji:location} {location}
 {emoji:roomType} {roomType}
@@ -36,27 +36,19 @@ export async function GET(request: NextRequest) {
         status: 401,
       });
     }
-    const userDb = await prisma.user.findFirst({
+    const neonUserDb = await prisma.user.findFirst({
       where: {
         clerkId: userId
       }
     })
 
+    // Neon userId
     const postTemplate = await prisma.postTemplate.findFirst({
       where: {
-        // id: randomUUID(),
-        userId: userDb?.id,
-        // template: format
+        userId: neonUserDb?.id,
       },
     });
 
-    // let format = "";
-    // if (!postTemplate) {
-    //   format = defaultFormat;
-    // } else {
-    //   format = postTemplate.template;
-    // }
-    console.log(postTemplate, 88888)
     return NextResponse.json({
       templateId: postTemplate?.id,
       template: postTemplate?.template,
@@ -76,27 +68,6 @@ export async function PUT(request: NextRequest) {
         status: 401,
       });
     }
-
-    // if (!name || !format) {
-    //   return NextResponse.json(
-    //     { error: "Name and format are required" },
-    //     { status: 400 }
-    //   );
-    // }
-
-    // const newTemplate: PropertyTemplate = {
-    //   id: Date.now().toString(),
-    //   name: name.trim(),
-    //   format: format.trim(),
-    // };
-
-    // await prisma.postTemplate.create({
-    //   data: {
-    //     id: randomUUID(),
-    //     userId,
-    //     template: format,
-    //   },
-    // });
 
     return NextResponse.json({
       template: format,

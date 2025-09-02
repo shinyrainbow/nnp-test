@@ -20,10 +20,10 @@ export default function NewBuySellContractPage() {
         </div>
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
-            Create New Rental Contract
+            {t("contracts.createNew.buySell")}
           </h1>
           <p className="text-gray-600 mt-2">
-            Fill in the details below to generate a rental agreement
+          {t("contracts.createNew.buySellDesc")}
           </p>
         </div>
         <BuySellContractBuilder />

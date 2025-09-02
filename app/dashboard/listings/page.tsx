@@ -7,16 +7,13 @@ import {
   Building,
   Bed,
   Bath,
-  Car,
   Ruler,
   Heart,
   Loader2,
   Grid,
   List,
-  Star,
   Download,
   Calendar,
-  Clock,
   Edit,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -38,7 +35,7 @@ import { CopyButtons } from "@/components/copy-buttons";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/contexts/language-context";
 
-interface Property {
+export interface Property {
   id: number;
   projectPropertyCode: string;
 
@@ -76,7 +73,7 @@ interface Property {
   project: Project;
 }
 
-interface Project {
+export interface Project {
   id: number;
   projectCode: string;
 
@@ -150,12 +147,34 @@ export default function PropertySearch() {
   }
 
   useEffect(() => {
-    // load default on mount
     fetchData(`page=${currentPage}&limit=${pageSize}&
       projectName=${searchTerm}&
       minPrice=${minPrice}&maxPrice=${maxPrice}&
       roomType=${selectedRoomType}&bedRoom=${selectedBedRoom}&
       minSize=${minSize}&maxSize=${maxSize}`);
+  }, []);
+
+  const [template, setTemplate] = useState("")
+  async function fetchTemplate() {
+    try {
+      const res = await fetch(`/api/post-builder`);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch: ${res.status}`);
+      }
+
+      const response = await res.json();
+      const { templateId, template } = response;
+      setTemplate(template);
+    } catch (err: any) {
+      // setError(err.message || "Something went wrong");
+    } finally {
+      // setLoading(false);
+    }
+  }
+
+  
+  useEffect(() => {
+    fetchTemplate();
   }, []);
 
   // Download all images function
@@ -228,9 +247,6 @@ export default function PropertySearch() {
     return statusMap[status] || status;
   };
 
-  // const getCurrentProject = (projectId: number) => {
-  //   return projects.find((project) => project.id === projectId)
-  // }
   const parsePrice = (value: string) => {
     if (!value) return 0;
     return Number(value.replace(/,/g, ""));
@@ -356,19 +372,7 @@ export default function PropertySearch() {
     }
   }, [error, setError]);
 
-  // if (loading && properties.length === 0) {
-  //   return (
-  //     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-  //       <div className="text-center">
-  //         <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
-  //         <p className="text-gray-600">{t("loadingProperties")}</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
   return (
-    // <div className="min-h-screen bg-gray-50">
     <div className="">
       {/* <div className="mb-8 flex justify-between items-start">
           <div>
@@ -654,7 +658,7 @@ export default function PropertySearch() {
 
                 const priceSellNumber = parsePrice(property.sellPrice);
                 const formattedSellPrice = formatPrice(priceSellNumber);
-                // const currentProject = getCurrentProject(property.projectId)
+
                 return (
                   <Card
                     key={property.id}
@@ -859,7 +863,10 @@ export default function PropertySearch() {
                           </p>
                         </div>
 
-                        <CopyButtons property={property} locale={language} />
+                        <CopyButtons 
+                        template={template}
+                        property={property}
+                         locale={language} />
 
                         <Button
                           variant="outline"
@@ -917,6 +924,5 @@ export default function PropertySearch() {
         </div>
       )} */}
     </div>
-    // </div>
   );
 }
