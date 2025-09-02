@@ -91,10 +91,9 @@ export async function POST(req) {
         });
         y -= lineHeight;
       }
+      
       y -= 8;
     }
-
-    
   
     // 5. Return PDF
     const pdfBytes = await pdfDoc.save();

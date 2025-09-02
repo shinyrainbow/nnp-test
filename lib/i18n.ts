@@ -89,6 +89,11 @@ export const translations = {
     "tasks.followUp": "Follow up with potential client",
     "tasks.friday": "Friday",
 
+    "stats.commission": "Total commission",
+    "stats.totalRent": "Rent Deal Closed", 
+    "stats.totalSell": "Sell Closed", 
+    "stats.totalVisit": "Total visit", 
+
     // line chat bot
     "line.title": "Access Code",
     "line.description": "Your one-time verification code",
@@ -378,6 +383,7 @@ export const translations = {
     // Loading
     loadingProperties: "Loading properties...",
     loadingPostTemplate: "Loading post template...",
+    loadingContract: "Loading contracts...",
 
     // Language
     language: "Language",
@@ -816,7 +822,7 @@ export const translations = {
     "dashboard.upcomingTasks": "งานที่กำลังจะมาถึง",
     "dashboard.tasksToDo": "สิ่งที่คุณต้องทำ",
 
-    "stats.changeFromLastMonth": "{{change}} จากเดือนที่แล้ว",
+    "stats.changeFromLastMonth": " จากเดือนที่แล้ว",
 
     "activity.newListing": "รายการใหม่เพิ่ม: 123 Main St",
     "activity.contractSigned": "เซ็นสัญญากับ John Doe",
@@ -830,6 +836,11 @@ export const translations = {
     "tasks.tomorrow": "พรุ่งนี้",
     "tasks.followUp": "ติดตามลูกค้าเป้าหมาย",
     "tasks.friday": "วันศุกร์",
+
+    "stats.commission": "ค่าคอมมิชชันรวม",
+    "stats.totalRent": "รวมดีลเช่า", 
+    "stats.totalSell": "รวมดีลขาย", 
+    "stats.totalVisit": "จำนวนครั้งเปิดทรัพย์", 
 
     // line chat bot
     "line.title": "รหัสเข้าใช้งาน",
@@ -1127,6 +1138,7 @@ export const translations = {
     // Loading
     loadingProperties: "กำลังโหลดอสังหาริมทรัพย์...",
     loadingPostTemplate: "กำลังโหลดรูปแปบบโพสต์...",
+    loadingContract: "กำลังโหลดสัญญา...",
 
     // Language
     language: "ภาษา",

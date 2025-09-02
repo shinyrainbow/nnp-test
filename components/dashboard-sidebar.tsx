@@ -22,7 +22,7 @@ const navigation = [
   { name: 'Listings', href: '/dashboard/listings', icon: TableProperties , language: 'menu.propertyListings'},
   { name: 'Line Chat Bot', href: '/dashboard/line-chat-bot', icon: MessageSquare , language: 'menu.lineChatBot'},
   { name: 'Post Builder', href: '/dashboard/post-builder', icon: MessageSquareText , language: 'menu.postBuilder'},
-  { name: 'Contract Builder', href: '/dashboard/contract-builder', icon: Newspaper , language: 'menu.contractBuilder'},
+  { name: 'Contract Builder', href: '/dashboard/contract-builder?tab=rent', icon: Newspaper , language: 'menu.contractBuilder'},
   { name: 'Calendar', href: '/dashboard/calendar', icon: Calendar, language: 'menu.calendar' },
  
   // { name: 'AI Assistant', href: '/dashboard/ai-assistant', icon: MessageSquare , language: 'aiAssistant'},

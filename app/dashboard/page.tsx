@@ -15,13 +15,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Badge } from '@/components/ui/badge'
 
-import { TrendingUp, TrendingDown, Home, DollarSign, BarChart3, AlertTriangle } from 'lucide-react'
+import { TrendingUp } from 'lucide-react'
 
 const stats = [
-  { title: "stats.sales", value: "34.5K", change: "+12%", icon: Calendar },
-  { title: "stats.visitors", value: "12.3K", change: "+8%", icon: FileText },
-  { title: "stats.orders", value: "1.2K", change: "-3%", icon: Users },
-  { title: "stats.revenue", value: "$24.5K", change: "+5%", icon: Calendar },
+  { title: "stats.commission", value: "345,000", change: "+12%", icon: Calendar , added: "+12,000"},
+  { title: "stats.totalRent", value: "21", change: "+8%", icon: FileText, added: "2" },
+  { title: "stats.totalSell", value: "4", change: "-3%", icon: Users ,added: "-5"},
+  { title: "stats.totalVisit", value: "120", change: "+5%", icon: Calendar , added: "20"},
 ];
 
 
@@ -116,12 +116,14 @@ export default function Dashboard() {
             <CardContent>
               <div className="text-2xl font-bold">{stat.value}</div>
               <p className="text-xs text-green-600">
-                {t("stats.changeFromLastMonth", { change: stat.change })}
+                {stat.added} {t("stats.changeFromLastMonth")}
               </p>
             </CardContent>
           </Card>
         ))}
       </div>
+
+     
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -136,20 +138,20 @@ export default function Dashboard() {
                   <p className="text-sm font-medium">
                     {t("activity.newListing")}
                   </p>
-                  <p className="text-xs text-gray-500">
-                    {t("activity.hoursAgo", { count: 2 })}
-                  </p>
+                  {/* <p className="text-xs text-gray-500">
+                    {t("activity.hoursAgo", { count: 2 })} ddd
+                  </p> */}
                 </div>
               </div>
               <div className="flex items-center space-x-4">
                 <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                 <div className="flex-1">
                   <p className="text-sm font-medium">
-                    {t("activity.contractSigned")}
+                    {t("activity.contractSigned")} 
                   </p>
-                  <p className="text-xs text-gray-500">
+                  {/* <p className="text-xs text-gray-500">
                     {t("activity.hoursAgo", { count: 5 })}
-                  </p>
+                  </p> */}
                 </div>
               </div>
               <div className="flex items-center space-x-4">
@@ -158,9 +160,9 @@ export default function Dashboard() {
                   <p className="text-sm font-medium">
                     {t("activity.viewingScheduled")}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  {/* <p className="text-xs text-gray-500">
                     {t("activity.dayAgo", { count: 1 })}
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
@@ -203,17 +205,17 @@ export default function Dashboard() {
       </div>
 
 
-      <Tabs defaultValue="neighborhoods" className="space-y-4">
+      <Tabs defaultValue="location" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="neighborhoods">Neighborhoods</TabsTrigger>
+          <TabsTrigger value="location">Location</TabsTrigger>
           <TabsTrigger value="trends">Market Trends</TabsTrigger>
           <TabsTrigger value="predictions">AI Predictions</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="neighborhoods" className="space-y-4">
+        <TabsContent value="location" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Neighborhood Analysis</CardTitle>
+              <CardTitle>Location Analysis</CardTitle>
               <CardDescription>
                 Compare different areas in your market
               </CardDescription>

@@ -12,7 +12,7 @@ export default function NewRentalContractPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center gap-4 mb-6">
           <Button variant="outline" size="sm" asChild>
-            <Link href={`/dashboard/contract-builder`} className="gap-2">
+            <Link href={`/dashboard/contract-builder?tab=rent`} className="gap-2">
               <ArrowLeft className="w-4 h-4" />
               {t("newContract.navigation.backToDashboard")}
             </Link>

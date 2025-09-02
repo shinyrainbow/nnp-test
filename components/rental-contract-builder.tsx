@@ -3,147 +3,18 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { FileUpload } from "@/components/file-upload";
-import {
-  Calendar,
-  MapPin,
-  DollarSign,
-  FileText,
-  Download,
-  ArrowLeft,
-  Loader2,
-} from "lucide-react";
+import { Download, Loader2 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-
-import Link from "next/link";
-import { PDFPreview } from "@/components/pdf-preview";
 import { useLanguage } from "@/contexts/language-context";
-import ExpandableCard from "./expandableCard";
 import { useToast } from "@/hooks/use-toast";
-import { generateContractPDF } from "@/lib/pdf-generator";
-import { languages } from "@/lib/i18n";
-// import InputForm from "@/components/auto-size";
-
-interface ContractData {
-  // Tenant Information
-  tenantName: string;
-  tenantEmail: string;
-  tenantPhone: string;
-  tenantAddress: string;
-  passportPhoto: File | null;
-
-  // Property Information
-  propertyAddress: string;
-  propertyType: string;
-  bedrooms: string;
-  bathrooms: string;
-
-  // Lease Terms
-  startDate: string;
-  endDate: string;
-  monthlyRent: string;
-  securityDeposit: string;
-  leaseTerm: string;
-
-  // Additional Terms
-  petPolicy: string;
-  smokingPolicy: string;
-  additionalTerms: string;
-}
 
 export function RentalContractBuilder() {
-  // const t = useTranslations("contractBuilder")
-  // const locale = useLocale()
   const { t } = useLanguage();
 
-  const [contractData, setContractData] = useState<ContractData>({
-    tenantName: "",
-    tenantEmail: "",
-    tenantPhone: "",
-    tenantAddress: "",
-    passportPhoto: null,
-    propertyAddress: "",
-    propertyType: "",
-    bedrooms: "",
-    bathrooms: "",
-    startDate: "",
-    endDate: "",
-    monthlyRent: "",
-    securityDeposit: "",
-    leaseTerm: "",
-    petPolicy: "",
-    smokingPolicy: "",
-    additionalTerms: "",
-  });
-
-  const [isGenerating, setIsGenerating] = useState(false);
-
-  const handleInputChange = (field: keyof ContractData, value: string) => {
-    setContractData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleFileUpload = (file: File | null) => {
-    setContractData((prev) => ({ ...prev, passportPhoto: file }));
-  };
-
-  const handleGenerateContract = async () => {
-    setIsGenerating(true);
-
-    // Simulate PDF generation
-    setTimeout(() => {
-      // In a real app, you would call an API to generate the PDF
-      const blob = new Blob(["Sample PDF content"], {
-        type: "application/pdf",
-      });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `rental-contract-${contractData.tenantName
-        .replace(/\s+/g, "-")
-        .toLowerCase()}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      setIsGenerating(false);
-    }, 2000);
-  };
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
-  const { toast } = useToast();
-
-  const handleDownloadPDF = async () => {
-    try {
-      setIsGeneratingPDF(true);
-      await generateContractPDF(contractData);
-      toast({
-        title: "success",
-        description: "Your rental contract has been downloaded.",
-      });
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-      toast({
-        title: "PDF Generation Failed",
-        description:
-          "There was an error generating your PDF. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsGeneratingPDF(false);
-    }
-  };
 
   const handlePreview = async () => {
-    const clausesEN= [
+    const clausesEN = [
       `CONDOMINIUM / UNIT LEASE AGREEMENT`,
       `       This Agreement is made at ${contractPlace}`,
       `on ${contractDate} Between:`,
@@ -167,22 +38,14 @@ export function RentalContractBuilder() {
       `This Agreement is executed in duplicate, with each party retaining one copy.`,
       ``,
       ``,
-      `_____________________________________ Lessor`,
-      `(                                                           )`,
+      `__________________________________ Lessor                      __________________________________ Lessee`,
+      `(                                                      )                                (                                                      )`,
       ``,
       ``,
-      `_____________________________________ Lessee`,
-      `(                                                           )`,
-      ``,
-      ``,
-      `_____________________________________ Witness`,
-      `(                                                           )`,
-      ``,
-      ``,
-      `_____________________________________ Witness`,
-      `(                                                           )`,
-    ]
-    const clausesTH= [
+      `__________________________________ Witness 1                  __________________________________ Witness 2`,
+      `(                                                      )                                (                                                      )`,
+    ];
+    const clausesTH = [
       `หนังสือสัญญาเช่าห้องชุด/ คอนโดมิเนียม`,
       `        สัญญานี้ทําขึ้นที่ ${contractPlace}`,
       `ณ วันทีี่ ${contractDate} ระหว่าง`,
@@ -206,26 +69,20 @@ export function RentalContractBuilder() {
       `สัญญานี้ได้ทำขึ้นเป็นสองฉบับ มีข้อความถูกต้องตรงกัน โดยเก็บสัญญาไว้ฝ่ายละฉบับ`,
       ``,
       ``,
-      `_____________________________________ ผู้ให้เช่า`, 
-      `(                                                           )`,
+      `__________________________________ ผู้ให้เช่า                      __________________________________ ผู้เช่า`,
+      `(                                                      )                                (                                                      )`,
       ``,
       ``,
-      `_____________________________________ ผู้เช่า`,
-      `(                                                           )`,
-      ``,
-      ``,
-      `_____________________________________ พยาน`,
-      `(                                                           )`,
-      ``,
-      ``,
-      `_____________________________________ พยาน`,
-      `(                                                           )`,
-              ];
+      `__________________________________ พยาน 1                    __________________________________ พยาน 2`,
+      `(                                                      )                                (                                                      )`,
+    ];
     try {
       const res = await fetch("/api/contract-preview", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clauses: activeTab === "TH" ? clausesTH : clausesEN  }),
+        body: JSON.stringify({
+          clauses: activeTab === "TH" ? clausesTH : clausesEN,
+        }),
       });
 
       if (!res.ok) throw new Error("Failed to generate PDF");
@@ -234,7 +91,6 @@ export function RentalContractBuilder() {
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       window.open(url, "_blank"); // open new tab with PDF
-      
     } catch (err) {
       console.error(err);
       alert("Error generating preview");
@@ -242,7 +98,38 @@ export function RentalContractBuilder() {
   };
 
   const handleDownload = async () => {
-    const clauses = [
+    const clausesEN = [
+      `CONDOMINIUM / UNIT LEASE AGREEMENT`,
+      `       This Agreement is made at ${contractPlace}`,
+      `on ${contractDate} Between:`,
+      `       Lessor (Landlord): Name: ${ownerName}, Age: ${ownerAge}, Identification Card No.: ${ownerId}, Address: ${ownerAddress}, Phone No.: ${ownerPhone} (hereinafter referred to as the “Lessor”)`,
+      `       Lessee (Tenant): Name: ${tenantName}, Age: ${tenantAge}, Identification Card No.: ${tenantId}, Address: ${tenantAddress}, Phone No.: ${tenantPhone} (hereinafter referred to as the “Lessee”)`,
+      `The parties agree to the following terms:`,
+      `       Clause 2: Advance Payment and Security Deposit The Lessor has received from the Lessee advance rent in the amount of ${advance} Baht and a security deposit for damages to the unit, furniture, and fixtures in the amount of ${deposit} Baht, paid on ${dateReceive}. The security deposit shall be refunded to the Lessee at the end of the lease, after deducting damages or other expenses as necessary.`,
+      `       Clause 3: Building and Land Tax The Lessee shall be responsible for applicable taxes in the amount of ${tax} Baht.`,
+      `       Clause 4: Common Area Fee The Lessee shall pay any applicable condominium/common fees in the amount of ${commonFee} Baht.`,
+      `       Clause 5: Electricity and Water Fees The Lessee shall be responsible for electricity and water charges of ${bills} Baht.`,
+      `       Clause 6: Care of Premises The Lessee shall maintain the leased premises in good condition. Any alterations or modifications require prior written approval from the Lessor. The Lessee shall be fully responsible for any damages incurred.`,
+      `       Clause 7: Fixtures and Improvements Any constructions or repairs within the premises shall remain upon termination of the lease and become the property of the Lessor, without any compensation to the Lessee. In case of fire or destruction of the premises, this Agreement shall be deemed terminated.`,
+      `       Clause 8: Subleasing and Use The Lessee shall not sublease or allow others to reside or conduct business within the unit without the Lessor’s written consent. The Lessor or their representative may inspect the premises at any time. Upon vacating, the Lessee shall have no claim for damages or moving costs.`,
+      `       Clause 9: Maintenance and Conduct The Lessee shall maintain cleanliness and avoid offensive odors, loud noise, or unsafe activities. The Lessee shall not store flammable or hazardous materials within the premises.`,
+      `       Clause 10: Fire Insurance The Lessee may obtain fire insurance for personal property inside the premises only with the prior written consent of the Lessor.`,
+      `       Clause 11: Breach of Contract If the Lessee violates any terms of this Agreement, the Lessor has the right to repossess the premises immediately and terminate the Agreement.`,
+      `       Clause 12: End of Lease Upon expiration of the lease or breach by the Lessee, the Lessee shall vacate the premises unconditionally.`,
+      `       Clause 13: Sale of Property During Lease If the Lessor sells the leased property before expiration of this Agreement, the Lessor shall notify the Lessee at least one month in advance, including the buyer and sale price, so the Lessee has an opportunity to purchase first if desired.`,
+      `       Clause 14: Legal Compliance The Lessee shall not use the premises for any unlawful purposes. The Lessee shall be fully responsible for any violations.`,
+      `       Clause 15: Understanding and Signatures Both parties have read and fully understood the terms of this Agreement, and sign in the presence of witnesses as evidence thereof.`,
+      `This Agreement is executed in duplicate, with each party retaining one copy.`,
+      ``,
+      ``,
+      `__________________________________ Lessor                      __________________________________ Lessee`,
+      `(                                                      )                                (                                                      )`,
+      ``,
+      ``,
+      `__________________________________ Witness 1                  __________________________________ Witness 2`,
+      `(                                                      )                                (                                                      )`,
+    ];
+    const clausesTH = [
       `หนังสือสัญญาเช่าห้องชุด/ คอนโดมิเนียม`,
       `        สัญญานี้ทําขึ้นที่ ${contractPlace}`,
       `ณ วันทีี่ ${contractDate} ระหว่าง`,
@@ -266,44 +153,89 @@ export function RentalContractBuilder() {
       `สัญญานี้ได้ทำขึ้นเป็นสองฉบับ มีข้อความถูกต้องตรงกัน โดยเก็บสัญญาไว้ฝ่ายละฉบับ`,
       ``,
       ``,
-      `_____________________________________ ผู้ให้เช่า`, 
-      `(                                                           )`,
+      `__________________________________ ผู้ให้เช่า                      __________________________________ ผู้เช่า`,
+      `(                                                      )                                (                                                      )`,
       ``,
       ``,
-      `_____________________________________ ผู้เช่า`,
-      `(                                                           )`,
-      ``,
-      ``,
-      `_____________________________________ พยาน`,
-      `(                                                           )`,
-      ``,
-      ``,
-      `_____________________________________ พยาน`,
-      `(                                                           )`,
+      `__________________________________ พยาน 1                    __________________________________ พยาน 2`,
+      `(                                                      )                                (                                                      )`,
     ];
     try {
+      setIsGeneratingPDF(true);
       const res = await fetch("/api/contract-preview", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clauses }),
+        body: JSON.stringify({
+          clauses: activeTab === "TH" ? clausesTH : clausesEN,
+        }),
       });
 
       if (!res.ok) throw new Error("Failed to generate PDF");
-
+      setIsGeneratingPDF(false);
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.download = 'my-document.pdf';
+      link.download = "rental-contract.pdf";
       link.click();
-    
       URL.revokeObjectURL(url);
     } catch (err) {
       console.error(err);
-      alert("Error generating preview");
+      alert("Error downloading PDF");
     }
   };
 
+  const saveRentalContract = async () => {
+    const contractData = {
+      language: activeTab,
+    contractPlace,
+    contractDate,
+  
+    ownerName,
+    ownerAge,
+    ownerId,
+    ownerAddress,
+    ownerPhone,
+  
+    tenantName,
+    tenantAge,
+    tenantId,
+    tenantAddress,
+    tenantPhone,
+  
+    projectName,
+    projectFloor,
+    projectAddress,
+  
+    rentalPeriod,
+    advance,
+    deposit,
+    tax,
+    commonFee,
+    bills,
+    rentalRate,
+    rentDue,
+  
+    dateReceive,
+    startDate,
+  
+    subDistrict,
+    district,
+    province,
+  };
+    try{
+      const res = await fetch("/api/save-rental-contract", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({contractData}),
+      });
+
+      if (!res.ok) throw new Error("Failed to save contract");
+    }catch(error){
+      console.error(error);
+      alert("Error saving contract");
+    }
+  }
   const [activeTab, setActiveTab] = useState("TH"); // default value
   // form fields
   const [contractPlace, setContractPlace] = useState("City Home Srinagarin");
@@ -316,7 +248,9 @@ export function RentalContractBuilder() {
   const [tenantName, setTenantName] = useState("ฮัลเลย์ ดูโอ");
   const [tenantAge, setTenantAge] = useState("45");
   const [tenantId, setTenantId] = useState("2463897617824");
-  const [tenantAddress, setTenantAddress] = useState("34/1234 บ้านบางกระเจ้า วัฒนา กทม ");
+  const [tenantAddress, setTenantAddress] = useState(
+    "34/1234 บ้านบางกระเจ้า วัฒนา กทม "
+  );
   const [tenantPhone, setTenantPhone] = useState("02352345235");
   const [projectName, setProjectName] = useState("City Home Bangna");
   const [projectFloor, setProjectFloor] = useState("5");
@@ -335,7 +269,6 @@ export function RentalContractBuilder() {
   const [province, setProvince] = useState("กรุงเทพฯ");
   const [rentDue, setRentDue] = useState("1");
 
-  // const [dateReceive, setDateReceive] = useState("");
   return (
     <div className="space-y-6">
       <Tabs
@@ -361,7 +294,11 @@ export function RentalContractBuilder() {
                   <br />
                   <br />
                   &ensp;&ensp;&ensp; สัญญานี้ทําขึ้นที่{" "}
-                  <InputForm value={contractPlace} onChange={setContractPlace} minWidth={300} />
+                  <InputForm
+                    value={contractPlace}
+                    onChange={setContractPlace}
+                    minWidth={300}
+                  />
                   <br />ณ วันทีี่{" "}
                   <InputForm
                     value={contractDate}
@@ -372,51 +309,131 @@ export function RentalContractBuilder() {
                   <br />
                   {/* Seller */}
                   &ensp;&ensp;&ensp; ชื่อ-นามสกุล{" "}
-                  <InputForm value={ownerName} onChange={setOwnerName} minWidth={360} />
-                   อายุ{" "}
-                  <InputForm value={ownerAge} onChange={setOnwerAge} minWidth={50}/>
-                  ปี <br/>
-                  ที่อยู่ <InputForm value={ownerAddress} onChange={setOwnerAddress} minWidth={460}/><br/>
+                  <InputForm
+                    value={ownerName}
+                    onChange={setOwnerName}
+                    minWidth={360}
+                  />
+                  อายุ{" "}
+                  <InputForm
+                    value={ownerAge}
+                    onChange={setOnwerAge}
+                    minWidth={50}
+                  />
+                  ปี <br />
+                  ที่อยู่{" "}
+                  <InputForm
+                    value={ownerAddress}
+                    onChange={setOwnerAddress}
+                    minWidth={460}
+                  />
+                  <br />
                   เลขที่บัตรประชาชน{" "}
-                  <InputForm value={ownerId} onChange={setOwnerId} minWidth={180}/>
-                  หมายเลขโทรศัพท์ <InputForm value={ownerPhone} onChange={setOwnerPhone} minWidth={180}/>
+                  <InputForm
+                    value={ownerId}
+                    onChange={setOwnerId}
+                    minWidth={180}
+                  />
+                  หมายเลขโทรศัพท์{" "}
+                  <InputForm
+                    value={ownerPhone}
+                    onChange={setOwnerPhone}
+                    minWidth={180}
+                  />
                   ซึ่งต่อไปนี้จะเรียกว่า "ผู้ให้เช่า” ฝ่ายหนึ่ง <br /> <br />
-
                   &ensp;&ensp;&ensp; ชื่อ-นามสกุล{" "}
-                  <InputForm value={tenantName} onChange={setTenantName} minWidth={360} /> อายุ{" "}
-                  <InputForm value={tenantAge} onChange={setTenantAge} minWidth={50}/>
-                  ปี <br/>
+                  <InputForm
+                    value={tenantName}
+                    onChange={setTenantName}
+                    minWidth={360}
+                  />{" "}
+                  อายุ{" "}
+                  <InputForm
+                    value={tenantAge}
+                    onChange={setTenantAge}
+                    minWidth={50}
+                  />
+                  ปี <br />
                   ที่อยู่
-                   <InputForm value={tenantAddress} onChange={setTenantAddress} minWidth={460}/><br/>
+                  <InputForm
+                    value={tenantAddress}
+                    onChange={setTenantAddress}
+                    minWidth={460}
+                  />
+                  <br />
                   เลขที่บัตรประชาชน{" "}
-                  <InputForm value={tenantId} onChange={setTenantId} minWidth={180}/>หมายเลขโทรศัพท์
-                   <InputForm value={tenantPhone} onChange={setTenantPhone} minWidth={180}/>
+                  <InputForm
+                    value={tenantId}
+                    onChange={setTenantId}
+                    minWidth={180}
+                  />
+                  หมายเลขโทรศัพท์
+                  <InputForm
+                    value={tenantPhone}
+                    onChange={setTenantPhone}
+                    minWidth={180}
+                  />
                   ซึ่งต่อไปนี้จะเรียกว่า "ผู้เช่า” ฝ่ายหนึ่ง <br /> <br />
-                
                   คู่สัญญาทั้งสองฝ่ายตกลงทำสัญญากัน มีข้อความดังต่อไปนี้ <br />{" "}
                   <br />
                   &ensp;&ensp;&ensp;<span className="font-bold">
                     ข้อ 1.{" "}
                   </span>{" "}
                   ผุ้ให้เช่าตกลงให้เช่าห้องชุด/คอนโดมิเนียม โครงการ{" "}
-                  <InputForm value={projectName} onChange={setProjectName} minWidth={300}/>
-                  ชั้น <InputForm value={projectFloor} onChange={setProjectFloor}/> 
-                  ตรอก/ซอย <InputForm value={projectAddress} onChange={setProjectAddress} minWidth={280}/> ถนน{" "}
-                 ตําบล/แขวง{" "}
-                  <InputForm value={subDistrict} onChange={setSubDistrict} minWidth={120} />
+                  <InputForm
+                    value={projectName}
+                    onChange={setProjectName}
+                    minWidth={300}
+                  />
+                  ชั้น{" "}
+                  <InputForm value={projectFloor} onChange={setProjectFloor} />
+                  ตรอก/ซอย{" "}
+                  <InputForm
+                    value={projectAddress}
+                    onChange={setProjectAddress}
+                    minWidth={280}
+                  />{" "}
+                  ถนน ตําบล/แขวง{" "}
+                  <InputForm
+                    value={subDistrict}
+                    onChange={setSubDistrict}
+                    minWidth={120}
+                  />
                   อำเภอ/เขต
-                  <InputForm value={district} onChange={setDistrict} minWidth={120}/>
-                  จังหวัด <InputForm value={province} onChange={setProvince} minWidth={120}/>
+                  <InputForm
+                    value={district}
+                    onChange={setDistrict}
+                    minWidth={120}
+                  />
+                  จังหวัด{" "}
+                  <InputForm
+                    value={province}
+                    onChange={setProvince}
+                    minWidth={120}
+                  />
                   มีกำหนดเวลา
-                  <InputForm value={rentalPeriod} onChange={setRentalPeriod} /> ปี
-                  นับตั้งแต่วันที่ <InputForm value={startDate} onChange={setStartDate} minWidth={120}/>
+                  <InputForm
+                    value={rentalPeriod}
+                    onChange={setRentalPeriod}
+                  />{" "}
+                  ปี นับตั้งแต่วันที่{" "}
+                  <InputForm
+                    value={startDate}
+                    onChange={setStartDate}
+                    minWidth={120}
+                  />
                   เป็นต้นไป
                   โดยผู้เช่ายอมเสียค่าเช่าให้แก่ผู้ให้เช่าเป็นเงินค่าเช่า
-                  เดือนละ <InputForm value={rentalRate} onChange={setRentalRate} /> บาท
-                  โดยจะชำระเป็นเงินสดหรือโอนเงินเข้าบัญชีธนาคารให้กับผู้ให้เช่า ภายในวันที่{" "}
-                  <InputForm value={rentDue} onChange={setRentDue} minWidth={120}/>
-                  ของทุกๆเดือน 
-                  เป็นต้น ไป ถ้าไม่ชำระตามกำหนด
+                  เดือนละ{" "}
+                  <InputForm value={rentalRate} onChange={setRentalRate} /> บาท
+                  โดยจะชำระเป็นเงินสดหรือโอนเงินเข้าบัญชีธนาคารให้กับผู้ให้เช่า
+                  ภายในวันที่{" "}
+                  <InputForm
+                    value={rentDue}
+                    onChange={setRentDue}
+                    minWidth={120}
+                  />
+                  ของทุกๆเดือน เป็นต้น ไป ถ้าไม่ชำระตามกำหนด
                   ผู้เช่ายอมให้ผู้ให้เช่ายึดทรัพยสิน
                   ของผู้เช่าได้และใส่กุญแจล๊อค <br />
                   <br />
@@ -425,16 +442,25 @@ export function RentalContractBuilder() {
                   <InputForm value={advance} onChange={setAdvance} /> บาท
                   และได้รับเงินค่าประกันความเสียหายของตัวห้อง
                   เฟอร์นิเจอร์และอุปกรณ์ตกแต่งภายในห้องเป็นจํานวนเงิน
-                  <InputForm value={deposit} onChange={setDeposit} /> บาท เมื่อวันที
-                  <InputForm value={dateReceive} onChange={setDateReceive} /> 
+                  <InputForm value={deposit} onChange={setDeposit} /> บาท
+                  เมื่อวันที
+                  <InputForm value={dateReceive} onChange={setDateReceive} />
                   โดยเงินค่าประกันความเสียหายจะคืนให้กับผู้เช่าในวันทำสัญญาหมดอายุหลังจากหักค่าเสียหายของตัวห้อง
-                  เฟอร์นิเจอร์อุปกรณ์ตกแต่งภายในห้องและค่าใช้จ่ายอื่นๆ เรียบร้อยแล้ว <br /> <br />
+                  เฟอร์นิเจอร์อุปกรณ์ตกแต่งภายในห้องและค่าใช้จ่ายอื่นๆ
+                  เรียบร้อยแล้ว <br /> <br />
                   &ensp;&ensp;&ensp;<span className="font-bold">ข้อ 3. </span>
-                  ค่าภาษีโรงเรือนและที่ดิน <InputForm value={tax} onChange={setTax} /> บาท <br /> <br />
+                  ค่าภาษีโรงเรือนและที่ดิน{" "}
+                  <InputForm value={tax} onChange={setTax} /> บาท <br /> <br />
                   &ensp;&ensp;&ensp;<span className="font-bold">ข้อ 4. </span>
-                  ค่าส่วนกลางโครงการ <InputForm value={commonFee} onChange={setCommonFee} /> บาท <br /> <br />
+                  ค่าส่วนกลางโครงการ{" "}
+                  <InputForm
+                    value={commonFee}
+                    onChange={setCommonFee}
+                  /> บาท <br /> <br />
                   &ensp;&ensp;&ensp;<span className="font-bold">ข้อ 5. </span>
-                  ค่าไฟฟ้าและค่าประปา <InputForm value={bills} onChange={setBills} /> บาท <br /> <br />
+                  ค่าไฟฟ้าและค่าประปา{" "}
+                  <InputForm value={bills} onChange={setBills} /> บาท <br />{" "}
+                  <br />
                   &ensp;&ensp;&ensp;<span className="font-bold">ข้อ 6. </span>
                   ผู้เช่ายอมรับที่จะรักษาตัวห้องทีเช่ามิให้ชำรุดทรุดโทรมไปกว่าเดิม
                   ถ้าผู้เช่ามีความประสงค์จะดัดแปลงหรือเพิ่มเติมสิ่งใดใดลง ไปอีก
@@ -500,14 +526,44 @@ export function RentalContractBuilder() {
                   จึงลงลายมือชื่อต่อหน้าพยานเป็นสำคัญ
                   <br /> <br />
                   สัญญานี้ได้ทำขึ้นเป็นสองฉบับ มีข้อความถูกต้องตรงกัน
-                  โดยเก็บสัญญาไว้ฝ่ายละฉบับ <br /> <br /> <br />
-
-
-                   <input disabled className="outline-none border-b-2 border-black bg-white w-[280px]"/> ผู้ให้เช่า <br /> <br /><br />
-                  <input disabled className="outline-none border-b-2 border-black bg-white w-[280px]"/> ผู้เช่า<br /> <br /><br />
-                  <input disabled className="outline-none border-b-2 border-black bg-white w-[280px]"/> พยาน 1<br /> <br /><br />
-                   <input disabled className="outline-none border-b-2 border-black bg-white w-[280px]"/> พยาน 2<br /> <br /><br />
+                  โดยเก็บสัญญาไว้ฝ่ายละฉบับ
                   <br />
+                  <br />
+                  <input
+                    disabled
+                    className="outline-none border-b-2 border-black bg-white w-[280px]"
+                  />{" "}
+                  ผู้ให้เช่า &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                  <input
+                    disabled
+                    className="outline-none border-b-2 border-black bg-white w-[280px]"
+                  />{" "}
+                  ผู้เช่า
+                  <br />
+                  ( &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;) 
+                 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                  ( &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;)
+                  <br /><br />
+                  <br />
+                
+                  <input
+                    disabled
+                    className="outline-none border-b-2 border-black bg-white w-[280px]"
+                  />{" "}
+                  พยาน 1
+                  &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                  <input
+                    disabled
+                    className="outline-none border-b-2 border-black bg-white w-[280px]"
+                  />{" "}
+                  พยาน 2
+                  <br />
+                  ( &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;) 
+                 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                  ( &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;)
+                  <br /><br /><br /><br />
+               
+              
                 </div>
               </CardContent>
             </Card>
@@ -528,64 +584,145 @@ export function RentalContractBuilder() {
                   <br />
                   <br />
                   &ensp;&ensp;&ensp;This Agreement is made at
-                  <InputForm value={contractPlace} onChange={setContractPlace} minWidth={300} />  <br/>
+                  <InputForm
+                    value={contractPlace}
+                    onChange={setContractPlace}
+                    minWidth={300}
+                  />{" "}
+                  <br />
                   on
-                  <InputForm value={contractDate} onChange={setContractDate} minWidth={100} /> Between: <br/><br />
-                  
-                  &ensp;&ensp;&ensp;Lessor
-                  (Landlord): Name:   <InputForm value={ownerName} onChange={setOwnerName} minWidth={360} /> Age:   <InputForm value={ownerAge} onChange={setOnwerAge} minWidth={50}/>
-                  years <br/>
-                  Address: <InputForm value={ownerAddress} onChange={setOwnerAddress} minWidth={460}/><br/>
-                  Identification Card No.: 
-                  <InputForm value={ownerId} onChange={setOwnerId} minWidth={180}/>
-                   Phone No.:<InputForm value={ownerPhone} onChange={setOwnerPhone} minWidth={180}/>
-                   (hereinafter referred to as the
-                  “Lessor”) <br />
-
+                  <InputForm
+                    value={contractDate}
+                    onChange={setContractDate}
+                    minWidth={100}
+                  />{" "}
+                  Between: <br />
                   <br />
-                  &ensp;&ensp;&ensp;Lessee (Tenant): Name: <InputForm value={tenantName} onChange={setTenantName} minWidth={360} />
-                   Age: <InputForm value={tenantAge} onChange={setTenantAge} minWidth={50}/> years
-                    Identification <br/>
-                   Address: <InputForm value={tenantAddress} onChange={setTenantAddress} minWidth={460}/><br/>
-Phone No.:
-                  Card No.: <InputForm value={tenantId} onChange={setTenantId} minWidth={180}/>
-                  Phone No.:<InputForm value={tenantPhone} onChange={setTenantPhone} minWidth={180}/>
-                   (hereinafter referred to as the
-                  “Lessee”) <br />  
+                  &ensp;&ensp;&ensp;Lessor (Landlord): Name:{" "}
+                  <InputForm
+                    value={ownerName}
+                    onChange={setOwnerName}
+                    minWidth={360}
+                  />{" "}
+                  Age:{" "}
+                  <InputForm
+                    value={ownerAge}
+                    onChange={setOnwerAge}
+                    minWidth={50}
+                  />
+                  years <br />
+                  Address:{" "}
+                  <InputForm
+                    value={ownerAddress}
+                    onChange={setOwnerAddress}
+                    minWidth={460}
+                  />
                   <br />
-                  {/* &ensp;&ensp;&ensp; The parties agree that the Lessor shall
-                  lease, and the Lessee shall lease, the following
-                  condominium/unit: <br />
+                  Identification Card No.:
+                  <InputForm
+                    value={ownerId}
+                    onChange={setOwnerId}
+                    minWidth={180}
+                  />
+                  Phone No.:
+                  <InputForm
+                    value={ownerPhone}
+                    onChange={setOwnerPhone}
+                    minWidth={180}
+                  />
+                  (hereinafter referred to as the “Lessor”) <br />
                   <br />
-                  Project: ___________________________ Unit No.:
-                  ___________________________ Floor: _______ Street:
-                  ___________________________ Subdistrict/District:
-                  ___________________________ District/County:
-                  ___________________________ Province:
-                  ___________________________ The above property is the sole
-                  ownership and possession of the Lessor.  */}
-
-                  The parties agree to
-                  the following terms: <br />
+                  &ensp;&ensp;&ensp;Lessee (Tenant): Name:{" "}
+                  <InputForm
+                    value={tenantName}
+                    onChange={setTenantName}
+                    minWidth={360}
+                  />
+                  Age:{" "}
+                  <InputForm
+                    value={tenantAge}
+                    onChange={setTenantAge}
+                    minWidth={50}
+                  />{" "}
+                  years Identification <br />
+                  Address:{" "}
+                  <InputForm
+                    value={tenantAddress}
+                    onChange={setTenantAddress}
+                    minWidth={460}
+                  />
+                  <br />
+                  Phone No.: Card No.:{" "}
+                  <InputForm
+                    value={tenantId}
+                    onChange={setTenantId}
+                    minWidth={180}
+                  />
+                  Phone No.:
+                  <InputForm
+                    value={tenantPhone}
+                    onChange={setTenantPhone}
+                    minWidth={180}
+                  />
+                  (hereinafter referred to as the “Lessee”) <br />
+                  <br />
+                  The parties agree to the following terms: <br />
                   <br />
                   &ensp;&ensp;&ensp;
                   <span className="font-bold">Clause 1: </span> Lease of
                   Property The Lessor agrees to lease the condominium/unit
-                  located in project 
-                  <InputForm value={projectName} onChange={setProjectName} minWidth={300}/>, Floor <InputForm value={projectFloor} onChange={setProjectFloor}/> ,
-                  Alley/Street <InputForm value={projectAddress} onChange={setProjectAddress} minWidth={280}/> , 
-                  Subdistrict
-                  <InputForm value={subDistrict} onChange={setSubDistrict} minWidth={120}/>,
-                   District  <InputForm value={district} onChange={setDistrict} minWidth={120}/>,
-                  Province <InputForm value={province} onChange={setProvince} minWidth={120}/>. 
-                  The lease term shall be <InputForm value={rentalPeriod} onChange={setRentalPeriod} /> 
-                  years, starting from <InputForm value={startDate} onChange={setStartDate} minWidth={120} />.
-                  The Lessee agrees to pay the Lessor rent of  <InputForm value={rentalRate} onChange={setRentalRate} /> Baht per
-                  month, payable in cash or by bank transfer to the Lessor’s
-                  account on the   <InputForm value={rentDue} onChange={setRentDue} minWidth={120} /> of each month, from the start date
-                  until the end of the lease. If payment is not made on time,
-                  the Lessor has the right to repossess the Lessee’s property
-                  and lock the premises. <br />
+                  located in project
+                  <InputForm
+                    value={projectName}
+                    onChange={setProjectName}
+                    minWidth={300}
+                  />
+                  , Floor{" "}
+                  <InputForm value={projectFloor} onChange={setProjectFloor} />{" "}
+                  , Alley/Street{" "}
+                  <InputForm
+                    value={projectAddress}
+                    onChange={setProjectAddress}
+                    minWidth={280}
+                  />{" "}
+                  , Subdistrict
+                  <InputForm
+                    value={subDistrict}
+                    onChange={setSubDistrict}
+                    minWidth={120}
+                  />
+                  , District{" "}
+                  <InputForm
+                    value={district}
+                    onChange={setDistrict}
+                    minWidth={120}
+                  />
+                  , Province{" "}
+                  <InputForm
+                    value={province}
+                    onChange={setProvince}
+                    minWidth={120}
+                  />
+                  . The lease term shall be{" "}
+                  <InputForm value={rentalPeriod} onChange={setRentalPeriod} />
+                  years, starting from{" "}
+                  <InputForm
+                    value={startDate}
+                    onChange={setStartDate}
+                    minWidth={120}
+                  />
+                  . The Lessee agrees to pay the Lessor rent of{" "}
+                  <InputForm value={rentalRate} onChange={setRentalRate} /> Baht
+                  per month, payable in cash or by bank transfer to the Lessor’s
+                  account on the{" "}
+                  <InputForm
+                    value={rentDue}
+                    onChange={setRentDue}
+                    minWidth={120}
+                  />{" "}
+                  of each month, from the start date until the end of the lease.
+                  If payment is not made on time, the Lessor has the right to
+                  repossess the Lessee’s property and lock the premises. <br />
                   <br />
                   &ensp;&ensp;&ensp;
                   <span className="font-bold">Clause 2: </span> Advance Payment
@@ -681,13 +818,40 @@ Phone No.:
                   terms of this Agreement and sign in the presence of witnesses.
                   This Agreement is made in two identical copies, with each
                   party retaining one copy. <br />
-                  <br /><br/>
-
-                  <input disabled className="outline-none border-b-2 border-black bg-white w-[280px]"/> Lessor <br /> <br /><br />
-                  <input disabled className="outline-none border-b-2 border-black bg-white w-[280px]"/> Lessee<br /> <br /><br />
-                  <input disabled className="outline-none border-b-2 border-black bg-white w-[280px]"/> Witness 1<br /> <br /><br />
-                   <input disabled className="outline-none border-b-2 border-black bg-white w-[280px]"/> Witness 2<br /> <br /><br />
-               <br/>
+                  <br />
+                  <br />
+                  <input
+                    disabled
+                    className="outline-none border-b-2 border-black bg-white w-[280px]"
+                  />{" "}
+                  Lessor &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                  <input
+                    disabled
+                    className="outline-none border-b-2 border-black bg-white w-[280px]"
+                  />{" "}
+                  Lessee
+                  <br />
+                  ( &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;) 
+                 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                  ( &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;)
+                  <br /><br />
+                  <br />
+                  <input
+                    disabled
+                    className="outline-none border-b-2 border-black bg-white w-[280px]"
+                  />{" "}
+                  Witness 1
+                  &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                  <input
+                    disabled
+                    className="outline-none border-b-2 border-black bg-white w-[280px]"
+                  />{" "}
+                  Witness 2
+                  <br />
+                  ( &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;) 
+                 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                  ( &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;)
+                  <br /><br /><br />
                 </div>
               </CardContent>
             </Card>
@@ -696,16 +860,8 @@ Phone No.:
       </Tabs>
 
       <div className="flex justify-end gap-2">
-        <Button
-          onClick={
-            handlePreview
-            // () => window.open("/api/contract-preview", "_blank")
-          }
-        >
-          Preview PDF
-        </Button>
+        <Button onClick={handlePreview}>Preview PDF</Button>
 
-        {/* PDF Download */}
         <Button
           onClick={handleDownload}
           className="flex items-center gap-2"
@@ -714,29 +870,29 @@ Phone No.:
           {isGeneratingPDF ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
-              "Generating PDF..."
-              {/* {language === "th" ? "กำลังสร้าง PDF..." : "Generating PDF..."} */}
+              {t("newContract.generatingContract")}
             </>
           ) : (
             <>
               <Download className="h-4 w-4" />
-              Download PDF
-              {/* {getTranslation("common.download", language)} */}
+              {t("newContract.generateContract")}
             </>
           )}
         </Button>
+
+        <Button onClick={saveRentalContract}>Save Contract</Button>
       </div>
     </div>
   );
 }
 
-export function InputForm({ value, onChange, minWidth=80 }) {
+export function InputForm({ value, onChange, minWidth = 80 }) {
   return (
     <input
-    value={value}
-    onChange={(e) => onChange && onChange(e.target.value)}
-    style={{ width: `${minWidth}px` }}
-    className="outline-none border-b border-gray-300 text-center"
-  />
-  )
+      value={value}
+      onChange={(e) => onChange && onChange(e.target.value)}
+      style={{ width: `${minWidth}px` }}
+      className="outline-none border-b border-gray-300 text-center"
+    />
+  );
 }

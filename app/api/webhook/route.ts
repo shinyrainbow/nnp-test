@@ -50,24 +50,5 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 
-  // const payload = await req.json();
 
-  // const { id, email, first_name, last_name } = payload.data;
-
-  // await prisma.user.upsert({
-  //   where: { clerkId: id },
-  //   update: {
-  //     email: email,
-  //   //   name: `${first_name || ""} ${last_name || ""}`.trim(),
-  //     // imageUrl: image_url,
-  //   },
-  //   create: {
-  //     clerkId: id,
-  //     email: email,
-  //   //   name: `${first_name || ""} ${last_name || ""}`.trim(),
-  //     // imageUrl: image_url,
-  //   },
-  // });
-
-  // return new Response("OK", { status: 200 });
 }

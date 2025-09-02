@@ -17,6 +17,7 @@ import {
   Send,
   CheckCircle,
   Loader2,
+  Home,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/language-context";
@@ -48,9 +49,10 @@ export default function LineChatBot() {
       setLoading(false);
     }
   }
-  useEffect(() => {
-    fetchLineCode();
-  }, []);
+
+  // useEffect(() => {
+  //   fetchLineCode();
+  // }, []);
 
   const handleCopy = async () => {
     try {
@@ -81,10 +83,23 @@ export default function LineChatBot() {
   }
   if (error) return <div>Error...</div>;
 
-
   return (
-    <div className="w-full pt-4 space-y-6">
-      <Card className="shadow-xl border-0 bg-white backdrop-blur-sm overflow-hidden">
+    // <div className="w-full pt-4 space-y-6">
+    <div className="min-h-screen bg-background">
+        <header className="border-b bg-card">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Home className="h-6 w-6 text-primary" />
+              <h1 className="text-2xl font-bold text-foreground">
+                {t("menu.lineChatBot")}
+              </h1>
+            </div>
+            {/* <Badge variant="secondary">{t("post.badge")}</Badge> */}
+          </div>
+        </div>
+      </header>
+      {/* <Card className="shadow-xl border-0 bg-white backdrop-blur-sm overflow-hidden">
         <div className="bg-gradient-to-r from-[#16a29d] to-cyan-700 px-6 py-8">
           <CardTitle className="text-3xl font-bold text-white mb-2">
             {t("line.title")}
@@ -112,9 +127,6 @@ export default function LineChatBot() {
                 <p className="text-slate-700 font-medium">
                   ✅ รหัสของคุณได้ถูกยืนยันแล้ว
                 </p>
-                {/* <p className="text-slate-500 text-sm">
-                  รหัสนี้ได้ถูกใช้งานแล้วและไม่สามารถใช้ซ้ำได้
-                </p> */}
               </div>
             </div>
           ) : (
@@ -163,7 +175,7 @@ export default function LineChatBot() {
             </div>
           )}
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* How to Use in Line Chat Bot */}
       <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">

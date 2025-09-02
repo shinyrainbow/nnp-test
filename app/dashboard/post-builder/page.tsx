@@ -554,13 +554,13 @@ console.log(post, 2222)
                   <CardDescription>
                     <div className="flex items-center justify-between">
                       <span>{t("post.propertyDataDesc")}</span>
-                      <Button
+                      {/* <Button
                         onClick={loadMockData}
                         variant="outline"
                         size="sm"
                       >
                         {t("post.loadData")}
-                      </Button>
+                      </Button> */}
                     </div>
                   </CardDescription>
                 </CardHeader>

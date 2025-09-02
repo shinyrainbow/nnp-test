@@ -8,19 +8,21 @@ datasource db {
 }
 
 model User {
-  id                String         @id @default(uuid())
-  clerkId           String         @unique
-  email             String?        @unique
-  firstName         String?
-  lastName          String?
-  isPaid            Boolean        @default(false)
-  currentExpireDate DateTime?
-  imageUrl          String?
-  lineCode          Int            @default(2025)
-  isEnableLine      Boolean        @default(false)
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
-  PostTemplate      PostTemplate[]
+  id                       String                    @id @default(uuid())
+  clerkId                  String                    @unique
+  email                    String?                   @unique
+  firstName                String?
+  lastName                 String?
+  isPaid                   Boolean                   @default(false)
+  currentExpireDate        DateTime?
+  imageUrl                 String?
+  lineCode                 Int                       @default(2025)
+  isEnableLine             Boolean                   @default(false)
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  PostTemplate             PostTemplate[]
+  rentalContracts          RentalContract[]
+  purchaseAndSaleContracts PurchaseAndSaleContract[]
 }
 
 enum PropertyStatus {
@@ -117,6 +119,105 @@ model Property {
 model PostTemplate {
   id       String @id @default(uuid())
   template String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model RentalContract {
+  id String @id @default(uuid())
+
+  language      String
+  contractPlace String?
+  contractDate  String?
+
+  ownerName    String?
+  ownerAge     String?
+  ownerId      String?
+  ownerAddress String?
+  ownerPhone   String?
+
+  tenantName    String?
+  tenantAge     String?
+  tenantId      String?
+  tenantAddress String?
+  tenantPhone   String?
+
+  projectName    String?
+  projectFloor   String?
+  projectAddress String?
+
+  rentalPeriod String?
+  advance      String?
+  deposit      String?
+  tax          String?
+  commonFee    String?
+  bills        String?
+
+  dateReceive String?
+  rentalRate  String?
+  startDate   String?
+
+  subDistrict String?
+  district    String?
+  province    String?
+  rentDue     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model PurchaseAndSaleContract {
+  id String @id @default(uuid())
+
+  language      String
+  contractPlace String?
+  contractDate  String?
+
+  sellerName    String?
+  sellerAge     String?
+  sellerId      String?
+  sellerAddress String?
+  sellerPhone   String?
+
+  buyerName    String?
+  buyerAge     String?
+  buyerId      String?
+  buyerAddress String?
+  buyerPhone   String?
+
+  projectName        String?
+  projectFloor       String?
+  projectAddressNo   String?
+  projectAddress     String?
+  amenities          String?
+  chanot             String?
+  size               String?
+  deposit            String?
+  depositText        String?
+  sellPrice          String?
+  priceText          String?
+  remainingPrice     String?
+  remainingPriceText String?
+
+  subDistrict String?
+  district    String?
+  province    String?
+
+  speTax   String?
+  tax      String?
+  mortgage String?
+  transfer String?
+  stamp    String?
+
+  note1 String?
+  note2 String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
