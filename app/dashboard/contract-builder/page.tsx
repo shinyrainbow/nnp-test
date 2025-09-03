@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Plus, FileText, Calendar, User, Download, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/language-context";
@@ -381,9 +381,7 @@ export default function Contracts() {
     }
   };
   const { t } = useLanguage();
-  // if (loading) {
-  //   return <p className="p-4"></p>;
-  // }
+
   if (error) return <p className="p-4 text-red-500">{error}</p>;
 
   return (
