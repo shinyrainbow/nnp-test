@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Home } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 export default function Contracts() {
   const [rentalContracts, setRentalContracts] = useState([]);
@@ -385,6 +386,7 @@ export default function Contracts() {
   if (error) return <p className="p-4 text-red-500">{error}</p>;
 
   return (
+    <Suspense fallback={<div>Loading search params...</div>}>
     <div className="min-h-screen ">
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-4">
@@ -708,5 +710,6 @@ export default function Contracts() {
         </Tabs>
       )}
     </div>
+    </Suspense>
   );
 }
