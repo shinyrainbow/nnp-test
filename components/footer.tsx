@@ -10,7 +10,7 @@ export function Footer() {
     <footer className="bg-gray-900 text-white py-12">
       <div className="container mx-auto px-4">
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-4 gap-4">
           <div>
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <Building2 className="h-8 w-8 text-primary" />
@@ -43,8 +43,8 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Company</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><Link href="/about" className="hover:text-white">{t("privacyPolicy")}</Link></li>
-              <li><Link href="/privacy" className="hover:text-white">{t("termsOfService")}</Link></li>
+              <li><Link href="/privacy-policy" className="hover:text-white">{t("privacyPolicy")}</Link></li>
+              <li><Link href="/terms-of-service" className="hover:text-white">{t("termsOfService")}</Link></li>
             </ul>
           </div>
         </div>
