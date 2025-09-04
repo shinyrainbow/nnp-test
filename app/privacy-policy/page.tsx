@@ -14,11 +14,7 @@ export default function PrivacyPolicy() {
           <h1 className="text-3xl font-bold mb-6 text-center">
             {t("privacyPolicy")} – NainaHub
           </h1>
-          {/* <p className="text-center text-gray-500 mb-12">
-            Effective Date: [Insert Date]
-          </p> */}
 
-          {/* English Version */}
           {language === "en" ? (
             <section className="mb-12">
               <p className="mb-4">

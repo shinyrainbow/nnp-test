@@ -20,6 +20,12 @@ export const translations = {
 
     subtitle: "Find your perfect property from {count} available listings",
 
+    // Authenthication
+    signUpTitle: "Get Started",
+    signUpDescription: "Create your Naina Hub account free!",
+    signInTitle: "Welcome Back",
+    signInDescription: "Sign in to your Naina Hub account",
+
     // Navigation
     features: "Features",
     pricing: "Pricing",
@@ -783,6 +789,13 @@ export const translations = {
       "ชุดเครื่องมือครบวงจรที่จะช่วยให้เอเจนต์อสังหาฯ ทำงานได้มีประสิทธิภาพยิ่งขึ้น และปิดดีลได้มากกว่าเดิม",
 
     subtitle: "ค้นหาอสังหาริมทรัพย์ที่เหมาะกับคุณจาก {count} รายการที่มีอยู่",
+
+    // Authenthication
+    signUpTitle: "สมัครสมาชิก",
+    signUpDescription: "ลงทะเบียนเข้าระบบ Naina Hub ฟรี",
+    signInTitle: "ยินดีต้อนรับกลับ",
+    signInDescription: "เข้าสู่ระบบ Naina Hub ",
+
     // Navigation
     features: "บริการของเรา",
     pricing: "ราคา",
