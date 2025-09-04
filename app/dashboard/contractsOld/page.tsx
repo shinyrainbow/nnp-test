@@ -68,7 +68,6 @@ export default function ContractsPage() {
 
   const onSubmit = async (data: ContractFormData) => {
     try {
-      console.log('Contract data:', data)
       // Here you would typically send the data to your API
       alert('Contract created successfully!')
       form.reset()

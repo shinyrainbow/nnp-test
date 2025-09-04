@@ -202,10 +202,7 @@ export default function PropertyPostCreator() {
 
   const generatePost = () => {
     if (!template) return "";
-console.log(propertyData, 22333344)
     let post = template;
-    console.log(post, 111111)
-    // selectedTemplate.format;
 
     defaultFields.forEach((field) => {
       const value = propertyData[field.id] || "";
@@ -214,7 +211,6 @@ console.log(propertyData, 22333344)
       post = post.replace(new RegExp(`{${field.id}}`, "g"), value);
       post = post.replace(new RegExp(`{emoji:${field.id}}`, "g"), emoji);
     });
-console.log(post, 2222)
     return post;
   };
 
@@ -223,7 +219,7 @@ console.log(post, 2222)
 
     try {
       await navigator.clipboard.writeText(post);
-      // console.log("helloooooo");
+
       setCopiedStates(true);
 
       // Reset the copied state after 2 seconds

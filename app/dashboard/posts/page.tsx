@@ -153,7 +153,7 @@ const Posts = () => {
     try {
       const response = await fetch(`/api/posts?access_token=${pageAccessToken}`)
       const data = await response.json()
-console.log(data, 555555)
+
       if (data.error) {
         console.error("Error loading scheduled posts:", data.error)
         return

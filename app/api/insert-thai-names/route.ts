@@ -10,7 +10,6 @@ export async function PUT(req) {
         const projectData = await req.json();
 
        const xxx = projectData.map((dd, index) => {
-        console.log(dd, 11111)
             return prisma.project.update({
                 where: {
                     projectCode: index+1,

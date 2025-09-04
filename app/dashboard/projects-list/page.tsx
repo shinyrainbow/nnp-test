@@ -131,8 +131,7 @@ export default function ProjectsPage() {
 
   // const names = projects.map((project) => project.projectNameEn);
   const newProjects = projects.sort((a, b) => a.projectNameEn.localeCompare(b.projectNameEn));
-console.log(newProjects, 4444444)
-  // console.log(names);
+
   // const first = names.slice(0, 100);
   // console.log("first:", first);
   // const second = names.slice(100, 200);

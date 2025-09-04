@@ -75,7 +75,7 @@ export default function ClientsPage() {
 
   const onSubmit = async (data: ClientFormData) => {
     try {
-      console.log('Client data:', data)
+
       toast({
         title: "Client Added",
         description: "New client has been added successfully.",

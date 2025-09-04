@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
     } = contractData;
 
     const hello = await prisma.rentalContract.findMany();
-    console.log(hello, 9999999999999);
+
     const contractCreated = await prisma.rentalContract.create({
       data: {
         id: randomUUID(),
@@ -141,13 +141,11 @@ export async function POST(request: NextRequest) {
         userId: userDb.id,
       },
     });
-    console.log(contractCreated, 3333);
 
     return NextResponse.json({
       message: "Rental contract saved successfully",
     });
   } catch (error) {
-    console.log(error, 999999);
     return NextResponse.json(
       { error: "Failed to save template" },
       { status: 500 }

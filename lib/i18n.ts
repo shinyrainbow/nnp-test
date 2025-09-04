@@ -99,9 +99,9 @@ export const translations = {
     "tasks.followUp": "Follow up with potential client",
     "tasks.friday": "Friday",
 
-    "stats.commission": "Total commission",
-    "stats.totalRent": "Rent Deal Closed",
-    "stats.totalSell": "Sell Closed",
+    "stats.commission": "Total Closed Deals",
+    "stats.totalRent": "Total Rental",
+    "stats.totalSell": "Total Sales",
     "stats.totalVisit": "Total visit",
 
     // line chat bot
@@ -228,8 +228,8 @@ export const translations = {
     "calendar.form.clientName.label": "Client Name *",
     "calendar.form.clientName.placeholder": "John Doe",
 
-    "calendar.form.clientPhone.label": "Client Phone *",
-    "calendar.form.clientPhone.placeholder": "+1 (555) 123-4567",
+    "calendar.form.clientContact.label": "Client Contact",
+    "calendar.form.clientContact.placeholder": "090-123-4567",
 
     "calendar.form.clientEmail.label": "Client Email *",
     "calendar.form.clientEmail.placeholder": "john@example.com",
@@ -240,7 +240,9 @@ export const translations = {
     "calendar.form.appointmentType.consultation": "Consultation",
     "calendar.form.appointmentType.signing": "Contract Signing",
     "calendar.form.appointmentType.inspection": "Property Inspection",
+    "calendar.form.appointmentType.transfer": "Transfer Ownership",
     "calendar.form.appointmentType.meeting": "Client Meeting",
+    "calendar.form.appointmentType.others": "Others",
 
     "calendar.form.propertyAddress.label": "Property Address *",
     "calendar.form.propertyAddress.placeholder": "123 Main Street, City, State",
@@ -274,21 +276,21 @@ export const translations = {
     "calendar.upcoming.title": "Upcoming",
     "calendar.upcoming.description": "Next appointments",
 
-    "calendar.tabs.allAppointments": "All Appointments",
-    "calendar.tabs.calendarView": "Calendar View",
+    "calendar.tabs.allAppointments": "Upcoming Appointments",
+    "calendar.tabs.calendarView": "History",
 
-    "calendar.allAppointments.title": "All Appointments",
+    "calendar.allAppointments.title": "Upcoming Appointments",
     "calendar.allAppointments.description":
-      "Complete list of your scheduled appointments",
+      "List of your scheduled appointments",
 
-    "calendar.calendarView.title": "Calendar View",
-    "calendar.calendarView.description": "Visual calendar representation",
+    "calendar.calendarView.title": "History",
+    "calendar.calendarView.description": "List of Appointment History",
 
     "calendar.calendarView.emptyMessage1":
       "Calendar view will be implemented with a calendar component",
     "calendar.calendarView.emptyMessage2":
       "This would show appointments in a monthly/weekly grid format",
-
+"calendar.at": "at",
     // Dashboard Menu
     "menu.dashboard": "Dashboard",
     "menu.propertyListings": "Listings",
@@ -803,7 +805,7 @@ export const translations = {
     dashboard: "แดชบอร์ด",
     signIn: "เข้าสู่ระบบ",
     signOut: "ออกจากระบบ",
-    getStarted: "เริ่มต้นใช้งาน",
+    getStarted: "เริ่มต้นใช้งานฟรี",
 
     // Hero Section
     heroTitle: "เครื่องมือสำหรับ",
@@ -857,10 +859,10 @@ export const translations = {
     "tasks.followUp": "ติดตามลูกค้าเป้าหมาย",
     "tasks.friday": "วันศุกร์",
 
-    "stats.commission": "ค่าคอมมิชชันรวม",
+    "stats.commission": "ปิดดีลทั้งหมด",
     "stats.totalRent": "รวมดีลเช่า",
     "stats.totalSell": "รวมดีลขาย",
-    "stats.totalVisit": "จำนวนครั้งเปิดทรัพย์",
+    "stats.totalVisit": "จำนวนนัดหมาย",
 
     // line chat bot
     "line.title": "รหัสเข้าใช้งาน",
@@ -972,8 +974,8 @@ export const translations = {
     // calendar TH
     "calendar.title": "ปฏิทินและนัดหมาย",
     "calendar.description": "จัดการตารางเวลาของคุณและการนัดหมายกับลูกค้า",
-    "calendar.addButton": "กำหนดเวลานัดหมาย",
-    "calendar.dialogTitle": "กำหนดเวลานัดหมายใหม่",
+    "calendar.addButton": "สร้างนัดหมายใหม่",
+    "calendar.dialogTitle": "สร้างนัดหมายใหม่",
     "calendar.dialogDescription": "สร้างนัดหมายใหม่กับลูกค้า",
 
     "calendar.form.title.label": "หัวข้อการนัดหมาย *",
@@ -982,19 +984,21 @@ export const translations = {
     "calendar.form.clientName.label": "ชื่อลูกค้า *",
     "calendar.form.clientName.placeholder": "จอห์น โด",
 
-    "calendar.form.clientPhone.label": "เบอร์โทรลูกค้า *",
-    "calendar.form.clientPhone.placeholder": "+1 (555) 123-4567",
+    "calendar.form.clientContact.label": "เบอร์/ไลน์ ติดต่อลูกค้า",
+    "calendar.form.clientContact.placeholder": "090-123-4567",
 
     "calendar.form.clientEmail.label": "อีเมลลูกค้า *",
     "calendar.form.clientEmail.placeholder": "john@example.com",
 
     "calendar.form.appointmentType.label": "ประเภทการนัดหมาย *",
     "calendar.form.appointmentType.placeholder": "เลือกประเภท",
-    "calendar.form.appointmentType.viewing": "ดูทรัพย์สิน",
+    "calendar.form.appointmentType.viewing": "ดูทรัพย์",
     "calendar.form.appointmentType.consultation": "ปรึกษา",
     "calendar.form.appointmentType.signing": "เซ็นสัญญา",
-    "calendar.form.appointmentType.inspection": "ตรวจสอบทรัพย์สิน",
+    "calendar.form.appointmentType.inspection": "ประเมินทรัพย์",
+    "calendar.form.appointmentType.transfer": "โอนทรัพย์",
     "calendar.form.appointmentType.meeting": "ประชุมลูกค้า",
+    "calendar.form.appointmentType.others": "อื่นๆ",
 
     "calendar.form.propertyAddress.label": "ที่อยู่ทรัพย์สิน *",
     "calendar.form.propertyAddress.placeholder": "123 ถนนหลัก, เมือง, รัฐ",
@@ -1028,20 +1032,21 @@ export const translations = {
     "calendar.upcoming.title": "นัดหมายถัดไป",
     "calendar.upcoming.description": "นัดหมายถัดไป",
 
-    "calendar.tabs.allAppointments": "นัดหมายทั้งหมด",
-    "calendar.tabs.calendarView": "มุมมองปฏิทิน",
+    "calendar.tabs.allAppointments": "นัดหมายที่กำลังจะถึง",
+    "calendar.tabs.calendarView": "ประวัติการนัดหมาย",
 
-    "calendar.allAppointments.title": "นัดหมายทั้งหมด",
-    "calendar.allAppointments.description": "รายการนัดหมายทั้งหมดของคุณ",
+    "calendar.allAppointments.title": "การนัดหมาย",
+    "calendar.allAppointments.description": "รายการนัดหมายที่กำลังจะมาถึง",
 
-    "calendar.calendarView.title": "มุมมองปฏิทิน",
-    "calendar.calendarView.description": "การแสดงผลปฏิทิน",
+    "calendar.calendarView.title": "ประวัติการนัดหมาย",
+    "calendar.calendarView.description": "แสดงนัดหมายที่ผ่านมา",
 
     "calendar.calendarView.emptyMessage1":
       "มุมมองปฏิทินจะถูกสร้างด้วยคอมโพเนนต์ปฏิทิน",
     "calendar.calendarView.emptyMessage2":
       "จะแสดงนัดหมายในรูปแบบตารางรายเดือน/รายสัปดาห์",
 
+      "calendar.at": "เวลา",
     // Dashboard Menu
     "menu.dashboard": "แดชบอร์ด",
     "menu.propertyListings": "รายการทรัพย์สิน",

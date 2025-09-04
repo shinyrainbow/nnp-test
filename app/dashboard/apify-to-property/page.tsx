@@ -192,8 +192,6 @@ export default function ApifyToProperty() {
     URL.revokeObjectURL(url);
   };
 
-  console.log(properties);
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <button onClick={apifyToProperty}>convert</button>

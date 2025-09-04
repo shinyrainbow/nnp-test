@@ -13,17 +13,51 @@ import { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { Badge } from '@/components/ui/badge'
+import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
 
-import { TrendingUp } from 'lucide-react'
+import { TrendingUp } from "lucide-react";
+import { getTypeIcon } from "./calendar/page";
 
 const stats = [
-  { title: "stats.commission", value: "345,000", change: "+12%", icon: Calendar , added: "+12,000"},
-  { title: "stats.totalRent", value: "21", change: "+8%", icon: FileText, added: "2" },
-  { title: "stats.totalSell", value: "4", change: "-3%", icon: Users ,added: "-5"},
-  { title: "stats.totalVisit", value: "120", change: "+5%", icon: Calendar , added: "20"},
+  {
+    title: "stats.commission",
+    type: "totalDeals",
+    value: "34",
+    change: "+12%",
+    icon: Calendar,
+    added: "+12,000",
+  },
+  {
+    title: "stats.totalRent",
+    type: "totalRentalDeals",
+    value: "21",
+    change: "+8%",
+    icon: FileText,
+    added: "2",
+  },
+  {
+    title: "stats.totalSell",
+    type: "totalSaleDeals",
+    value: "4",
+    change: "-3%",
+    icon: Users,
+    added: "-5",
+  },
+  {
+    title: "stats.totalVisit",
+    type: "totalVisit",
+    value: "120",
+    change: "+5%",
+    icon: Calendar,
+    added: "20",
+  },
 ];
 
+function capitalizeFirst(str: string) {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 const marketData = {
   overview: {
@@ -33,31 +67,60 @@ const marketData = {
     rentChange: 12.3,
     daysOnMarket: 28,
     marketChange: -15.2,
-    inventoryLevel: 2.8
+    inventoryLevel: 2.8,
   },
   neighborhoods: [
-    { name: 'Downtown', avgPrice: 650000, change: 12.5, inventory: 45, hotness: 95 },
-    { name: 'Midtown', avgPrice: 520000, change: 8.2, inventory: 67, hotness: 78 },
-    { name: 'Suburbs North', avgPrice: 420000, change: 5.1, inventory: 89, hotness: 65 },
-    { name: 'Suburbs South', avgPrice: 380000, change: 3.8, inventory: 112, hotness: 52 },
-    { name: 'Waterfront', avgPrice: 750000, change: 15.2, inventory: 23, hotness: 88 }
+    {
+      name: "Downtown",
+      avgPrice: 650000,
+      change: 12.5,
+      inventory: 45,
+      hotness: 95,
+    },
+    {
+      name: "Midtown",
+      avgPrice: 520000,
+      change: 8.2,
+      inventory: 67,
+      hotness: 78,
+    },
+    {
+      name: "Suburbs North",
+      avgPrice: 420000,
+      change: 5.1,
+      inventory: 89,
+      hotness: 65,
+    },
+    {
+      name: "Suburbs South",
+      avgPrice: 380000,
+      change: 3.8,
+      inventory: 112,
+      hotness: 52,
+    },
+    {
+      name: "Waterfront",
+      avgPrice: 750000,
+      change: 15.2,
+      inventory: 23,
+      hotness: 88,
+    },
   ],
   trends: [
-    { month: 'Jan', sales: 145, avgPrice: 465000, inventory: 320 },
-    { month: 'Feb', sales: 167, avgPrice: 472000, inventory: 298 },
-    { month: 'Mar', sales: 189, avgPrice: 478000, inventory: 275 },
-    { month: 'Apr', sales: 203, avgPrice: 485000, inventory: 252 },
-    { month: 'May', sales: 198, avgPrice: 492000, inventory: 234 },
-    { month: 'Jun', sales: 221, avgPrice: 498000, inventory: 218 }
+    { month: "Jan", sales: 145, avgPrice: 465000, inventory: 320 },
+    { month: "Feb", sales: 167, avgPrice: 472000, inventory: 298 },
+    { month: "Mar", sales: 189, avgPrice: 478000, inventory: 275 },
+    { month: "Apr", sales: 203, avgPrice: 485000, inventory: 252 },
+    { month: "May", sales: 198, avgPrice: 492000, inventory: 234 },
+    { month: "Jun", sales: 221, avgPrice: 498000, inventory: 218 },
   ],
   predictions: [
-    { metric: 'Price Growth', current: 8.5, predicted: 6.2, confidence: 78 },
-    { metric: 'Sales Volume', current: 221, predicted: 235, confidence: 82 },
-    { metric: 'Inventory', current: 218, predicted: 195, confidence: 71 },
-    { metric: 'Days on Market', current: 28, predicted: 24, confidence: 85 }
-  ]
-}
-
+    { metric: "Price Growth", current: 8.5, predicted: 6.2, confidence: 78 },
+    { metric: "Sales Volume", current: 221, predicted: 235, confidence: 82 },
+    { metric: "Inventory", current: 218, predicted: 195, confidence: 71 },
+    { metric: "Days on Market", current: 28, predicted: 24, confidence: 85 },
+  ],
+};
 
 export default function Dashboard() {
   const { t } = useLanguage();
@@ -73,7 +136,7 @@ export default function Dashboard() {
       if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status}`);
       }
-      console.log(res);
+
       setUser(res);
     } catch (err: any) {
       setError(err.message || "Something went wrong");
@@ -81,6 +144,30 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
+  const { toast } = useToast();
+  const [appointments, setAppointments] = useState([]);
+
+  const fetchAppointments = async () => {
+    try {
+      const res = await fetch("/api/appointments");
+      const data = await res.json();
+
+      setAppointments(data);
+      toast({
+        title: "Appointment Scheduled",
+        description: "Get appointments.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to get schedule appointment. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+  useEffect(() => {
+    fetchAppointments();
+  }, []);
 
   useEffect(() => {
     fetchUser();
@@ -115,15 +202,14 @@ export default function Dashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stat.value}</div>
-              <p className="text-xs text-green-600">
+              {/* <p className="text-xs text-green-600">
                 {stat.added} {t("stats.changeFromLastMonth")}
-              </p>
+              </p> */}
             </CardContent>
           </Card>
         ))}
       </div>
 
-     
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -147,7 +233,7 @@ export default function Dashboard() {
                 <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                 <div className="flex-1">
                   <p className="text-sm font-medium">
-                    {t("activity.contractSigned")} 
+                    {t("activity.contractSigned")}
                   </p>
                   {/* <p className="text-xs text-gray-500">
                     {t("activity.hoursAgo", { count: 5 })}
@@ -176,34 +262,19 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="flex items-center space-x-4">
-                <Calendar className="h-4 w-4 text-primary" />
-                <div className="flex-1">
-                  <p className="text-sm font-medium">{t("tasks.viewing")}</p>
-                  <p className="text-xs text-gray-500">{t("tasks.today")}</p>
+              {appointments.map((task, i) => (
+                <div key={i} className="flex items-center space-x-4">
+                  {getTypeIcon(task.appointmentType)}
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">{capitalizeFirst(t(task.appointmentType))}</p>
+                    <p className="text-xs text-gray-500">{task.clientName}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <FileText className="h-4 w-4 text-blue-500" />
-                <div className="flex-1">
-                  <p className="text-sm font-medium">
-                    {t("tasks.reviewContract")}
-                  </p>
-                  <p className="text-xs text-gray-500">{t("tasks.tomorrow")}</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4">
-                <Users className="h-4 w-4 text-green-500" />
-                <div className="flex-1">
-                  <p className="text-sm font-medium">{t("tasks.followUp")}</p>
-                  <p className="text-xs text-gray-500">{t("tasks.friday")}</p>
-                </div>
-              </div>
+              ))}
             </div>
           </CardContent>
         </Card>
       </div>
-
 
       <Tabs defaultValue="location" className="space-y-4">
         <TabsList>
@@ -351,7 +422,6 @@ export default function Dashboard() {
           </div>
         </TabsContent>
 
-    
         <TabsContent value="predictions" className="space-y-4">
           <Card>
             <CardHeader>

@@ -20,7 +20,6 @@ const defaultTemplate =
 
 export async function GET() {
   const user = await currentUser();
-  console.log(user, 666666)
   if (!user) return Response.json({ error: "Not signed in" }, { status: 401 });
 
   let dbUser = await prisma.user.findUnique({

@@ -100,7 +100,6 @@ export default function CommissionPage() {
 
   const onSubmit = async (data: CommissionFormData) => {
     try {
-      console.log('Commission data:', data)
       toast({
         title: "Commission Added",
         description: "New commission record has been added successfully.",

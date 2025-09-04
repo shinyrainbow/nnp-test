@@ -53,7 +53,6 @@ const App = () => {
         body: formData,
       });
 
-      console.log("res", response)
       const result = await response.json();
 
       if (response.ok) {
