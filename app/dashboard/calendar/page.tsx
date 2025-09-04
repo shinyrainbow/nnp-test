@@ -161,6 +161,7 @@ export default function CalendarPage() {
         <h1 className="text-3xl font-bold text-gray-900">{t("calendar.title")}</h1>
         <p className="text-gray-600">{t("calendar.description")}</p>
       </div>
+      
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <Button>
