@@ -20,6 +20,7 @@ const defaultTemplate =
 
 export async function GET() {
   const user = await currentUser();
+  console.log(user, 666666)
   if (!user) return Response.json({ error: "Not signed in" }, { status: 401 });
 
   let dbUser = await prisma.user.findUnique({
@@ -31,7 +32,6 @@ export async function GET() {
       orderBy: { lineCode: "desc" },
     });
     const nextLineCode = lastUser ? lastUser.lineCode + 1 : 2025;
-    console.log(JSON.stringify(user), 9999)
 
     dbUser = await prisma.user.create({
       data: {

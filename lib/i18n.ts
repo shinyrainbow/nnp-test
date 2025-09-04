@@ -65,6 +65,10 @@ export const translations = {
     // clientManagement: "Client Management",
     // clientManagementDesc: "Manage leads and nurture relationships",
 
+    // footer
+    privacyPolicy: "Privacy Policy",
+    termsOfService: "Terms of Service",
+
     // Dashboard
     "dashboard.title": "Dashboard",
     "dashboard.welcome":
@@ -90,9 +94,9 @@ export const translations = {
     "tasks.friday": "Friday",
 
     "stats.commission": "Total commission",
-    "stats.totalRent": "Rent Deal Closed", 
-    "stats.totalSell": "Sell Closed", 
-    "stats.totalVisit": "Total visit", 
+    "stats.totalRent": "Rent Deal Closed",
+    "stats.totalSell": "Sell Closed",
+    "stats.totalVisit": "Total visit",
 
     // line chat bot
     "line.title": "Access Code",
@@ -658,7 +662,7 @@ export const translations = {
     "contact.messagePlaceholder": "Tell us how we can help you...",
 
     "contact.submit": "Send Message",
-    "contact.address1": "317/1 Sukhumvit 66/1 Soi 13",
+    "contact.address1": "317/1 Sukhumvit 66/1 Rd, Yaek 13",
     "contact.address2": "Bang Chak Subdistrict, Phra Khanong District",
     "contact.address3": "Bangkok",
 
@@ -668,16 +672,16 @@ export const translations = {
     "contracts.title.buySell": "Buy/Sell Contracts",
     "contracts.subtitle.rent":
       "Manage your rental agreements and tenant information",
-    "contracts.subtitle.buySell":
-      "Manage your purchase and sell agreements",
-'contract.languageTH':"Thai version",
- 'contract.languageEN':"English version",
-
+    "contracts.subtitle.buySell": "Manage your purchase and sell agreements",
+    "contract.languageTH": "Thai version",
+    "contract.languageEN": "English version",
 
     "contracts.createNew.rental": "Create New Rental Contract",
-   "contracts.createNew.rentalDesc":  "Fill in the details below to generate a rental agreement",
+    "contracts.createNew.rentalDesc":
+      "Fill in the details below to generate a rental agreement",
     "contracts.createNew.buySell": "Create New Purchase and Sell Contract",
-    "contracts.createNew.buySellDesc": "Fill in the details below to generate a purchase and sell agreement",
+    "contracts.createNew.buySellDesc":
+      "Fill in the details below to generate a purchase and sell agreement",
 
     "contracts.stats.total": "Total Contracts",
     "contracts.stats.active": "Active Contracts",
@@ -813,6 +817,9 @@ export const translations = {
     clientManagement: "การจัดการลูกค้า",
     clientManagementDesc: "จัดระเบียบลูกค้าเป้าหมายและรักษาความสัมพันธ์",
 
+    // footer
+    privacyPolicy: "นโยบายความเป็นส่วนตัว",
+    termsOfService: "เงื่อนไขการให้บริการ",
     // Dashboard
     "dashboard.title": "แดชบอร์ด",
     "dashboard.welcome":
@@ -838,9 +845,9 @@ export const translations = {
     "tasks.friday": "วันศุกร์",
 
     "stats.commission": "ค่าคอมมิชชันรวม",
-    "stats.totalRent": "รวมดีลเช่า", 
-    "stats.totalSell": "รวมดีลขาย", 
-    "stats.totalVisit": "จำนวนครั้งเปิดทรัพย์", 
+    "stats.totalRent": "รวมดีลเช่า",
+    "stats.totalSell": "รวมดีลขาย",
+    "stats.totalVisit": "จำนวนครั้งเปิดทรัพย์",
 
     // line chat bot
     "line.title": "รหัสเข้าใช้งาน",
@@ -1418,13 +1425,15 @@ export const translations = {
     "contracts.title.buySell": "สัญญาจะซื้อจะขาย",
     "contracts.subtitle.rent": "จัดการสัญญาเช่าและข้อมูลผู้เช่า",
     "contracts.subtitle.buySell": "จัดการสัญญาซื้อ/ขายและข้อมูลผู้ซื้อขาย",
-'contract.languageTH':"ภาษาไทย",
- 'contract.languageEN':"ภาษาอังกฤษ",
+    "contract.languageTH": "ภาษาไทย",
+    "contract.languageEN": "ภาษาอังกฤษ",
 
     "contracts.createNew.rental": "สร้างสัญญาเช่าใหม่",
-    "contracts.createNew.rentalDesc": "พิมพ์รายละเอียดในช่องว่างเพื่อสร้างสัญญาเช่าใหม่",
+    "contracts.createNew.rentalDesc":
+      "พิมพ์รายละเอียดในช่องว่างเพื่อสร้างสัญญาเช่าใหม่",
     "contracts.createNew.buySell": "สร้างสัญญาจะซื้อจะขายใหม่",
-    "contracts.createNew.buySellDesc":"พิมพ์รายละเอียดในช่องว่างเพื่อสร้างสัญญาจะซื้อจะขายใหม่",
+    "contracts.createNew.buySellDesc":
+      "พิมพ์รายละเอียดในช่องว่างเพื่อสร้างสัญญาจะซื้อจะขายใหม่",
 
     "contracts.stats.total": "จำนวนสัญญาทั้งหมด",
     "contracts.stats.active": "สัญญาที่ใช้งานอยู่",
