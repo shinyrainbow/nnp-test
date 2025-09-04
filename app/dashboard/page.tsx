@@ -17,7 +17,12 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 
 import { TrendingUp } from "lucide-react";
-import { getTypeIcon } from "./calendar/page";
+import {
+  formatted,
+  getAppointmentType,
+  getTypeIcon,
+  getUpcomingAppointments,
+} from "./calendar/page";
 
 const stats = [
   {
@@ -146,7 +151,7 @@ export default function Dashboard() {
   };
   const { toast } = useToast();
   const [appointments, setAppointments] = useState([]);
-
+  const upcoming = getUpcomingAppointments(appointments);
   const fetchAppointments = async () => {
     try {
       const res = await fetch("/api/appointments");
@@ -165,13 +170,65 @@ export default function Dashboard() {
       });
     }
   };
-  useEffect(() => {
-    fetchAppointments();
-  }, []);
+
+  const [rentalContracts, setRentalContracts] = useState(0);
+  const fetchRentalContract = async () => {
+    try {
+      const res = await fetch("/api/save-rental-contract");
+      const data = await res.json();
+
+      if (data.contracts) {
+        setRentalContracts(data.contracts.length);
+      }
+    } catch (error) {}
+  };
+
+  const [saleContracts, setSaleContracts] = useState(0);
+  const fetchSaleContract = async () => {
+    try {
+      const res = await fetch("/api/save-purchase-and-sale-contract");
+      const data = await res.json();
+
+      if (data.contracts) {
+        setSaleContracts(data.contracts.length);
+      }
+    } catch (error) {}
+  };
+
+  const getStatValue = (type) => {
+    switch (type) {
+      case "totalDeals":
+        return saleContracts + rentalContracts;
+      case "totalRentalDeals":
+        return rentalContracts;
+      case "totalSaleDeals":
+        return saleContracts;
+      case "totalVisit":
+        return appointments.length;
+    }
+  };
 
   useEffect(() => {
     fetchUser();
+    fetchRentalContract();
+    fetchSaleContract();
+    fetchAppointments();
   }, []);
+
+  const getAppointmentType = (type: string) => {
+    switch (type) {
+      case "viewing":
+        return t("calendar.form.appointmentType.viewing");
+      case "signing":
+        return t("calendar.form.appointmentType.signing");
+      case "inspection":
+        return t("calendar.form.appointmentType.inspection");
+      case "transfer":
+        return t("calendar.form.appointmentType.transfer");
+      case "others":
+        return t("calendar.form.appointmentType.others");
+    }
+  };
 
   if (!user) {
     return (
@@ -201,7 +258,9 @@ export default function Dashboard() {
               <stat.icon className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
+              <div className="text-2xl font-bold">
+                {getStatValue(stat.type)}
+              </div>
               {/* <p className="text-xs text-green-600">
                 {stat.added} {t("stats.changeFromLastMonth")}
               </p> */}
@@ -261,12 +320,17 @@ export default function Dashboard() {
             <CardDescription>{t("dashboard.tasksToDo")}</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {appointments.map((task, i) => (
+            <div className="space-y-4 max-h-[200px] overflow-y-auto">
+              {upcoming.map((task, i) => (
                 <div key={i} className="flex items-center space-x-4">
                   {getTypeIcon(task.appointmentType)}
                   <div className="flex-1">
-                    <p className="text-sm font-medium">{capitalizeFirst(t(task.appointmentType))}</p>
+                    <p className="text-sm font-medium">
+                      {capitalizeFirst(
+                        t(getAppointmentType(task.appointmentType))
+                      )}{" "}
+                      - {formatted(task.date)} - {task.time}
+                    </p>
                     <p className="text-xs text-gray-500">{task.clientName}</p>
                   </div>
                 </div>
@@ -276,7 +340,73 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      <Tabs defaultValue="location" className="space-y-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Location Analysis</CardTitle>
+          <CardDescription>
+            Compare different areas in your market
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {marketData.neighborhoods.map((neighborhood, index) => (
+              <div
+                key={neighborhood.name}
+                className="flex items-center justify-between p-4 border rounded-lg"
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <MapPin className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">{neighborhood.name}</h3>
+                    <p className="text-sm text-gray-500">
+                      {neighborhood.inventory} active listings
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-6">
+                  <div className="text-right">
+                    <p className="font-semibold">
+                      ${neighborhood.avgPrice.toLocaleString()}
+                    </p>
+                    <div className="flex items-center text-xs">
+                      <TrendingUp className="mr-1 h-3 w-3 text-green-500" />
+                      <span className="text-green-500">
+                        +{neighborhood.change}%
+                      </span>
+                    </div>
+                  </div>
+                  <div className="w-24">
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span>Hotness</span>
+                      <span>{neighborhood.hotness}%</span>
+                    </div>
+                    <Progress value={neighborhood.hotness} className="h-2" />
+                  </div>
+                  <Badge
+                    variant={
+                      neighborhood.hotness > 80
+                        ? "default"
+                        : neighborhood.hotness > 60
+                        ? "secondary"
+                        : "outline"
+                    }
+                  >
+                    {neighborhood.hotness > 80
+                      ? "Hot"
+                      : neighborhood.hotness > 60
+                      ? "Warm"
+                      : "Cool"}
+                  </Badge>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* <Tabs defaultValue="location" className="space-y-4">
         <TabsList>
           <TabsTrigger value="location">Location</TabsTrigger>
           <TabsTrigger value="trends">Market Trends</TabsTrigger>
@@ -472,7 +602,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
         </TabsContent>
-      </Tabs>
+      </Tabs> */}
     </div>
   );
 }

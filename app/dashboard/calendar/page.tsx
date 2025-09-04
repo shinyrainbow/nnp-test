@@ -49,6 +49,28 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/language-context";
 
+
+export function buildAppointmentDate(appt) {
+  const datePart = new Date(appt.date); // base date
+  const [hours, minutes] = appt.time.split(":").map(Number);
+
+  const appointmentDate = new Date(datePart);
+  appointmentDate.setHours(hours, minutes, 0, 0);
+
+  return appointmentDate;
+}
+
+export function getUpcomingAppointments(data) {
+  const now = new Date();
+  return data
+    .filter((appt) => buildAppointmentDate(appt) > now)
+    .sort(
+      (a, b) =>
+        buildAppointmentDate(a).getTime() - buildAppointmentDate(b).getTime()
+    ); // soonest first
+}
+
+
 export const getTypeColor = (type: string) => {
   switch (type) {
     case "viewing":
@@ -79,6 +101,7 @@ export const getTypeIcon = (type: string) => {
   }
 };
 
+
 const appointmentSchema = z.object({
   clientName: z.string().min(2, "Client name is required"),
   clientContact: z.string().optional(),
@@ -90,6 +113,13 @@ const appointmentSchema = z.object({
 
 type AppointmentFormData = z.infer<typeof appointmentSchema>;
 
+export const formatted = (isoDate) => {
+  return new Date(isoDate).toLocaleDateString("th-TH", {
+    day: "numeric",
+    month: "short", // "ม.ค."
+    year: "numeric", // Buddhist year (พ.ศ.)
+  });
+};
 export default function CalendarPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
@@ -129,20 +159,7 @@ export default function CalendarPage() {
     fetchAppointments();
   }, []);
 
-  const getAppointmentType = (type: string) => {
-    switch (type) {
-      case "viewing":
-        return t("calendar.form.appointmentType.viewing");
-      case "signing":
-        return t("calendar.form.appointmentType.signing");
-      case "inspection":
-        return t("calendar.form.appointmentType.inspection");
-      case "transfer":
-        return t("calendar.form.appointmentType.transfer");
-      case "others":
-        return t("calendar.form.appointmentType.others");
-    }
-  };
+
   const onSubmit = async (data: AppointmentFormData) => {
     try {
       await fetch("/api/appointments", {
@@ -174,24 +191,15 @@ export default function CalendarPage() {
     }
   };
 
-  function buildAppointmentDate(appt: (typeof appointments)[number]) {
-    const datePart = new Date(appt.date); // base date
-    const [hours, minutes] = appt.time.split(":").map(Number);
-
-    const appointmentDate = new Date(datePart);
-    appointmentDate.setHours(hours, minutes, 0, 0);
-
-    return appointmentDate;
-  }
-
-  function getUpcomingAppointments(data: typeof appointments) {
-    const now = new Date();
-    return data.filter((appt) => buildAppointmentDate(appt) > now);
-  }
 
   function getPreviousAppointments(data: typeof appointments) {
     const now = new Date();
-    return data.filter((appt) => buildAppointmentDate(appt) <= now);
+    return data
+      .filter((appt) => buildAppointmentDate(appt) <= now)
+      .sort(
+        (a, b) =>
+          buildAppointmentDate(b).getTime() - buildAppointmentDate(a).getTime()
+      ); // latest first
   }
 
   const upcoming = getUpcomingAppointments(appointments);
@@ -215,14 +223,23 @@ export default function CalendarPage() {
       });
     }
   };
-  const formatted = (isoDate) => {
-    return new Date(isoDate).toLocaleDateString("th-TH", {
-      day: "numeric",
-      month: "short", // "ม.ค."
-      year: "numeric", // Buddhist year (พ.ศ.)
-    });
-  };
+
   const { t } = useLanguage();
+
+  const getAppointmentType = (type: string) => {
+    switch (type) {
+      case "viewing":
+        return t("calendar.form.appointmentType.viewing");
+      case "signing":
+        return t("calendar.form.appointmentType.signing");
+      case "inspection":
+        return t("calendar.form.appointmentType.inspection");
+      case "transfer":
+        return t("calendar.form.appointmentType.transfer");
+      case "others":
+        return t("calendar.form.appointmentType.others");
+    }
+  };
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
