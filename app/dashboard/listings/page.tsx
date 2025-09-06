@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Search,
-  MapPin,
   Building,
   Bed,
   Bath,
@@ -133,6 +132,8 @@ export default function PropertySearch() {
 
       const response = await res.json();
       const { data, limit, total, page } = response;
+      setLoading(false);
+
       setProperties(data);
       setTotalSearchResults(total);
       const totalPageButton = Math.ceil(parseInt(total) / parseInt(limit));
@@ -154,7 +155,8 @@ export default function PropertySearch() {
       minSize=${minSize}&maxSize=${maxSize}`);
   }, []);
 
-  const [template, setTemplate] = useState("")
+  const [template, setTemplate] = useState("");
+
   async function fetchTemplate() {
     try {
       const res = await fetch(`/api/post-builder`);
@@ -172,7 +174,6 @@ export default function PropertySearch() {
     }
   }
 
-  
   useEffect(() => {
     fetchTemplate();
   }, []);
@@ -215,19 +216,6 @@ export default function PropertySearch() {
     );
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "available":
-        return "bg-green-100 text-green-800";
-      case "rented":
-        return "bg-yellow-100 text-yellow-800";
-      case "sold":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
   const getLocalizedPropertyType = (type: string) => {
     const typeMap: Record<string, string> = {
       Condo: t("condo"),
@@ -236,15 +224,6 @@ export default function PropertySearch() {
       House: t("house"),
     };
     return typeMap[type] || type;
-  };
-
-  const getLocalizedStatus = (status: string) => {
-    const statusMap: Record<string, string> = {
-      available: t("available"),
-      rented: t("rented"),
-      sold: t("sold"),
-    };
-    return statusMap[status] || status;
   };
 
   const parsePrice = (value: string) => {
@@ -374,13 +353,6 @@ export default function PropertySearch() {
 
   return (
     <div className="">
-      {/* <div className="mb-8 flex justify-between items-start">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{t("title")}</h1>
-            <p className="text-gray-600">{t("subtitle", { count: totalItems.toString() })}</p>
-          </div>
-        </div> */}
-
       {error && (
         <Alert className="mb-6 border-red-200 bg-red-50">
           <AlertDescription className="text-red-800">{error}</AlertDescription>
@@ -565,7 +537,11 @@ export default function PropertySearch() {
                     type="submit"
                     className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700"
                   >
-                    <Search className="w-4 h-4" />
+                    {loading ? (
+                      <Loader2 className="w-4 h-4" />
+                    ) : (
+                      <Search className="w-4 h-4" />
+                    )}
                     {t("searchButton")}
                   </Button>
                   <Button
@@ -597,7 +573,7 @@ export default function PropertySearch() {
         </CardContent>
       </Card>
 
-      {!loading && properties.length === 0 ? (
+      {loading ? (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <Loader2 className="w-8 h-4 animate-spin mx-auto mb-4 text-blue-600 mt-[-200px]" />
@@ -606,11 +582,9 @@ export default function PropertySearch() {
         </div>
       ) : (
         <>
-          {/* View Toggle and Results Count */}
           <div className="flex justify-between items-center mb-6">
             <p className="text-gray-600">
               Showing {totalSearchResults} properties
-              {/* {t("showing", { count: properties.length.toString() })} */}
             </p>
             <div className="flex items-center gap-2">
               <Button
@@ -634,7 +608,6 @@ export default function PropertySearch() {
             </div>
           </div>
 
-          {/* Pagination - Top */}
           <div className="mb-6">
             <Pagination
               currentPage={currentPage}
@@ -647,9 +620,7 @@ export default function PropertySearch() {
               locale={language}
             />
           </div>
-          {/* )} */}
 
-          {/* Property Display */}
           {viewMode === "grid" ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
               {properties.map((property) => {
@@ -863,10 +834,11 @@ export default function PropertySearch() {
                           </p>
                         </div>
 
-                        <CopyButtons 
-                        template={template}
-                        property={property}
-                         locale={language} />
+                        <CopyButtons
+                          template={template}
+                          property={property}
+                          locale={language}
+                        />
 
                         <Button
                           variant="outline"
@@ -913,16 +885,15 @@ export default function PropertySearch() {
           )}
         </>
       )}
-
-      {/* {properties.length === 0 && !loading && (
-        <div className="text-center py-12">
-          <div className="text-gray-500 mb-4">
-            <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
-            <h3 className="text-lg font-medium">{t("noPropertiesFound")}</h3>
-            <p>{t("tryAdjusting")}</p>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 }
+
+const getLocalizedStatus = (status: string) => {
+  const statusMap: Record<string, string> = {
+    available: t("available"),
+    rented: t("rented"),
+    sold: t("sold"),
+  };
+  return statusMap[status] || status;
+};

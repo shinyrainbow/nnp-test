@@ -14,7 +14,9 @@ export const translations = {
 
     "home.viewDashboard": "View Dashboard",
     "home.more": "See more",
-    "home.adTitle": "Everything You Need to Succeed",
+    "home.adTitle":
+      "Ever feel like this? Struggling to find properties in time, wasting time fixing listings, clients forgetting rent, or contracts being drafted too late? Let us help.",
+
     "home.adDescription":
       "Our comprehensive toolkit helps real estate agents work more efficiently and close more deals",
 
@@ -44,32 +46,28 @@ export const translations = {
     watchDemo: "Watch Demo",
 
     // Features
-    // dashboard: "",
-
-    listings: "Listings",
+    listings: "Property Listings",
     listingsDesc:
-      "Property listings with filters — easy to find, fast, and convenient.",
+      "10,000+ property listings, constantly updated, with filters for easy and fast searching.",
     lineChatBot: "Line Chat Bot",
     lineChatBotDesc:
-      "LINE bot to notify tenants about rent, water, and electricity bills.",
-    postBuilder: "Auto Post Builder",
+      "A Line bot that sends rent reminders to help agents work professionally. Just add the NainaHub bot to your group and start using it.",
+    postBuilder: "Post Template Builder",
     postBuilderDesc:
-      "Create ready-to-post messages for social media and easily link them to your listings.",
+      "Create your own marketing messages for posting. Easily link property details and copy them with a single click.",
     contractBuilder: "Contract Builder",
     contractBuilderDesc:
-      "Create professional rental contracts in just minutes.",
+      "Create purchase, sale, and rental contracts in both English and Thai. Download as PDF in just a few minutes.",
 
+    calendar: "Client Appointments",
+    calendarDesc:
+      "Schedule client meetings, property showings, contract signings, transfers, and appraisals—never miss an important appointment.",
     propertyAnalytics: "Property Analytics",
-    propertyAnalyticsDesc: "Track performance and property market trends",
-
-    clientManagement: "Client Management",
-    clientManagementDesc: "Manage leads and nurture relationships",
-
-    calendar: "Appointment Management",
-    calendarDesc: "Manage leads and nurture relationships",
-
-    // clientManagement: "Client Management",
-    // clientManagementDesc: "Manage leads and nurture relationships",
+    propertyAnalyticsDesc:
+      "Track performance and market trends to boost agent productivity.",
+    clientManagement: "Deal Tracking",
+    clientManagementDesc:
+      "Easily view statistics for closed deals and new property listings.",
 
     // footer
     privacyPolicy: "Privacy Policy",
@@ -290,7 +288,7 @@ export const translations = {
       "Calendar view will be implemented with a calendar component",
     "calendar.calendarView.emptyMessage2":
       "This would show appointments in a monthly/weekly grid format",
-"calendar.at": "at",
+    "calendar.at": "at",
     // Dashboard Menu
     "menu.dashboard": "Dashboard",
     "menu.propertyListings": "Listings",
@@ -453,42 +451,51 @@ export const translations = {
     add: "Add",
     search: "Search",
 
-    // features page (home)
+    // features page
     "features.badge": "Features",
     "features.title": "Comprehensive Real Estate Tools",
-    "features.subtitle":
-      "Discover all the powerful features that make Naina Hub the ultimate toolkit for real estate professionals",
+    "features.subtitle": "Discover all the powerful features that make Naina Hub the ultimate toolkit for real estate professionals",
+    "features.category.property": "Property Listings",
+    "features.category.lineChatBot": "Line Chat Bot",
+    "features.category.postBuilder": "Post Template Builder",
+    "features.category.contract": "Contracts & Documents",
+    "features.category.client": "Client Appointments",
+    "features.category.analysis": "Property Analytics",
 
-    "features.category.property": "Property Management",
-    "features.category.contract": "Contract & Documentation",
-    "features.category.client": "Client Management",
-    "features.category.ai": "AI-Powered Tools",
+    "features.categoryDesc.property": "Helps agents find properties for clients faster and more conveniently.",
+    "features.categoryDesc.lineChatBot": "Add the chat bot to your Line group for instant customer notifications.",
+    "features.categoryDesc.postBuilder": "Create marketing posts linked to your contact info easily. Use it for any property—copy and post instantly.",
+    "features.categoryDesc.contract": "Draft contracts and download documents quickly.",
+    "features.categoryDesc.client": "Essential tools for managing your clients.",
+    "features.categoryDesc.analysis": "Analyze properties and market trends.",
 
-    "features.categoryDesc.property": "Essential tools for property management",
-    "features.categoryDesc.contract":
-      "Essential tools for contract & documentation",
-    "features.categoryDesc.client": "Essential tools for client management",
-    "features.categoryDesc.ai": "Essential tools for AI-powered tools",
+    "features.property.1": "Search and filter properties",
+    "features.property.2": "Share property images with clients instantly",
+    "features.property.3": "Copy owner or co-agent contact with one click",
+    "features.property.4": "Copy pre-made posts and post immediately",
 
-    "features.property.1": "Listing management with rental status tracking",
-    "features.property.2": "Property photo gallery with AI enhancement",
-    "features.property.3": "Automated property valuation",
-    "features.property.4": "Market comparison analysis",
+    "features.lineChatBot.1": "Send rent reminders to clients",
+    "features.lineChatBot.2": "Reduce manual reminders and make agents more professional",
+    "features.lineChatBot.3": "Set reminder dates quickly and easily",
 
-    "features.contract.1": "Rental contract builder with templates",
-    "features.contract.2": "Digital signature integration",
-    "features.contract.3": "Document storage and management",
-    "features.contract.4": "Legal compliance checking",
+    "features.postBuilder.1": "Create text templates and edit anytime",
+    "features.postBuilder.2": "Connect directly to your property details",
+    "features.postBuilder.3": "Copy and post with a single click",
 
-    "features.client.1": "Client database with preferences",
-    "features.client.2": "Communication history tracking",
-    "features.client.3": "Automated follow-up reminders",
-    "features.client.4": "Lead scoring and qualification",
+    "features.contract.1": "Create rental contracts with ready-made templates",
+    "features.contract.2": "Available in Thai and English",
+    "features.contract.3": "Preview or download as PDF instantly",
+    "features.contract.4": "Quickly create and sign contracts in no time",
 
-    "features.ai.1": "Property description generator",
-    "features.ai.2": "Market trend analysis",
-    "features.ai.3": "Price prediction algorithms",
-    "features.ai.4": "Chatbot for client inquiries",
+    "features.client.1": "Schedule client appointments with date and time",
+    "features.client.2": "Categorize appointments: property viewings, contract signing, appraisals, transfers, etc.",
+    "features.client.3": "Manage appointments systematically",
+
+    "features.analysis.1": "Consolidate data useful for agents",
+    "features.analysis.2": "Track closed deals and appointment counts",
+    "features.analysis.3": "Analyze market prices",
+    "features.analysis.4": "Analyze property trends in each zone",
+
 
     // Pricing
     pricingTitle: "Simple, Transparent Pricing",
@@ -658,7 +665,7 @@ export const translations = {
 
     "contact.formTitle": "Send us a Message",
     "contact.formDescription":
-      "Fill out the form below and we'll get back to you within 24 hours.",
+      "Add us on Line using the QR code below, and we’ll get back to you within 24 hours.",
 
     "contact.name": "Name *",
     "contact.namePlaceholder": "Your full name",
@@ -786,7 +793,8 @@ export const translations = {
 
     "home.viewDashboard": "เข้าสู่แดชบอร์ด",
     "home.more": "เพิ่มเติม",
-    "home.adTitle": "ทุกสิ่งที่คุณต้องการเพื่อความสำเร็จ",
+    "home.adTitle":
+      "เคยไหม? หาทรัพย์ไม่ทัน เสียเวลาแก้โพส ลูกค้าลืมค่าเช่า ร่างสัญญาช้าไป ให้เราช่วยดีกว่า",
     "home.adDescription":
       "ชุดเครื่องมือครบวงจรที่จะช่วยให้เอเจนต์อสังหาฯ ทำงานได้มีประสิทธิภาพยิ่งขึ้น และปิดดีลได้มากกว่าเดิม",
 
@@ -817,20 +825,26 @@ export const translations = {
 
     // Features
     listings: "รายการทรัพย์",
-    listingsDesc: "รายการทรัพย์ พร้อมฟิลเตอร์ หาง่าย ได้ไว สะดวกรวดเร็ว",
+    listingsDesc:
+      "10,000+ รายการทรัพย์ อัพเดทตลอด พร้อมฟิลเตอร์ หาง่าย ได้ไว สะดวกรวดเร็ว",
     lineChatBot: "Line Chat Bot",
-    lineChatBotDesc: "บอทไลน์แจ้งเตือนค่าเช่า ค่าน้ำ ค่าไฟ ให้ลูกค้า",
+    lineChatBotDesc:
+      "บอทไลน์แจ้งเตือนค่าเช่า เพื่อให้การทำงานเอเจ้นเป็นมืออาชีพ แอดบอท NainaHub เข้ากรุ้ปแล้วเรียกใช้งานได้เลย",
     postBuilder: "สร้าง Template โพส",
-    postBuilderDesc: "สร้างข้อความไว้โพส เชื่อมกับทรัพย์ของเราได้ง่ายๆ",
+    postBuilderDesc:
+      "สร้างข้อความการตลาดของตัวเองไว้โพส เชื่อมรายละเอียดทรัพย์ได้ง่ายๆ แล้วกดปุ่มเดียวก็อปปี้ไปโพสได้เลย",
     contractBuilder: "เครื่องมือสร้างสัญญา",
-    contractBuilderDesc: "สร้างสัญญาเช่าระดับมืออาชีพในไม่กี่นาที",
+    contractBuilderDesc:
+      "สร้างสัญญาจะซื้อจะขาย สัญญาเช่า ทั้งอังกฤษและไทย ดาวน์โหลดเป็น PDF ได้ในไม่กี่นาที",
 
     calendar: "นัดลูกค้า",
-    calendarDesc: "ผูกทรัพย์กับเรา ไม่พลาดนัดหมายสำคัญ",
+    calendarDesc:
+      "จดนัดหมายลูกค้า เปิดทรัพย์ เซ็นสัญญา โอน ประเมิน ไม่พลาดนัดหมายสำคัญ",
     propertyAnalytics: "กราฟวิเคราะห์ทรัพย์",
-    propertyAnalyticsDesc: "ติดตามประสิทธิภาพและแนวโน้มตลาด",
-    clientManagement: "การจัดการลูกค้า",
-    clientManagementDesc: "จัดระเบียบลูกค้าเป้าหมายและรักษาความสัมพันธ์",
+    propertyAnalyticsDesc:
+      "ติดตามประสิทธิภาพและแนวโน้มตลาดเพิ่มประสิทธิภาพการทำงานให้เอเจ้น",
+    clientManagement: "ติดตามสถิติดีลที่ปิดได้",
+    clientManagementDesc: "ดูสถิติการปิดดีลและการเปิดทรัพย์ได้ง่ายๆ",
 
     // footer
     privacyPolicy: "นโยบายความเป็นส่วนตัว",
@@ -1017,7 +1031,7 @@ export const translations = {
     "calendar.form.notes.placeholder":
       "บันทึกเพิ่มเติมเกี่ยวกับการนัดหมายนี้...",
 
-    "calendar.form.submit": "กำหนดเวลานัดหมาย",
+    "calendar.form.submit": "บันทึกการนัดหมาย",
     "calendar.form.cancel": "ยกเลิก",
 
     "calendar.todaysSchedule.title": "ตารางวันนี้",
@@ -1046,7 +1060,7 @@ export const translations = {
     "calendar.calendarView.emptyMessage2":
       "จะแสดงนัดหมายในรูปแบบตารางรายเดือน/รายสัปดาห์",
 
-      "calendar.at": "เวลา",
+    "calendar.at": "เวลา",
     // Dashboard Menu
     "menu.dashboard": "แดชบอร์ด",
     "menu.propertyListings": "รายการทรัพย์สิน",
@@ -1221,42 +1235,58 @@ export const translations = {
     add: "เพิ่ม",
     search: "ค้นหา",
 
-    // Feature page (home)
+    // features page
     "features.badge": "คุณสมบัติ",
     "features.title": "เครื่องมืออสังหาริมทรัพย์แบบครบวงจร",
     "features.subtitle":
       "ค้นพบคุณสมบัติอันทรงพลังทั้งหมดที่ทำให้ Naina Hub เป็นเครื่องมือที่สมบูรณ์แบบสำหรับมืออาชีพด้านอสังหาริมทรัพย์",
 
-    "features.category.property": "การจัดการทรัพย์สิน",
+    "features.category.property": "รายการทรัพย์",
+    "features.category.lineChatBot": "แชทบอทไลน์",
+    "features.category.postBuilder": "สร้าง Template โพส",
     "features.category.contract": "สัญญาและเอกสาร",
-    "features.category.client": "การจัดการลูกค้า",
-    "features.category.ai": "เครื่องมือ AI",
+    "features.category.client": "นัดหมายลูกค้า",
+    "features.category.analysis": "กราฟวิเคราะห์ทรัพย์",
 
-    "features.categoryDesc.property": "เครื่องมือสำคัญสำหรับการจัดการทรัพย์สิน",
-    "features.categoryDesc.contract":
-      "เครื่องมือสำคัญสำหรับการทำสัญญาและเอกสาร",
+    "features.categoryDesc.property":
+      "ช่วยเอเจ้นหาทรัพย์ให้ลูกค้า สะดวก รวดเร็วยิ่งขึ้น",
+    "features.categoryDesc.lineChatBot":
+      "แอดแชทมอทเข้ากรุ๊ปไลน์ พร้อมใช้งาน ช่วยแจ้งเตือนลูกค้า",
+    "features.categoryDesc.postBuilder":
+      "สร้างโพสการตลาดพร้อมติด Contact ของตัวเองได้ง่ายๆ ทำครั้งเดียวใช้ได้ทุกทรัพย์ ก๊อปปี้ไปโพสได้เลย",
+    "features.categoryDesc.contract": "ร่างสัญญาและดาวน์โหลดเอกสารได้ไว",
     "features.categoryDesc.client": "เครื่องมือสำคัญสำหรับการจัดการลูกค้า",
-    "features.categoryDesc.ai": "เครื่องมือสำคัญที่ขับเคลื่อนด้วย AI",
+    "features.categoryDesc.analysis": "วิเคราะห์ทรัพย์ และ แนวโน้มการตลาด",
 
-    "features.property.1": "การจัดการประกาศพร้อมติดตามสถานะการเช่า",
-    "features.property.2": "แกลเลอรีรูปภาพทรัพย์สินพร้อมปรับปรุงด้วย AI",
-    "features.property.3": "การประเมินมูลค่าทรัพย์สินอัตโนมัติ",
-    "features.property.4": "การวิเคราะห์เปรียบเทียบตลาด",
+    "features.property.1": "ค้นหา และ ฟิลเตอร์ทรัพย์",
+    "features.property.2": "แชร์รูปภาพทรัพย์ให้ลูกค้าได้ไว",
+    "features.property.3": "ก๊อปปี้เบอร์เจ้าของและโคเอเจ้นได้เพียงคลิกเดียว",
+    "features.property.4": "ก๊อปปี้โพสที่สร้างแล้วไปโพสได้เลยทันที",
+
+    "features.lineChatBot.1": "แจ้งเตือนค่าเช่าให้ลูกค้า",
+    "features.lineChatBot.2":
+      "ลดระยะเวลาเตือนเอง เพิ่มความเป็นมืออาชีพ",
+    "features.lineChatBot.3": "ตั้งค่าวันแจ้งเตือนง่ายๆ แปบเดียวเสร็จ",
+
+    "features.postBuilder.1":
+      "สร้างรูปแบบข้อความที่ต้องการ จะแก้ไขเมื่อไรก็ได้ ",
+    "features.postBuilder.2": "เชื่อมต่อกับรายละเอียดทรัพย์ของเรา",
+    "features.postBuilder.3": "กดปุ่มเดียวเพื่อก๊อปปี้ไปโพสได้เลย",
 
     "features.contract.1": "สร้างสัญญาเช่าด้วยแม่แบบสำเร็จรูป",
-    "features.contract.2": "การผสานรวมลายเซ็นดิจิทัล",
-    "features.contract.3": "การจัดเก็บและจัดการเอกสาร",
-    "features.contract.4": "การตรวจสอบการปฏิบัติตามกฎหมาย",
+    "features.contract.2": "มีให้ทั้งภาษาไทยและอังกฤษ",
+    "features.contract.3": "ดู Preview หรือ ดาวน์โหลดเป็น PDF ได้เลย",
+    "features.contract.4": "สร้างปุ๊ปเซ็นปั๊ปไวเว่อ",
 
-    "features.client.1": "ฐานข้อมูลลูกค้าพร้อมข้อมูลความต้องการ",
-    "features.client.2": "การติดตามประวัติการสื่อสาร",
-    "features.client.3": "การแจ้งเตือนติดตามผลอัตโนมัติ",
-    "features.client.4": "การจัดอันดับและคัดกรองลูกค้า",
+    "features.client.1": "สร้างนัดหมายลูกค้าพร้อมวันเวลา",
+    "features.client.2":
+      "แยกประเภทการนัดหมาย ดูทรัพย์ เซ็นสัญญา ประเมิน โอน และอื่นๆ",
+    "features.client.3": "จัดการนัดหมายอย่างเป็นระบบ",
 
-    "features.ai.1": "ตัวช่วยสร้างคำอธิบายทรัพย์สิน",
-    "features.ai.2": "การวิเคราะห์แนวโน้มตลาด",
-    "features.ai.3": "อัลกอริทึมคาดการณ์ราคา",
-    "features.ai.4": "แชทบอทสำหรับตอบคำถามลูกค้า",
+    "features.analysis.1": "รวมข้อมูลที่มีประโยชน์กับเอเจ้น",
+    "features.analysis.2": "ดูจำนวนดีลที่ปิดได้ ติดตามจำนวนการนัดหมาย",
+    "features.analysis.3": "วิเคราะห์ราคาตลาด",
+    "features.analysis.4": "วิเคราะห์แนวโน้มทรัพย์ในแต่ละโซน",
 
     // Pricing
     pricingTitle: "ราคาที่เรียบง่ายและโปร่งใส",
@@ -1421,7 +1451,7 @@ export const translations = {
 
     "contact.formTitle": "ส่งข้อความถึงเรา",
     "contact.formDescription":
-      "กรอกแบบฟอร์มด้านล่าง แล้วเราจะติดต่อกลับภายใน 24 ชั่วโมง",
+      "เพิ่มเราเป็นเพื่อนใน Line โดยสแกน QR Code ด้านล่าง แล้วเราจะติดต่อกลับภายใน 24 ชั่วโมง",
 
     "contact.name": "ชื่อ *",
     "contact.namePlaceholder": "ชื่อ-นามสกุลของคุณ",

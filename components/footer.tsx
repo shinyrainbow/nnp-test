@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Building2 } from 'lucide-react'
 import { useLanguage } from '@/contexts/language-context'
 import { FaFacebook, FaInstagram, FaTiktok } from 'react-icons/fa';
@@ -12,14 +13,29 @@ export function Footer() {
 
         <div className="grid md:grid-cols-4 gap-4">
           <div>
-            <Link href="/" className="flex items-center space-x-2 mb-4">
+
+            <Image
+              src="/logo-with-slogan.png"
+              alt="Company Logo"
+              width={240} // set width
+              height={80} // set height
+              priority // optional: preload for faster load
+            />
+
+          {/* <div className="h-[30px] flex items-center justify-center">
+            <p className="text-[30px] leading-none font-bold text-primary">
+              NainaHub
+            </p>
+          </div> */}
+
+            {/* <Link href="/" className="flex items-center space-x-2 mb-4">
               <Building2 className="h-8 w-8 text-primary" />
               <span className="text-2xl font-bold">Naina Hub</span>
             </Link>
             <p className="text-gray-400">
               {t("home.banner")}{t("home.subBanner")}
-              {/* Professional tools for real estate agents to work faster and more efficiently. */}
-            </p>
+              Professional tools for real estate agents to work faster and more efficiently.
+            </p> */}
           </div>
           
           <div>
@@ -34,10 +50,26 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Social Media</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><Link href="/contact" className="hover:text-white"><FaFacebook /></Link></li>
-              <li><Link href="/help" className="hover:text-white"><FaTiktok /></Link></li>
-              <li><Link href="/docs" className="hover:text-white"><FaInstagram /></Link></li>
-            </ul>
+  <li>
+    <Link href="/contact" className="hover:text-white flex items-center space-x-2">
+      <FaFacebook />
+      <span>Facebook Page</span>
+    </Link>
+  </li>
+  <li>
+    <Link href="/help" className="hover:text-white flex items-center space-x-2">
+      <FaTiktok />
+      <span>Tiktok</span>
+    </Link>
+  </li>
+  <li>
+    <Link href="/docs" className="hover:text-white flex items-center space-x-2">
+      <FaInstagram />
+      <span>Instagram</span>
+    </Link>
+  </li>
+</ul>
+
           </div>
           
           <div>

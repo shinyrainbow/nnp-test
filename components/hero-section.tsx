@@ -8,7 +8,9 @@ import { useLanguage } from "@/contexts/language-context";
 export function HeroSection() {
   const { t } = useLanguage();
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-green-50 to-emerald-100">
+    <section className="py-20 px-4 
+        bg-gradient-to-br from-teal-100 to-blue-200
+    ">
       <div className="container mx-auto text-center">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
           {t("home.banner")}
@@ -34,25 +36,26 @@ export function HeroSection() {
             <Link href="/features">{t("home.more")}</Link>
           </Button>
         </div>
-
-        {/* <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <div className="text-center">
-            <Building2 className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Property Management</h3>
-            <p className="text-gray-600">Manage all your listings and properties in one place</p>
-          </div>
-          <div className="text-center">
-            <Users className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Client Relations</h3>
-            <p className="text-gray-600">Keep track of clients and their preferences</p>
-          </div>
-          <div className="text-center">
-            <TrendingUp className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Analytics & Reports</h3>
-            <p className="text-gray-600">Get insights to grow your business</p>
-          </div>
-        </div> */}
       </div>
     </section>
   );
 }
+
+
+  // {/* <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+  //         <div className="text-center">
+  //           <Building2 className="h-12 w-12 text-primary mx-auto mb-4" />
+  //           <h3 className="text-xl font-semibold mb-2">Property Management</h3>
+  //           <p className="text-gray-600">Manage all your listings and properties in one place</p>
+  //         </div>
+  //         <div className="text-center">
+  //           <Users className="h-12 w-12 text-primary mx-auto mb-4" />
+  //           <h3 className="text-xl font-semibold mb-2">Client Relations</h3>
+  //           <p className="text-gray-600">Keep track of clients and their preferences</p>
+  //         </div>
+  //         <div className="text-center">
+  //           <TrendingUp className="h-12 w-12 text-primary mx-auto mb-4" />
+  //           <h3 className="text-xl font-semibold mb-2">Analytics & Reports</h3>
+  //           <p className="text-gray-600">Get insights to grow your business</p>
+  //         </div>
+  //       </div> */}

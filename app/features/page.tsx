@@ -24,6 +24,24 @@ const featureCategories = [
     ],
   },
   {
+    title: "features.category.lineChatBot",
+    description: "features.categoryDesc.lineChatBot",
+    features: [
+      "features.lineChatBot.1",
+      "features.lineChatBot.2",
+      "features.lineChatBot.3",
+    ],
+  },
+  {
+    title: "features.category.postBuilder",
+    description: "features.categoryDesc.postBuilder",
+    features: [
+      "features.postBuilder.1",
+      "features.postBuilder.2",
+      "features.postBuilder.3",
+    ],
+  },
+  {
     title: "features.category.contract",
     description: "features.categoryDesc.contract",
     features: [
@@ -40,39 +58,19 @@ const featureCategories = [
       "features.client.1",
       "features.client.2",
       "features.client.3",
-      "features.client.4",
     ],
   },
   {
-    title: "features.category.ai",
-    description: "features.categoryDesc.ai",
+    title: "features.category.analysis",
+    description: "features.categoryDesc.analysis",
     features: [
-      "features.ai.1",
-      "features.ai.2",
-      "features.ai.3",
-      "features.ai.4",
+      "features.analysis.1",
+      "features.analysis.2",
+      "features.analysis.3",
+      "features.analysis.4",
     ],
   },
-  {
-    title: "features.category.client",
-    description: "features.categoryDesc.client",
-    features: [
-      "features.client.1",
-      "features.client.2",
-      "features.client.3",
-      "features.client.4",
-    ],
-  },
-  {
-    title: "features.category.ai",
-    description: "features.categoryDesc.ai",
-    features: [
-      "features.ai.1",
-      "features.ai.2",
-      "features.ai.3",
-      "features.ai.4",
-    ],
-  },
+
 ];
 
 export default function FeaturesPage() {

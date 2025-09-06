@@ -25,6 +25,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import Link from 'next/link'
+import Image from 'next/image'
 import { useLanguage } from "@/contexts/language-context";
 
 const contactSchema = z.object({
@@ -91,7 +93,7 @@ export default function ContactPage() {
                   <Phone className="h-6 w-6 text-primary mt-1" />
                   <div>
                     <h3 className="font-semibold">{t("contact.phone")}</h3>
-                    <p className="text-gray-600">Mon-Fri 9AM-6PM EST</p>
+                    <p className="text-gray-600">090-979-1689</p>
                   </div>
                 </div>
 
@@ -115,7 +117,19 @@ export default function ContactPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Form {...form}>
+<div className="flex justify-center">
+
+              <Link href="/">
+            <Image
+              src="/L_gainfriends_2dbarcodes_GW.png"
+              alt="Company Logo"
+              width={240} // set width
+              height={80} // set height
+              priority // optional: preload for faster load
+              />
+          </Link>
+          </div>
+                {/* <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-6"
@@ -194,7 +208,7 @@ export default function ContactPage() {
                       {t("contact.submit")}
                     </Button>
                   </form>
-                </Form>
+                </Form> */}
               </CardContent>
             </Card>
           </div>

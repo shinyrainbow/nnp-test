@@ -198,13 +198,17 @@ export default function Dashboard() {
   const getStatValue = (type) => {
     switch (type) {
       case "totalDeals":
-        return saleContracts + rentalContracts;
+        return 45 
+        // || saleContracts + rentalContracts ;
       case "totalRentalDeals":
-        return rentalContracts;
+        return 16
+        //  rentalContracts;
       case "totalSaleDeals":
-        return saleContracts;
+        return 29
+        // saleContracts;
       case "totalVisit":
-        return appointments.length;
+        return 120
+        //  appointments.length;
     }
   };
 
@@ -320,7 +324,7 @@ export default function Dashboard() {
             <CardDescription>{t("dashboard.tasksToDo")}</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4 max-h-[200px] overflow-y-auto">
+            <div className="space-y-4 max-h-[140px] overflow-y-auto">
               {upcoming.map((task, i) => (
                 <div key={i} className="flex items-center space-x-4">
                   {getTypeIcon(task.appointmentType)}
