@@ -392,7 +392,7 @@ export const translations = {
 
     // Loading
     loadingProperties: "Loading properties...",
-    loadingPostTemplate: "Loading post template...",
+    loadingPostTemplate: "Loading post templates...",
     loadingContract: "Loading contracts...",
 
     // Language
@@ -1176,7 +1176,7 @@ export const translations = {
 
     // Loading
     loadingProperties: "กำลังโหลดอสังหาริมทรัพย์...",
-    loadingPostTemplate: "กำลังโหลดรูปแปบบโพสต์...",
+    loadingPostTemplate: "กำลังโหลดรูปแบบโพสต์...",
     loadingContract: "กำลังโหลดสัญญา...",
 
     // Language

@@ -90,7 +90,12 @@ export function RentalContractBuilder() {
       // Get PDF as blob
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
-      window.open(url, "_blank"); // open new tab with PDF
+      // window.open(url, "_blank"); // open new tab with PDF
+
+      const iframe = document.createElement("iframe");
+iframe.style.display = "none";
+iframe.src = url;
+document.body.appendChild(iframe);
     } catch (err) {
       console.error(err);
       alert("Error generating preview");

@@ -586,7 +586,7 @@ export default function PropertySearch() {
             <p className="text-gray-600">
               Showing {totalSearchResults} properties
             </p>
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <Button
                 variant={viewMode === "grid" ? "default" : "outline"}
                 size="sm"
@@ -605,7 +605,7 @@ export default function PropertySearch() {
                 <List className="w-4 h-4" />
                 {t("table")}
               </Button>
-            </div>
+            </div> */}
           </div>
 
           <div className="mb-6">
@@ -889,11 +889,11 @@ export default function PropertySearch() {
   );
 }
 
-const getLocalizedStatus = (status: string) => {
-  const statusMap: Record<string, string> = {
-    available: t("available"),
-    rented: t("rented"),
-    sold: t("sold"),
-  };
-  return statusMap[status] || status;
-};
+// const getLocalizedStatus = (status: string) => {
+//   const statusMap: Record<string, string> = {
+//     available: t("available"),
+//     rented: t("rented"),
+//     sold: t("sold"),
+//   };
+//   return statusMap[status] || status;
+// };
