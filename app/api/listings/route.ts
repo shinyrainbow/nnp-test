@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma"; // adjust to your prisma client path
-import { RoomType } from "@prisma/client";
+
+import { PrismaClient, RoomType } from "@prisma/client";
 import { S3Client, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { auth } from "@clerk/nextjs/server";
+const prisma = new PrismaClient();
 
 // Helper: parse price string like "1,500,000" or "15,000 THB"
 function parsePrice(value: string | null): number | null {
@@ -40,6 +42,37 @@ function isImageKey(key: string) {
 
 export async function GET(req: NextRequest) {
   try {
+
+    const { userId } = await auth(); // Get authenticated user ID
+
+    if (!userId) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+      });
+    }
+    const userDb = await prisma.user.findFirst({
+      where: {
+        clerkId: userId,
+      },
+    });
+
+    // if user is freeUser
+    if (!!userDb && !userDb.isPaid) {
+      return NextResponse.json({
+        page: 1,
+        limit: 0,
+        total: 0,
+        data: [],
+      });
+    }
+    if (!userDb || !userDb?.id) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+      });
+    }
+
+
+
     const { searchParams } = new URL(req.url);
 
     const projectName = searchParams.get("projectName") || "";
@@ -93,7 +126,7 @@ export async function GET(req: NextRequest) {
         propertyTypeFilter.propertyType = { in: types };
       }
     }
-console.log(propertyTypeFilter, 55555)
+// console.log(propertyTypeFilter, 55555)
     const bedRoomFilter: any = {};
     if (bedRoom && bedRoom !== "all") {
       bedRoomFilter.bedRoom = bedRoom;

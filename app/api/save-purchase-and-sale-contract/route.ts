@@ -8,7 +8,6 @@ const prisma = new PrismaClient();
 export async function GET() {
   try {
     const { userId } = await auth(); // Get authenticated user ID
-
     if (!userId) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -19,6 +18,19 @@ export async function GET() {
         clerkId: userId,
       },
     });
+
+    const neonUserDb = await prisma.user.findFirst({
+      where: {
+        clerkId: userId,
+      },
+    });
+     // if user is freeUser
+     if (!!neonUserDb && !neonUserDb.isPaid) {
+     return NextResponse.json({
+        contracts: [],
+        message: "GET Purchase and sale contract successfully",
+      });
+    }
 
     const contracts = await prisma.purchaseAndSaleContract.findMany({
       where: {
@@ -52,12 +64,18 @@ export async function POST(request: NextRequest) {
         clerkId: userId,
       },
     });
+
+    // if user is freeUser
+    if (!!userDb && !userDb.isPaid) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+      });
+    }
     if (!userDb || !userDb?.id) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
       });
     }
-    const hello = await prisma.purchaseAndSaleContract.findMany();
 
     const {
       language,

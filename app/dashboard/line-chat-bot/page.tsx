@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,84 +8,57 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Copy,
-  Check,
-  MessageCircle,
-  Users,
-  Send,
-  CheckCircle,
-  Loader2,
-  Home,
-} from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Check, MessageCircle, Users, Send, Loader2, Home } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
-
+import Image from "next/image";
 export default function LineChatBot() {
-  const [copied, setCopied] = useState(false);
-  const { toast } = useToast();
   const { t } = useLanguage();
 
-  const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function fetchLineCode() {
-    try {
-      setLoading(true);
-      setError(null);
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
-      const res = await fetch(`/api/line-chat-bot`);
+  const [user, setUser] = useState<any>(null);
+  const [loadingUser, setLoadingUser] = useState(false);
+  const [errorUser, setErrorUser] = useState<string | null>(null);
+
+  const fetchUser = async () => {
+    try {
+      setLoadingUser(true);
+      setErrorUser(null);
+      const res = await fetch("/api/me");
+
       if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status}`);
       }
-      const data = await res.json();
+      const userData = await res.json();
 
-      setUserData(data);
+      setUser(userData);
     } catch (err: any) {
-      setError(err.message || "Something went wrong");
+      setErrorUser(err.message || "Something went wrong");
     } finally {
-      setLoading(false);
-    }
-  }
-
-  // useEffect(() => {
-  //   fetchLineCode();
-  // }, []);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(userData?.lineCode);
-      setCopied(true);
-      toast({
-        title: "Code copied!",
-        description: "The 5-digit code has been copied to your clipboard.",
-      });
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      toast({
-        title: "Failed to copy",
-        description: "Please try copying the code manually.",
-        variant: "destructive",
-      });
+      setLoadingUser(false);
     }
   };
 
-  if (loading) {
+  if (loading || loadingUser) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
         </div>
       </div>
-    )
+    );
   }
   if (error) return <div>Error...</div>;
 
   return (
     // <div className="w-full pt-4 space-y-6">
     <div className="min-h-screen bg-background">
-        <header className="border-b bg-card">
+      <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -205,6 +177,15 @@ export default function LineChatBot() {
                 </p>
               </div>
             </div>
+            <div className="flex ml-10">
+              <Image
+                src="/line-starter.jpg"
+                alt="Start setting up Line Chat Bot"
+                width={160} // set width
+                height={200} // set height
+                priority // optional: preload for faster load
+              />
+            </div>
 
             <div className="flex gap-3">
               <div className="flex-shrink-0 w-8 h-8 bg-cyan-100 text-cyan-700 rounded-full flex items-center justify-center text-sm font-semibold">
@@ -218,6 +199,23 @@ export default function LineChatBot() {
                   {t("line.step2explain")}
                 </p>
               </div>
+            </div>
+            <div className="flex ml-10">
+              <Image
+                src="/line-setting-page.jpg"
+                alt="Setting page"
+                className="mr-4"
+                width={160} // set width
+                height={200} // set height
+                priority // optional: preload for faster load
+              />
+              <Image
+                src="/line-languages-picker.jpg"
+                alt="Setting page"
+                width={160} // set width
+                height={200} // set height
+                priority // optional: preload for faster load
+              />
             </div>
 
             <div className="flex gap-3">
@@ -234,6 +232,39 @@ export default function LineChatBot() {
               </div>
             </div>
 
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 ml-10">
+              <Image
+                src="/line-thai.jpg"
+                alt="Setting language"
+                className="mr-4"
+                width={160} // set width
+                height={200} // set height
+                priority // optional: preload for faster load
+              />
+              <Image
+                src="/line-english.jpg"
+                alt="Setting language"
+                className="mr-4"
+                width={160} // set width
+                height={200} // set height
+                priority // optional: preload for faster load
+              />
+              <Image
+                src="/line-japanese.jpg"
+                alt="Setting language"
+                className="mr-4"
+                width={160} // set width
+                height={200} // set height
+                priority // optional: preload for faster load
+              />
+              <Image
+                src="/line-chinese.jpg"
+                alt="Setting language"
+                width={160} // set width
+                height={200} // set height
+                priority // optional: preload for faster load
+              />
+            </div>
             <div className="flex gap-3">
               <div className="flex-shrink-0 w-8 h-8 bg-cyan-100 text-cyan-700 rounded-full flex items-center justify-center text-sm font-semibold">
                 4
@@ -249,6 +280,17 @@ export default function LineChatBot() {
               </div>
             </div>
           </div>
+
+          <div className="flex ml-10">
+              <Image
+                src="/line-end-contract.jpg"
+                alt="End contract message"
+                width={160} // set width
+                height={200} // set height
+                priority // optional: preload for faster load
+              />
+            </div>
+
           <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
             <div className="flex items-start gap-2">
               <Check className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />

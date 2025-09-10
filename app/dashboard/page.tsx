@@ -138,11 +138,16 @@ export default function Dashboard() {
       setLoading(true);
       setError(null);
       const res = await fetch("/api/me");
+
       if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status}`);
       }
 
       setUser(res);
+      // after fetch user , fetch other data
+      await fetchRentalContract();
+      await fetchSaleContract();
+      await fetchAppointments();
     } catch (err: any) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -184,6 +189,7 @@ export default function Dashboard() {
   };
 
   const [saleContracts, setSaleContracts] = useState(0);
+
   const fetchSaleContract = async () => {
     try {
       const res = await fetch("/api/save-purchase-and-sale-contract");
@@ -198,25 +204,18 @@ export default function Dashboard() {
   const getStatValue = (type) => {
     switch (type) {
       case "totalDeals":
-        return 45 
-        // || saleContracts + rentalContracts ;
+        return saleContracts + rentalContracts;
       case "totalRentalDeals":
-        return 16
-        //  rentalContracts;
+        return rentalContracts;
       case "totalSaleDeals":
-        return 29
-        // saleContracts;
+        return saleContracts;
       case "totalVisit":
-        return 120
-        //  appointments.length;
+        return appointments.length;
     }
   };
 
   useEffect(() => {
     fetchUser();
-    fetchRentalContract();
-    fetchSaleContract();
-    fetchAppointments();
   }, []);
 
   const getAppointmentType = (type: string) => {
@@ -234,6 +233,7 @@ export default function Dashboard() {
     }
   };
 
+  console.log(user, 1111);
   if (!user) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -273,8 +273,8 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
+        {/* <Card>
           <CardHeader>
             <CardTitle>{t("dashboard.recentActivity")}</CardTitle>
             <CardDescription>{t("dashboard.latestUpdates")}</CardDescription>
@@ -287,9 +287,9 @@ export default function Dashboard() {
                   <p className="text-sm font-medium">
                     {t("activity.newListing")}
                   </p>
-                  {/* <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500">
                     {t("activity.hoursAgo", { count: 2 })} ddd
-                  </p> */}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
@@ -298,9 +298,9 @@ export default function Dashboard() {
                   <p className="text-sm font-medium">
                     {t("activity.contractSigned")}
                   </p>
-                  {/* <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500">
                     {t("activity.hoursAgo", { count: 5 })}
-                  </p> */}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
@@ -309,14 +309,14 @@ export default function Dashboard() {
                   <p className="text-sm font-medium">
                     {t("activity.viewingScheduled")}
                   </p>
-                  {/* <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500">
                     {t("activity.dayAgo", { count: 1 })}
-                  </p> */}
+                  </p>
                 </div>
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         <Card>
           <CardHeader>
@@ -344,11 +344,11 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      <Card>
+      {/* <Card>
         <CardHeader>
-          <CardTitle>Location Analysis</CardTitle>
+          <CardTitle>{t("location.analysis")}</CardTitle>
           <CardDescription>
-            Compare different areas in your market
+          {t("location.analysisDesc")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -408,7 +408,7 @@ export default function Dashboard() {
             ))}
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* <Tabs defaultValue="location" className="space-y-4">
         <TabsList>

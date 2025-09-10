@@ -62,9 +62,14 @@ export const translations = {
     calendar: "Client Appointments",
     calendarDesc:
       "Schedule client meetings, property showings, contract signings, transfers, and appraisals—never miss an important appointment.",
-    propertyAnalytics: "Property Analytics",
+    // propertyAnalytics: "Property Analytics",
+    // propertyAnalyticsDesc:
+    //   "Track performance and market trends to boost agent productivity.",
+    propertyAnalytics: "Statistics",
     propertyAnalyticsDesc:
-      "Track performance and market trends to boost agent productivity.",
+      "Track deal-closing statistics and property-opening trends to improve agent efficiency",
+    
+
     clientManagement: "Deal Tracking",
     clientManagementDesc:
       "Easily view statistics for closed deals and new property listings.",
@@ -102,30 +107,29 @@ export const translations = {
     "stats.totalSell": "Total Sales",
     "stats.totalVisit": "Total visit",
 
-    // line chat bot
-    "line.title": "Access Code",
-    "line.description": "Your one-time verification code",
-    "line.copy": "Copy to Clipboard",
-    "line.copied": "Successfully Copied!",
-    "line.instruction": "Click the button above to copy your code",
-    "line.warning": "⚠️ This code expires after one use",
-    "line.howToUse": "How to Use in Line Chat Bot",
-    "line.explain": "Follow these steps to paste the code in your Line group",
-    "line.step1": "Open Line Group",
-    "line.step1explain":
-      "Navigate to your Line group where the chat bot is active",
-    "line.step2": "Tap Message Input",
-    "line.step2explain":
-      "Tap on the message input field at the bottom of the screen",
-    "line.step3": "Paste the Code",
-    "line.step3explain":
-      'Long press in the input field and select "Paste" to insert your copied code',
-    "line.step4": "Send Message",
-    "line.step4explain":
-      "Tap the send button to submit your code to the chat bot",
-    "line.tips": "Pro Tip",
-    "line.tipsexplain":
-      "Make sure to paste the code exactly as copied. The chat bot will process your code automatically once sent.",
+    "location.analysis": "Location Analysis",
+    "location.analysisDesc":
+      "Analyze property locations and market trends to make informed decisions.",
+
+  // line chat bot
+"line.title": "Access Code",
+"line.description": "One-time verification code",
+"line.copy": "Copy Code",
+"line.copied": "Copied!",
+"line.instruction": "Click the button above to copy your code",
+"line.warning": "⚠️ This code expires after one-time use",
+"line.howToUse": "How to Use Line Chat Bot",
+"line.explain": "When you subscribe to our Plan and complete payment, the admin will send you a QR Code for the Chat Bot. Add it as a friend on Line, then follow these steps:",
+"line.step1": "Open a Line Group",
+"line.step1explain": "Go to the Line group where you want the Bot to send notifications and type the word \"nainahub\" (case-insensitive) to activate the Chat Bot",
+"line.step2": "When you see the message and the rental notification settings button",
+"line.step2explain": "Press the 'Set Rental Notification' button. You can select the lease start and end dates, enter tenant details, choose the notification language, and press save",
+"line.step3": "Rental Payment Notification",
+"line.step3explain": "On the lease start date (due date), the Line Chat Bot will automatically send a rental payment reminder to the tenant",
+"line.step4": "Lease Expiry Notification",
+"line.step4explain": "Seven days before the lease end date, the Line Chat Bot will automatically send a lease expiry notification to the tenant",
+"line.tips": "Tips",
+"line.tipsexplain": "You can always change the notification dates in the Line Chat Bot for your tenants",
 
     // post builder
     "post.title": "Property Post Creator",
@@ -146,7 +150,8 @@ export const translations = {
     "post.copied": "Copied",
     "post.saveTemplate": "Save Template",
     "post.savedTemplate": "Saved Template",
-
+    "post.freeUser" : "When you activate our Plan, you will be able to use the Property Post Builder.",
+    
     // commission
     "commissionTracker.title": "Commission Tracker",
     "commissionTracker.description":
@@ -394,6 +399,7 @@ export const translations = {
     loadingProperties: "Loading properties...",
     loadingPostTemplate: "Loading post templates...",
     loadingContract: "Loading contracts...",
+    loadingAppointments: "Loading appointments...",
 
     // Language
     language: "Language",
@@ -843,9 +849,12 @@ export const translations = {
     calendar: "นัดลูกค้า",
     calendarDesc:
       "จดนัดหมายลูกค้า เปิดทรัพย์ เซ็นสัญญา โอน ประเมิน ไม่พลาดนัดหมายสำคัญ",
-    propertyAnalytics: "กราฟวิเคราะห์ทรัพย์",
+    // propertyAnalytics: "กราฟวิเคราะห์ทรัพย์",
+    // propertyAnalyticsDesc:
+    //   "ติดตามประสิทธิภาพและแนวโน้มตลาดเพิ่มประสิทธิภาพการทำงานให้เอเจ้น",
+    propertyAnalytics: "สถิติ",
     propertyAnalyticsDesc:
-      "ติดตามประสิทธิภาพและแนวโน้มตลาดเพิ่มประสิทธิภาพการทำงานให้เอเจ้น",
+      "ติดตามสถิติการปิดดีลและแนวโน้มการเปิดทรัพย์เพิ่มประสิทธิภาพการทำงานให้เอเจ้น",
     clientManagement: "ติดตามสถิติดีลที่ปิดได้",
     clientManagementDesc: "ดูสถิติการปิดดีลและการเปิดทรัพย์ได้ง่ายๆ",
 
@@ -881,6 +890,10 @@ export const translations = {
     "stats.totalSell": "รวมดีลขาย",
     "stats.totalVisit": "จำนวนนัดหมาย",
 
+    "location.analysis": "การวิเคราะห์ทำเล",
+"location.analysisDesc":
+  "วิเคราะห์ทำเลที่ตั้งของทรัพย์สินและแนวโน้มตลาดเพื่อใช้ประกอบการตัดสินใจอย่างรอบคอบ",
+
     // line chat bot
     "line.title": "รหัสเข้าใช้งาน",
     "line.description": "รหัสยืนยันตัวตนใช้ครั้งเดียว",
@@ -889,19 +902,18 @@ export const translations = {
     "line.instruction": "คลิกปุ่มด้านบนเพื่อคัดลอกรหัสของคุณ",
     "line.warning": "⚠️ รหัสนี้หมดอายุหลังจากใช้งานครั้งเดียว",
     "line.howToUse": "วิธีใช้งานใน Line Chat Bot",
-    "line.explain": "ทำตามขั้นตอนเหล่านี้เพื่อวางรหัสในกลุ่ม Line ของคุณ",
+    "line.explain": "เมื่อคุณสมัครใช้ Plan ของเราและชำระเงินเรียบร้อยแล้ว แอดมินจะส่ง QR Code ของ Chat Bot ให้คุณเพิ่มเพื่อนบน Line จากนั้นให้ทำตามขั้นตอนเหล่านี้",
     "line.step1": "เปิดกลุ่ม Line",
-    "line.step1explain": "ไปที่กลุ่ม Line ของคุณที่มี Chat Bot ทำงานอยู่",
-    "line.step2": "แตะช่องพิมพ์ข้อความ",
-    "line.step2explain": "แตะที่ช่องพิมพ์ข้อความด้านล่างของหน้าจอ",
-    "line.step3": "วางรหัส",
-    "line.step3explain":
-      'กดค้างในช่องพิมพ์ข้อความและเลือก "วาง" เพื่อใส่รหัสที่คัดลอกไว้',
-    "line.step4": "ส่งข้อความ",
-    "line.step4explain": "แตะปุ่มส่งเพื่อส่งรหัสของคุณไปยัง Chat Bot",
+    "line.step1explain": "ไปที่กลุ่ม Line ที่ต้องการให้ Bot แจ้งเตือน และพิมพ์คำว่า \"nainahub\" (ตัวพิมพ์เล็กหรือใหญ่ก็ได้) เพื่อเรียกใช้งาน Chat Bot",
+    "line.step2": "เมื่อเห็นข้อความและปุ่มตั้งค่าการแจ้งเตือน",
+    "line.step2explain": "กดปุ่ม ตั้งค่าแจ้งเตือนค่าเช่า คุณสามารถเลือกวันที่เริ่มและวันที่สิ้นสุดสัญญาเช่า พร้อมทั้งกรอกข้อมูลผู้เช่า และ เลือกภาษาที่ต้องการให้ทำการแจ้งเตือน และกดบันทึก",
+    "line.step3": "ข้อความแจ้งเตือนค่าเช่า",
+    "line.step3explain": "เมื่อถึงวันที่ตั้งค่าวันเริ่มสัญญา (วันครบกำหนดชำระค่าเช่า) Line Chat Bot จะส้งข้อความแจ้งเตือนชำระค่าเช่าให้กับผู้เช่าอัติโนมัติ",
+    "line.step4": "ข้อความแจ้งเตือนการสิ้นสุดสัญญาเช่า",
+    "line.step4explain": "เมื่อถึง 7 วันก่อนวันสิ้นสุดสัญญา Line Chat Bot จะส้งข้อความแจ้งเตือนการสิ้นสุดสัญญาให้กับผู้เช่าอัติโนมัติ",
     "line.tips": "เคล็ดลับ",
     "line.tipsexplain":
-      "ตรวจสอบให้แน่ใจว่าได้วางรหัสตรงตามที่คัดลอกมา Chat Bot จะประมวลผลรหัสของคุณโดยอัตโนมัติเมื่อส่งแล้ว",
+      "คุณสามารถเปลี่ยนวันที่ Line Chat Bot จะข้อมูลแจ้งเตือนให้กับผู้เช่าได้เสมอ",
 
     // post builder
     "post.title": "ตัวสร้างโพสต์ทรัพย์",
@@ -922,7 +934,7 @@ export const translations = {
     "post.copied": "คัดลอกแล้ว",
     "post.saveTemplate": "บันทึก",
     "post.savedTemplate": "บันทึกแล้ว",
-
+    "post.freeUser": "เมื่อคุณเปิดใช้ Plan ของเรา จะสามารถใช้งานตัวสร้างโพสต์ทรัพย์ได้",
     // commission
     "commissionTracker.title": "ตัวติดตามค่าคอมมิชชั่น",
     "commissionTracker.description":
@@ -1066,7 +1078,7 @@ export const translations = {
     "calendar.at": "เวลา",
     // Dashboard Menu
     "menu.dashboard": "แดชบอร์ด",
-    "menu.propertyListings": "รายการทรัพย์สิน",
+    "menu.propertyListings": "รายการทรัพย์",
     "menu.lineChatBot": "ไลน์บอทแจ้งเตือน",
     "menu.postBuilder": "สร้างโพสอัตโนมัติ",
     "menu.contractBuilder": "สร้างสัญญา ซื้อ-ขาย/เช่า",
@@ -1181,7 +1193,7 @@ export const translations = {
     loadingProperties: "กำลังโหลดอสังหาริมทรัพย์...",
     loadingPostTemplate: "กำลังโหลดรูปแบบโพสต์...",
     loadingContract: "กำลังโหลดสัญญา...",
-
+    loadingAppointments: "กำลังโหลดนัดหมาย...",
     // Language
     language: "ภาษา",
     english: "English",
@@ -1307,7 +1319,7 @@ export const translations = {
         period: "1,500.-/เดือน",
         description: "เหมาะสำหรับผู้เริ่มต้น",
         features: [
-          "ดูรายการทรัพย์สินได้ทุกรายการ",
+          "ดูรายการทรัพย์ได้ทุกรายการ",
           "สร้างสัญญาได้ไม่จำกัด",
           "สร้างเท็มเพลตโพส",
           "เพิ่มการนัดหมายลูกค้า",
@@ -1320,7 +1332,7 @@ export const translations = {
         period: "1,200.-/เดือน",
         description: "เหมาะสำหรับฟรีแลนซ์",
         features: [
-          "ดูรายการทรัพย์สินได้ทุกรายการ",
+          "ดูรายการทรัพย์ได้ทุกรายการ",
           "สร้างสัญญาได้ไม่จำกัด",
           "สร้างเท็มเพลตโพส",
           "เพิ่มการนัดหมายลูกค้า",
@@ -1334,7 +1346,7 @@ export const translations = {
         period: "990.-/เดือน",
         description: "เหมาะสำหรับฟรีแลนซ์และบริษัท",
         features: [
-          "ดูรายการทรัพย์สินได้ทุกรายการ",
+          "ดูรายการทรัพย์ได้ทุกรายการ",
           "สร้างสัญญาได้ไม่จำกัด",
           "สร้างเท็มเพลตโพส",
           "เพิ่มการนัดหมายลูกค้า",

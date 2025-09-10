@@ -14,10 +14,14 @@ model User {
   firstName                String?
   lastName                 String?
   isPaid                   Boolean                   @default(false)
+  startDate                DateTime?
   currentExpireDate        DateTime?
   imageUrl                 String?
+  plan                     String?
+
   createdAt                DateTime                  @default(now())
   updatedAt                DateTime                  @updatedAt
+  
   role                     Roles                  @default(freeUser)
   postTemplate             PostTemplate[]
   rentalContracts          RentalContract[]

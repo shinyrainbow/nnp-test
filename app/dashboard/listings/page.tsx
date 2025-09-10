@@ -125,7 +125,7 @@ export default function PropertySearch() {
       setError(null);
 
       const res = await fetch(`/api/listings?${query}`);
-      
+
       if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status}`);
       }
@@ -351,25 +351,24 @@ export default function PropertySearch() {
     }
   }, [error, setError]);
 
-
   const deleteProperty = async (id) => {
     try {
-      const res =await fetch(`/api/listings/${id}`, {
+      const res = await fetch(`/api/listings/${id}`, {
         method: "DELETE",
       });
-    
+
       const data = await res.json();
       console.log(data);
-     
+
       if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status}`);
       }
-
     } catch (err: any) {
       // setError(err.message || "Something went wrong");
     } finally {
     }
-  }
+  };
+  
   return (
     <div className="">
       {error && (
@@ -402,7 +401,7 @@ export default function PropertySearch() {
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Enter project name or location"
+                  placeholder={t("enterProjectName")}
                   className="w-full"
                 />
                 {/* <CommaSeparatedSearch
@@ -427,11 +426,14 @@ export default function PropertySearch() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">{t("allRoomTypes")}</SelectItem>
-                    <SelectItem  value={"Condo"}>{t("condo")}</SelectItem>
-                    <SelectItem  value={"Apartment"}>{t("apartment")}</SelectItem>
-                    <SelectItem  value={"Townhouse"}>{t("townhouse")}</SelectItem>
+                    <SelectItem value={"Condo"}>{t("condo")}</SelectItem>
+                    <SelectItem value={"Apartment"}>
+                      {t("apartment")}
+                    </SelectItem>
+                    <SelectItem value={"Townhouse"}>
+                      {t("townhouse")}
+                    </SelectItem>
                     <SelectItem value={"SingleHouse"}>{t("house")}</SelectItem>
-                   
                   </SelectContent>
                 </Select>
               </div>
@@ -642,8 +644,7 @@ export default function PropertySearch() {
 
           {viewMode === "grid" ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-              {properties.map((property,index) => {
-                console.log(property, 888888888)
+              {properties.map((property, index) => {
                 const priceRentalNumber = parsePrice(property.rentalRate);
                 const formattedRentalPrice = formatPrice(priceRentalNumber);
 
@@ -677,7 +678,6 @@ export default function PropertySearch() {
                       </div> */}
                         </div>
 
-
                         <div className="flex gap-1">
                           <Button variant="ghost" size="sm">
                             <Heart className="w-4 h-4" />
@@ -701,7 +701,6 @@ export default function PropertySearch() {
                             <Edit className="w-4 h-4" />
                           </Button>
                         </div>
-
                       </div>
 
                       {/* <div className="flex items-center gap-1 text-sm text-gray-600">
@@ -855,14 +854,23 @@ export default function PropertySearch() {
                           <div>
                             {/* <p className="text-sm text-gray-600">{t("rent")}</p> */}
                             <p className="text-lg font-bold text-blue-600">
-                              <span className="text-sm text-gray-600">{t("rent")}:</span> {formattedRentalPrice}{t("month")}
+                              <span className="text-sm text-gray-600">
+                                {t("rent")}:
+                              </span>{" "}
+                              {formattedRentalPrice}
+                              {t("month")}
                             </p>
                           </div>
                         </div>
                         <div className="text-left">
                           {/* <p className="text-sm text-gray-600">{t("sale")}</p> */}
                           <p className="text-lg font-bold text-green-600">
-                          <span className="text-sm text-gray-600">{t("sale")}:</span> {formattedSellPrice !== "0" ? formattedSellPrice :  "-" }
+                            <span className="text-sm text-gray-600">
+                              {t("sale")}:
+                            </span>{" "}
+                            {formattedSellPrice !== "0"
+                              ? formattedSellPrice
+                              : "-"}
                           </p>
                         </div>
 
@@ -920,12 +928,3 @@ export default function PropertySearch() {
     </div>
   );
 }
-
-// const getLocalizedStatus = (status: string) => {
-//   const statusMap: Record<string, string> = {
-//     available: t("available"),
-//     rented: t("rented"),
-//     sold: t("sold"),
-//   };
-//   return statusMap[status] || status;
-// };

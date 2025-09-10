@@ -14,6 +14,19 @@ export async function GET() {
         status: 401,
       });
     }
+
+    const neonUserDb = await prisma.user.findFirst({
+      where: {
+        clerkId: userId,
+      },
+    });
+     // if user is freeUser
+     if (!!neonUserDb && !neonUserDb.isPaid) {
+     return NextResponse.json({
+        contracts: [],
+        message: "GET Purchase and sale contract successfully",
+      });
+    }
     const userDb = await prisma.user.findFirst({
       where: {
         clerkId: userId,
@@ -48,12 +61,18 @@ export async function POST(request: NextRequest) {
         status: 401,
       });
     }
-
     const userDb = await prisma.user.findFirst({
       where: {
         clerkId: userId,
       },
     });
+
+    // if user is freeUser
+    if (!!userDb && !userDb.isPaid) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+      });
+    }
     if (!userDb || !userDb?.id) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -97,12 +116,10 @@ export async function POST(request: NextRequest) {
       province,
     } = contractData;
 
-    const hello = await prisma.rentalContract.findMany();
-
-    const contractCreated = await prisma.rentalContract.create({
+    await prisma.rentalContract.create({
       data: {
         id: randomUUID(),
-        language: "TH",
+        language,
         contractPlace,
         contractDate,
 

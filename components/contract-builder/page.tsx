@@ -29,6 +29,29 @@ export default function ContractBuilder() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [user, setUser] = useState<any>(null);
+  const [loadingUser, setLoadingUser] = useState(false);
+  const [errorUser, setErrorUser] = useState<string | null>(null);
+
+  const fetchUser = async () => {
+    try {
+      setLoadingUser(true);
+      setErrorUser(null);
+      const res = await fetch("/api/me");
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch: ${res.status}`);
+      }
+      const userData = await res.json();
+
+      setUser(userData.data);
+    } catch (err: any) {
+      setErrorUser(err.message || "Something went wrong");
+    } finally {
+      setLoadingUser(false);
+    }
+  };
+
   useEffect(() => {
     const fetchRentalContracts = async () => {
       try {
@@ -61,7 +84,9 @@ export default function ContractBuilder() {
 
     fetchRentalContracts();
     fetchPurchaseAndSaleContracts();
+    fetchUser();
   }, []);
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -388,7 +413,16 @@ export default function ContractBuilder() {
     }
   };
   const { t } = useLanguage();
-
+  if(loading || loadingUser){
+return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
+            <p className="text-gray-600">{t("loadingContract")}</p>
+          </div>
+        </div>
+)
+}
   if (error) return <p className="p-4 text-red-500">{error}</p>;
 
   return (
@@ -407,15 +441,7 @@ export default function ContractBuilder() {
         </div>
       </header>
 
-      {loading ? (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="text-center">
-            <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
-            <p className="text-gray-600">{t("loadingContract")}</p>
-          </div>
-        </div>
-      ) : (
-        <Tabs
+      <Tabs
           value={activeTab}
           onValueChange={handleChange}
           defaultValue={activeTab}
@@ -439,12 +465,28 @@ export default function ContractBuilder() {
                         {t("contracts.subtitle.rent")}
                       </p>
                     </div>
-                    <Button asChild size="lg" className="gap-2">
-                      <Link href="/dashboard/contract-builder/new-rental-contract">
+
+                    {!user.isPaid ? (
+                      <Button
+                        size="lg"
+                        className="gap-2"
+                        disabled={true}
+                      >
                         <Plus className="w-5 h-5" />
                         {t("contracts.createNew.rental")}
-                      </Link>
-                    </Button>
+                      </Button>
+                    ) : (
+                      <Button
+                        asChild
+                        size="lg"
+                        className="gap-2"
+                      >
+                        <Link href="/dashboard/contract-builder/new-rental-contract">
+                          <Plus className="w-5 h-5" />
+                          {t("contracts.createNew.rental")}
+                        </Link>
+                      </Button>
+                    )}
                   </div>
 
                   {/* Stats Cards */}
@@ -579,12 +621,24 @@ export default function ContractBuilder() {
                         {t("contracts.subtitle.buySell")}
                       </p>
                     </div>
-                    <Button asChild size="lg" className="gap-2">
+                    {!user.isPaid ? (
+                      <Button
+                        size="lg"
+                        className="gap-2"
+                        disabled={true}
+                      >
+                        <Plus className="w-5 h-5" />
+                        {t("contracts.createNew.buySell")}
+                      </Button>
+                    ) : (
+                      <Button asChild size="lg" className="gap-2">
                       <Link href="/dashboard/contract-builder/new-buySell-contract">
                         <Plus className="w-5 h-5" />
                         {t("contracts.createNew.buySell")}
                       </Link>
                     </Button>
+                    )}
+                   
                   </div>
 
                   {/* Stats Cards */}
@@ -713,7 +767,6 @@ export default function ContractBuilder() {
             </Card>
           </TabsContent>
         </Tabs>
-      )}
     </>
   );
 }

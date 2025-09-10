@@ -1,16 +1,35 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
 import { randomUUID } from "crypto";
 import { auth } from "@clerk/nextjs/server";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export async function GET() {
   try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+      });
+    }
+
+    const neonUserDb = await prisma.user.findFirst({
+      where: {
+        clerkId: userId,
+      },
+    });
+     // if user is freeUser
+     if (!!neonUserDb && !neonUserDb.isPaid) {
+     return NextResponse.json([])
+    }
+
     const appointments = await prisma.appointment.findMany({
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json(appointments);
   } catch (error) {
-    console.error("GET /appointments error:", error);
     return NextResponse.json(
       { error: "Failed to fetch appointments" },
       { status: 500 }
@@ -18,10 +37,9 @@ export async function GET() {
   }
 }
 
-
 export async function POST(req: Request) {
   try {
-    const { userId } = await auth(); 
+    const { userId } = await auth();
 
     if (!userId) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
@@ -30,15 +48,24 @@ export async function POST(req: Request) {
     }
     const neonUserDb = await prisma.user.findFirst({
       where: {
-        clerkId: userId
-      }
-    })
+        clerkId: userId,
+      },
+    });
 
-    if(!neonUserDb) {
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-            status: 401,
-          });
+    // if not found user
+    if (!neonUserDb) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+      });
     }
+
+    // if user is freeUser
+    if (!!neonUserDb && !neonUserDb.isPaid) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+      });
+    }
+
     const body = await req.json();
     const { appointmentType, clientName, clientContact, date, time, notes } =
       body;

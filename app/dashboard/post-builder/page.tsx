@@ -19,14 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Copy,
-  Home,
-  Eye,
-  FileText,
-  Check,
-  Loader2,
-} from "lucide-react";
+import { Copy, Home, Eye, FileText, Check, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/language-context";
 
@@ -73,7 +66,7 @@ export const defaultFields: TemplateField[] = [
     label: "Property Type",
     type: "select",
     emoji: "🏢",
-    options: ["Condo", "Apartment",  "Townhouse","SingleHouse"],
+    options: ["Condo", "Apartment", "Townhouse", "SingleHouse"],
     required: true,
   },
   {
@@ -159,13 +152,35 @@ export default function PropertyPostCreator() {
   const [copiedStates, setCopiedStates] = useState(false);
   const [templateId, setTemplateId] = useState();
   const [saved, setSaved] = useState(false);
-  useEffect(() => {
-    loadTemplate();
-  }, []);
+
   const [template, setTemplate] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [user, setUser] = useState<any>(null);
+  const [loadingUser, setLoadingUser] = useState(false);
+  const [errorUser, setErrorUser] = useState<string | null>(null);
+
+  const fetchUser = async () => {
+    try {
+      setLoadingUser(true);
+      setErrorUser(null);
+      const res = await fetch("/api/me");
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch: ${res.status}`);
+      }
+      const userData = await res.json();
+
+      setUser(userData.data);
+    } catch (err: any) {
+      setErrorUser(err.message || "Something went wrong");
+    } finally {
+      setLoadingUser(false);
+    }
+  };
+
+  console.log(user, 22222)
   const loadTemplate = async () => {
     try {
       setLoading(true);
@@ -177,9 +192,6 @@ export default function PropertyPostCreator() {
       if (response.ok) {
         setTemplateId(data.templateId);
         setTemplate(data.template);
-        // if (data.templates.length > 0 && !selectedTemplate) {
-        //   setSelectedTemplate(data.templates[0]);
-        // }
       } else {
         toast({
           title: "Failed to load templates",
@@ -199,6 +211,11 @@ export default function PropertyPostCreator() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadTemplate();
+    fetchUser();
+  }, []);
 
   const generatePost = () => {
     if (!template) return "";
@@ -318,14 +335,6 @@ export default function PropertyPostCreator() {
     }, 1000);
   };
 
-  const loadMockData = () => {
-    setPropertyData(mockPropertyData);
-    toast({
-      title: "Mock data loaded!",
-      description: "Sample property data has been loaded for testing.",
-    });
-  };
-
   const insertFieldTag = (fieldId: string, isEmoji = false) => {
     if (!template || !textareaRef.current) return;
 
@@ -351,6 +360,16 @@ export default function PropertyPostCreator() {
     }, 0);
   };
 
+  if (loading || loadingUser) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
+          <p className="text-gray-600">{t("loadingPostTemplate")}</p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
@@ -367,18 +386,14 @@ export default function PropertyPostCreator() {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
-        {loading ? (
-          <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-            <div className="text-center">
-              <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
-              <p className="text-gray-600">{t("loadingPostTemplate")}</p>
-            </div>
-          </div>
-        ) : (
+      {!!user && !user.isPaid ? (<>{t("post.freeUser")}</>):
+     ( <div className="container mx-auto px-4 py-8">
+       
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="space-y-6">
-              {/* <Card>
+
+
+                <div className="space-y-6">
+                  {/* <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5" />
@@ -458,211 +473,213 @@ export default function PropertyPostCreator() {
             </CardContent>
           </Card> */}
 
-              {/* Edit part */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FileText className="h-5 w-5" />
-                    {t("post.formatEditor")}
-                  </CardTitle>
-                  <CardDescription>
-                    {t("post.formatEditorDesc")}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="format">
-                      {t("post.postFormatTemplate")}
-                    </Label>
-                    <Textarea
-                      ref={textareaRef}
-                      id="format"
-                      value={template || ""}
-                      onChange={(e) =>
-                        updateTemplateFormatDebounced(e.target.value)
-                      }
-                      placeholder="Enter your custom format here..."
-                      className="min-h-[200px] font-mono text-sm"
-                    />
-                  </div>
-
-                  <div className="space-y-3">
-                    <div>
-                      <p className="font-medium mb-2 text-sm">
-                        {t("post.fieldTags")}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {defaultFields.map((field) => (
-                          <Button
-                            key={field.id}
-                            variant="outline"
-                            size="sm"
-                            onClick={() => insertFieldTag(field.id)}
-                            className="text-xs h-7 px-2 hover:bg-primary hover:text-primary-foreground"
-                          >
-                            {`{${field.id}}`}
-                          </Button>
-                        ))}
+                  {/* Edit part */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <FileText className="h-5 w-5" />
+                        {t("post.formatEditor")}
+                      </CardTitle>
+                      <CardDescription>
+                        {t("post.formatEditorDesc")}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div>
+                        <Label htmlFor="format">
+                          {t("post.postFormatTemplate")}
+                        </Label>
+                        <Textarea
+                          ref={textareaRef}
+                          id="format"
+                          value={template || ""}
+                          onChange={(e) =>
+                            updateTemplateFormatDebounced(e.target.value)
+                          }
+                          placeholder="Enter your custom format here..."
+                          className="min-h-[200px] font-mono text-sm"
+                        />
                       </div>
-                    </div>
-                    <div>
-                      <p className="font-medium mb-2 text-sm">
-                        {t("post.emojiTags")}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {defaultFields
-                          .filter((field) => field.emoji)
-                          .map((field) => (
-                            <Button
-                              key={`emoji-${field.id}`}
-                              variant="outline"
-                              size="sm"
-                              onClick={() => insertFieldTag(field.id, true)}
-                              className="text-xs h-7 px-2 hover:bg-secondary hover:text-secondary-foreground"
-                            >
-                              {field.emoji}
-                            </Button>
-                          ))}
+
+                      <div className="space-y-3">
+                        <div>
+                          <p className="font-medium mb-2 text-sm">
+                            {t("post.fieldTags")}
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {defaultFields.map((field) => (
+                              <Button
+                                key={field.id}
+                                variant="outline"
+                                size="sm"
+                                onClick={() => insertFieldTag(field.id)}
+                                className="text-xs h-7 px-2 hover:bg-primary hover:text-primary-foreground"
+                              >
+                                {`{${field.id}}`}
+                              </Button>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <p className="font-medium mb-2 text-sm">
+                            {t("post.emojiTags")}
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {defaultFields
+                              .filter((field) => field.emoji)
+                              .map((field) => (
+                                <Button
+                                  key={`emoji-${field.id}`}
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => insertFieldTag(field.id, true)}
+                                  className="text-xs h-7 px-2 hover:bg-secondary hover:text-secondary-foreground"
+                                >
+                                  {field.emoji}
+                                </Button>
+                              ))}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
 
-                  <Button onClick={saveTemplate} className="w-full">
-                    {saved ? (
-                      <>
-                        <Check className="w-4 h-4 mr-1" />{" "}
-                        {t("post.savedTemplate")}
-                      </>
-                    ) : (
-                      t("post.saveTemplate")
-                    )}
-                  </Button>
-                </CardContent>
-              </Card>
+                      <Button onClick={saveTemplate} className="w-full">
+                        {saved ? (
+                          <>
+                            <Check className="w-4 h-4 mr-1" />{" "}
+                            {t("post.savedTemplate")}
+                          </>
+                        ) : (
+                          t("post.saveTemplate")
+                        )}
+                      </Button>
+                    </CardContent>
+                  </Card>
 
-              {/* Property Data */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Home className="h-5 w-5" />
-                    {t("post.propertyData")}
-                  </CardTitle>
-                  <CardDescription>
-                    <div className="flex items-center justify-between">
-                      <span>{t("post.propertyDataDesc")}</span>
-                      {/* <Button
+                  {/* Property Data */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Home className="h-5 w-5" />
+                        {t("post.propertyData")}
+                      </CardTitle>
+                      <CardDescription>
+                        <div className="flex items-center justify-between">
+                          <span>{t("post.propertyDataDesc")}</span>
+                          {/* <Button
                         onClick={loadMockData}
                         variant="outline"
                         size="sm"
                       >
                         {t("post.loadData")}
                       </Button> */}
-                    </div>
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 gap-4 max-h-[400px] overflow-y-auto">
-                    {defaultFields.map((field) => (
-                      <div key={field.id}>
-                        <Label
-                          htmlFor={field.id}
-                          className="flex items-center gap-2"
-                        >
-                          {field.emoji} {field.label}
-                          {field.required && (
-                            <span className="text-destructive">*</span>
-                          )}
-                        </Label>
-                        {field.type === "textarea" ? (
-                          <Textarea
-                            id={field.id}
-                            value={propertyData[field.id] || ""}
-                            onChange={(e) =>
-                              setPropertyData({
-                                ...propertyData,
-                                [field.id]: e.target.value,
-                              })
-                            }
-                            placeholder={field.placeholder}
-                          />
-                        ) : field.type === "select" ? (
-                          <Select
-                            value={propertyData[field.id] || ""}
-                            onValueChange={(value) =>
-                              setPropertyData({
-                                ...propertyData,
-                                [field.id]: value,
-                              })
-                            }
-                          >
-                            <SelectTrigger>
-                              <SelectValue
-                                placeholder={`Select ${field.label}`}
+                        </div>
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid grid-cols-1 gap-4 max-h-[400px] overflow-y-auto">
+                        {defaultFields.map((field) => (
+                          <div key={field.id}>
+                            <Label
+                              htmlFor={field.id}
+                              className="flex items-center gap-2"
+                            >
+                              {field.emoji} {field.label}
+                              {field.required && (
+                                <span className="text-destructive">*</span>
+                              )}
+                            </Label>
+                            {field.type === "textarea" ? (
+                              <Textarea
+                                id={field.id}
+                                value={propertyData[field.id] || ""}
+                                onChange={(e) =>
+                                  setPropertyData({
+                                    ...propertyData,
+                                    [field.id]: e.target.value,
+                                  })
+                                }
+                                placeholder={field.placeholder}
                               />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {field.options?.map((option) => (
-                                <SelectItem key={option} value={option}>
-                                  {option}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        ) : (
-                          <Input
-                            id={field.id}
-                            type={field.type}
-                            value={propertyData[field.id] || ""}
-                            onChange={(e) =>
-                              setPropertyData({
-                                ...propertyData,
-                                [field.id]: e.target.value,
-                              })
-                            }
-                            placeholder={field.placeholder}
-                          />
-                        )}
+                            ) : field.type === "select" ? (
+                              <Select
+                                value={propertyData[field.id] || ""}
+                                onValueChange={(value) =>
+                                  setPropertyData({
+                                    ...propertyData,
+                                    [field.id]: value,
+                                  })
+                                }
+                              >
+                                <SelectTrigger>
+                                  <SelectValue
+                                    placeholder={`Select ${field.label}`}
+                                  />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {field.options?.map((option) => (
+                                    <SelectItem key={option} value={option}>
+                                      {option}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            ) : (
+                              <Input
+                                id={field.id}
+                                type={field.type}
+                                value={propertyData[field.id] || ""}
+                                onChange={(e) =>
+                                  setPropertyData({
+                                    ...propertyData,
+                                    [field.id]: e.target.value,
+                                  })
+                                }
+                                placeholder={field.placeholder}
+                              />
+                            )}
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                    </CardContent>
+                  </Card>
+                </div>
 
-            <div className="space-y-6">
-              <Card className="sticky top-4">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Eye className="h-5 w-5" />
-                    {t("post.generatePreview")}
-                  </CardTitle>
-                  <CardDescription>{t("post.review")}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="bg-muted p-4 rounded-lg min-h-[300px]">
-                    <pre className="whitespace-pre-wrap text-sm font-mono">
-                      {generatePost() ||
-                        "Create your format template to see the preview..."}
-                    </pre>
-                  </div>
-                  <Button
-                    onClick={copyToClipboard}
-                    className="w-full"
-                    disabled={!generatePost()}
-                  >
-                    {copiedStates ? (
-                      <Check className="w-4 h-4 mr-1" />
-                    ) : (
-                      <Copy className="h-4 w-4 mr-2" />
-                    )}
-                    {copiedStates ? t("post.copied") : t("post.copy")}
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+                <div className="space-y-6">
+                  <Card className="sticky top-4">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Eye className="h-5 w-5" />
+                        {t("post.generatePreview")}
+                      </CardTitle>
+                      <CardDescription>{t("post.review")}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="bg-muted p-4 rounded-lg min-h-[300px]">
+                        <pre className="whitespace-pre-wrap text-sm font-mono">
+                          {generatePost() ||
+                            "Create your format template to see the preview..."}
+                        </pre>
+                      </div>
+                      <Button
+                        onClick={copyToClipboard}
+                        className="w-full"
+                        disabled={!generatePost()}
+                      >
+                        {copiedStates ? (
+                          <Check className="w-4 h-4 mr-1" />
+                        ) : (
+                          <Copy className="h-4 w-4 mr-2" />
+                        )}
+                        {copiedStates ? t("post.copied") : t("post.copy")}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+
           </div>
-        )}
-      </div>
+                      
+        
+      </div>)}
     </div>
   );
 }

@@ -45,6 +45,7 @@ import {
   Pen,
   Trash2,
   HandCoins,
+  Loader2,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/language-context";
@@ -137,6 +138,29 @@ export default function CalendarPage() {
     },
   });
 
+  const [user, setUser] = useState<any>(null);
+  const [loadingUser, setLoadingUser] = useState(false);
+  const [errorUser, setErrorUser] = useState<string | null>(null);
+
+  const fetchUser = async () => {
+    try {
+      setLoadingUser(true);
+      setErrorUser(null);
+      const res = await fetch("/api/me");
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch: ${res.status}`);
+      }
+      const userData = await res.json();
+
+      setUser(userData.data);
+    } catch (err: any) {
+      setErrorUser(err.message || "Something went wrong");
+    } finally {
+      setLoadingUser(false);
+    }
+  };
+
   const fetchAppointments = async () => {
     try {
       const res = await fetch("/api/appointments");
@@ -157,6 +181,7 @@ export default function CalendarPage() {
   };
   useEffect(() => {
     fetchAppointments();
+    fetchUser()
   }, []);
 
 
@@ -190,7 +215,6 @@ export default function CalendarPage() {
       });
     }
   };
-
 
   function getPreviousAppointments(data: typeof appointments) {
     const now = new Date();
@@ -240,6 +264,27 @@ export default function CalendarPage() {
         return t("calendar.form.appointmentType.others");
     }
   };
+
+  if(!user) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="text-center">
+        <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
+        <p className="text-gray-600">{t("loadingAppointments")}</p>
+      </div>
+    </div>
+    )
+  }
+  if(!appointments) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="text-center">
+        <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
+        <p className="text-gray-600">{t("loadingAppointments")}</p>
+      </div>
+    </div>
+    )
+  }
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -252,7 +297,7 @@ export default function CalendarPage() {
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button disabled={!user.isPaid}>
               <Plus className="mr-2 h-4 w-4" />
               {t("calendar.addButton")}
             </Button>
