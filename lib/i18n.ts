@@ -351,7 +351,7 @@ export const translations = {
     ownerListed: "Owner Listed",
     amenities: "Amenities",
     facilities: "Facilities",
-    floor: "Floor",
+    floor: "fl.",
     note: "Note",
     availability: "Availability",
     shortTermOk: "Short-term OK",
@@ -381,7 +381,7 @@ export const translations = {
     condo: "Condo",
     apartment: "Apartment",
     townhouse: "Townhouse",
-    house: "House",
+    house: "SingleHouse",
 
     // Pagination
     rowsPerPage: "Rows per page",
@@ -454,7 +454,8 @@ export const translations = {
     // features page
     "features.badge": "Features",
     "features.title": "Comprehensive Real Estate Tools",
-    "features.subtitle": "Discover all the powerful features that make Naina Hub the ultimate toolkit for real estate professionals",
+    "features.subtitle":
+      "Discover all the powerful features that make Naina Hub the ultimate toolkit for real estate professionals",
     "features.category.property": "Property Listings",
     "features.category.lineChatBot": "Line Chat Bot",
     "features.category.postBuilder": "Post Template Builder",
@@ -462,11 +463,16 @@ export const translations = {
     "features.category.client": "Client Appointments",
     "features.category.analysis": "Property Analytics",
 
-    "features.categoryDesc.property": "Helps agents find properties for clients faster and more conveniently.",
-    "features.categoryDesc.lineChatBot": "Add the chat bot to your Line group for instant customer notifications.",
-    "features.categoryDesc.postBuilder": "Create marketing posts linked to your contact info easily. Use it for any property—copy and post instantly.",
-    "features.categoryDesc.contract": "Draft contracts and download documents quickly.",
-    "features.categoryDesc.client": "Essential tools for managing your clients.",
+    "features.categoryDesc.property":
+      "Helps agents find properties for clients faster and more conveniently.",
+    "features.categoryDesc.lineChatBot":
+      "Add the chat bot to your Line group for instant customer notifications.",
+    "features.categoryDesc.postBuilder":
+      "Create marketing posts linked to your contact info easily. Use it for any property—copy and post instantly.",
+    "features.categoryDesc.contract":
+      "Draft contracts and download documents quickly.",
+    "features.categoryDesc.client":
+      "Essential tools for managing your clients.",
     "features.categoryDesc.analysis": "Analyze properties and market trends.",
 
     "features.property.1": "Search and filter properties",
@@ -475,7 +481,8 @@ export const translations = {
     "features.property.4": "Copy pre-made posts and post immediately",
 
     "features.lineChatBot.1": "Send rent reminders to clients",
-    "features.lineChatBot.2": "Reduce manual reminders and make agents more professional",
+    "features.lineChatBot.2":
+      "Reduce manual reminders and make agents more professional",
     "features.lineChatBot.3": "Set reminder dates quickly and easily",
 
     "features.postBuilder.1": "Create text templates and edit anytime",
@@ -488,14 +495,14 @@ export const translations = {
     "features.contract.4": "Quickly create and sign contracts in no time",
 
     "features.client.1": "Schedule client appointments with date and time",
-    "features.client.2": "Categorize appointments: property viewings, contract signing, appraisals, transfers, etc.",
+    "features.client.2":
+      "Categorize appointments: property viewings, contract signing, appraisals, transfers, etc.",
     "features.client.3": "Manage appointments systematically",
 
     "features.analysis.1": "Consolidate data useful for agents",
     "features.analysis.2": "Track closed deals and appointment counts",
     "features.analysis.3": "Analyze market prices",
     "features.analysis.4": "Analyze property trends in each zone",
-
 
     // Pricing
     pricingTitle: "Simple, Transparent Pricing",
@@ -504,48 +511,44 @@ export const translations = {
 
     plans: [
       {
-        name: "Starter",
-        price: "ฟรี",
-        period: "/month",
-        description: "Perfect for new agents getting started",
+        name: "3 Months",
+        price: "4,500.-",
+        period: "1,500.-/month",
+        description: "Suitable for beginners",
         features: [
-          "Up to 10 property listings",
-          "Basic contract templates",
-          "Client management",
-          "Email support",
-          "Mobile app access",
+          "Access all property listings",
+          "Unlimited contract creation",
+          "Create post template",
+          "Add client appointments",
         ],
         popular: false,
       },
       {
-        name: "Professional",
-        price: "900.-",
-        period: "/month",
-        description: "For established agents who need more power",
+        name: "6 Months",
+        price: "7,200.-",
+        period: "1,200.-/month",
+        description: "Suitable for freelancers",
         features: [
-          "Unlimited property listings",
-          "Advanced contract builder",
-          "AI-powered tools",
-          "Analytics dashboard",
-          "Priority support",
-          "Custom branding",
-          "API access",
+          "Access all property listings",
+          "Unlimited contract creation",
+          "Create post template",
+          "Add client appointments",
+          "Unlimited use of Line Chat Bot groups",
         ],
         popular: true,
       },
       {
-        name: "Enterprise",
-        price: "3,900.-",
-        period: "/month",
-        description: "For teams and large real estate companies",
+        name: "12 Months",
+        price: "11,880.-",
+        period: "990.-/month",
+        description: "Suitable for freelancers and companies",
         features: [
-          "Everything in Professional",
-          "Team collaboration tools",
-          "Advanced analytics",
-          "Custom integrations",
-          "Dedicated account manager",
-          "White-label solution",
-          "SLA guarantee",
+          "Access all property listings",
+          "Unlimited contract creation",
+          "Create post template",
+          "Add client appointments",
+          "Unlimited use of Line Chat Bot groups",
+          "Ongoing access at a cheaper price.",
         ],
         popular: false,
       },
@@ -739,7 +742,7 @@ export const translations = {
     "newContract.propertyInformation.propertyType": "Property Type",
     "newContract.propertyInformation.selectType": "Select property type",
     "newContract.propertyInformation.types.apartment": "Apartment",
-    "newContract.propertyInformation.types.house": "House",
+    "newContract.propertyInformation.types.house": "SingleHouse",
     "newContract.propertyInformation.types.condo": "Condominium",
     "newContract.propertyInformation.types.townhouse": "Townhouse",
     "newContract.propertyInformation.placeholders.propertyAddress":
@@ -1241,6 +1244,11 @@ export const translations = {
     "features.subtitle":
       "ค้นพบคุณสมบัติอันทรงพลังทั้งหมดที่ทำให้ Naina Hub เป็นเครื่องมือที่สมบูรณ์แบบสำหรับมืออาชีพด้านอสังหาริมทรัพย์",
 
+      // "features.title.website": "บริการทำเว็บไซต์สำหรับเอเจ้น ฟรี Domain และ Server 1 ปี",
+      // "features.subtitle.website":
+      //   "ค้นพบคุณสมบัติอันทรงพลังทั้งหมดที่ทำให้ Naina Hub เป็นเครื่องมือที่สมบูรณ์แบบสำหรับมืออาชีพด้านอสังหาริมทรัพย์",
+  
+
     "features.category.property": "รายการทรัพย์",
     "features.category.lineChatBot": "แชทบอทไลน์",
     "features.category.postBuilder": "สร้าง Template โพส",
@@ -1264,8 +1272,7 @@ export const translations = {
     "features.property.4": "ก๊อปปี้โพสที่สร้างแล้วไปโพสได้เลยทันที",
 
     "features.lineChatBot.1": "แจ้งเตือนค่าเช่าให้ลูกค้า",
-    "features.lineChatBot.2":
-      "ลดระยะเวลาเตือนเอง เพิ่มความเป็นมืออาชีพ",
+    "features.lineChatBot.2": "ลดระยะเวลาเตือนเอง เพิ่มความเป็นมืออาชีพ",
     "features.lineChatBot.3": "ตั้งค่าวันแจ้งเตือนง่ายๆ แปบเดียวเสร็จ",
 
     "features.postBuilder.1":
@@ -1295,45 +1302,44 @@ export const translations = {
 
     plans: [
       {
-        name: "เริ่มต้น",
-        price: "ฟรี",
-        period: "/เดือน",
-        description: "สำหรับทดลองใช้งาน",
+        name: "3 เดือน",
+        price: "4,500.-",
+        period: "1,500.-/เดือน",
+        description: "เหมาะสำหรับผู้เริ่มต้น",
         features: [
-          "ดูรายการทรัพย์สินได้ 10 รายการ",
-          "สร้างสัญญาได้ 1 ครั้ง",
-          "ใช้ Line Messenger 1 ครั้ง",
-          "บริการหลังบ้าน",
-          "ใช้ได้ตลอด ไม่จำกัด",
+          "ดูรายการทรัพย์สินได้ทุกรายการ",
+          "สร้างสัญญาได้ไม่จำกัด",
+          "สร้างเท็มเพลตโพส",
+          "เพิ่มการนัดหมายลูกค้า",
         ],
         popular: false,
       },
       {
-        name: "ฟรีแลนซ์",
-        price: "900.-",
-        period: "/เดือน",
-        description: "สำหรับฟรีแลนซ์และบริษัทเล็ก",
+        name: "6 เดือน",
+        price: "7,200.-",
+        period: "1,200.-/เดือน",
+        description: "เหมาะสำหรับฟรีแลนซ์",
         features: [
-          "ดูรายการทรัพย์สินได้ไม่จำกัดรายการ",
-          "สร้างสัญญาได้ไม่จำกัดครั้ง",
-          "ใช้ Line Messenger 10 ครั้ง",
-          "บริการหลังบ้าน",
-          "ใช้ได้ตลอด ไม่จำกัด",
+          "ดูรายการทรัพย์สินได้ทุกรายการ",
+          "สร้างสัญญาได้ไม่จำกัด",
+          "สร้างเท็มเพลตโพส",
+          "เพิ่มการนัดหมายลูกค้า",
+          "ใช้ Line Chat Bot ไม่จำกัดจำนวนกรุ๊ป",
         ],
         popular: true,
       },
       {
-        name: "บริษัท",
-        price: "3,900.-",
-        period: "/เดือน",
-        description: "สำหรับบริษัทใหญ่",
+        name: "12 เดือน",
+        price: "11,880.-",
+        period: "990.-/เดือน",
+        description: "เหมาะสำหรับฟรีแลนซ์และบริษัท",
         features: [
-          "ดูรายการทรัพย์สินได้ไม่จำกัดรายการ",
-          "สร้างสัญญาได้ไม่จำกัดครั้ง",
-          "ใช้ Line Messenger 10 ครั้ง",
-          "บริการหลังบ้าน",
-          "ใช้ได้ตลอด ไม่จำกัด",
-          "ใช้บริการ AI Assistant ได้ไม่จำกัดครั้ง",
+          "ดูรายการทรัพย์สินได้ทุกรายการ",
+          "สร้างสัญญาได้ไม่จำกัด",
+          "สร้างเท็มเพลตโพส",
+          "เพิ่มการนัดหมายลูกค้า",
+          "ใช้ Line Chat Bot ไม่จำกัดจำนวนกรุ๊ป",
+          "ใช้ได้อย่างต่อเนื่องในราคาที่ถูกลง",
         ],
         popular: false,
       },

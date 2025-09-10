@@ -17,7 +17,6 @@ export default function Home() {
     const data = await res.json();
     setJsonData(data);
   };
-
   return (
     <div className="p-6">
       <form onSubmit={handleUpload}>

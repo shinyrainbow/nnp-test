@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma"; // adjust to your prisma client path
 import { RoomType } from "@prisma/client";
+import { S3Client, ListObjectsV2Command } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 // Helper: parse price string like "1,500,000" or "15,000 THB"
 function parsePrice(value: string | null): number | null {
@@ -14,6 +16,26 @@ function parseRoomSize(value: string | null): number | null {
   if (!value) return null;
   const num = value.replace(/[^0-9.]/g, "");
   return num ? parseFloat(num) : null;
+}
+
+const s3 = new S3Client({
+  region: process.env.AWS_REGION!,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+  },
+});
+
+const BUCKET = process.env.S3_BUCKET!;
+const PREFIX = process.env.S3_PREFIX || ""; // e.g. "images/"
+
+const IMAGE_EXTS = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"]);
+
+function isImageKey(key: string) {
+  const i = key.lastIndexOf(".");
+  if (i < 0) return false;
+  const ext = key.slice(i).toLowerCase();
+  return IMAGE_EXTS.has(ext);
 }
 
 export async function GET(req: NextRequest) {
@@ -36,7 +58,7 @@ export async function GET(req: NextRequest) {
       ? parseFloat(searchParams.get("maxSize")!)
       : null;
 
-    const roomType = searchParams.get("roomType");
+    const propertyType = searchParams.get("propertyType");
     const bedRoom = searchParams.get("bedRoom");
 
     const page = parseInt(searchParams.get("page") || "1", 10);
@@ -60,22 +82,23 @@ export async function GET(req: NextRequest) {
 
     const projectCodes = projects.map((p) => p.projectCode);
 
-    const roomTypeFilter: any = {};
-    if (roomType && roomType !== "all") {
-      const types = (roomType as string)
+    const propertyTypeFilter: any = {};
+    if (propertyType && propertyType !== "all") {
+      const types = (propertyType as string)
         .split(",")
         .filter((t) => Object.values(RoomType).includes(t as RoomType)) // ✅ validate
         .map((t) => t as RoomType);
 
       if (types.length > 0) {
-        roomTypeFilter.roomType = { in: types };
+        propertyTypeFilter.propertyType = { in: types };
       }
     }
-
+console.log(propertyTypeFilter, 55555)
     const bedRoomFilter: any = {};
     if (bedRoom && bedRoom !== "all") {
       bedRoomFilter.bedRoom = bedRoom;
     }
+
 
     if (!projects.length) {
       return NextResponse.json({
@@ -88,7 +111,7 @@ export async function GET(req: NextRequest) {
       // Fetch properties
       const properties = await prisma.property.findMany({
         where: {
-          ...roomTypeFilter,
+          ...propertyTypeFilter,
           ...bedRoomFilter,
           ...(projectCodes.length > 0
             ? { projectCode: { in: projectCodes } }
@@ -121,6 +144,7 @@ export async function GET(req: NextRequest) {
 
       // slice data
       const paginatedItems = filtered.slice(skipNumber, skipNumber + limit);
+
       return NextResponse.json({
         page,
         limit,
@@ -136,3 +160,71 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+
+// export async function getImages(folder: string) {
+//   try {
+//     let ContinuationToken: string | undefined;
+//     const keys: string[] = [];
+
+//     do {
+//       const res = await s3.send(
+//         new ListObjectsV2Command({
+//           Bucket: process.env.AWS_S3_BUCKET_NAME,
+//           // Prefix: `${folder}/`,
+//           Prefix: "1684348259133823/",
+//           ContinuationToken,
+//         })
+//       );
+//       // console.log(res, 9999999);
+
+//       (res.Contents || []).forEach((o) => {
+//         if (o.Key && !o.Key.endsWith("/") && isImageKey(o.Key)) {
+//           keys.push(o.Key);
+//           // console.log("whattt,", o.Key);
+//         }
+//       });
+
+//       ContinuationToken = res.IsTruncated
+//         ? res.NextContinuationToken
+//         : undefined;
+//     } while (ContinuationToken);
+
+//     // console.log(keys, 33333)
+//     // Option A: return presigned URLs (expire ~10 minutes)
+//     // const presigned = await Promise.all(
+//     //   keys.map(async (Key) => ({
+//     //     key: Key,
+//     //     url: await getSignedUrl(
+//     //       s3,
+//     //       // Use GetObject to sign direct S3 access:
+//     //       new (
+//     //         await import("@aws-sdk/client-s3")
+//     //       ).GetObjectCommand({
+//     //         Bucket: process.env.AWS_S3_BUCKET_NAME,
+//     //         Key,
+//     //       }),
+//     //       { expiresIn: 600 } // 10 minutes
+//     //     ),
+//     //   }))
+//     // );
+
+//     // console.log(presigned, 5555555);
+//     // // Option B: if using public CloudFront, return stable CDN URLs:
+//     // const cdnBase = process.env.CDN_BASE;
+//     // const cdn = cdnBase
+//     //   ? keys.map((key) => ({ key, url: `${cdnBase}/${key}` }))
+//     //   : null;
+
+//     return NextResponse.json({
+//       count: keys.length,
+//       // pick one style to use on the client:
+//       images: presigned,
+//     });
+//   } catch (err: any) {
+//     console.error(err);
+//     return NextResponse.json(
+//       { error: "Failed to list images", details: err?.message },
+//       { status: 500 }
+//     );
+//   }
+// }

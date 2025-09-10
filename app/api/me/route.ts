@@ -38,7 +38,9 @@ export async function GET() {
         email: user.emailAddresses.length ? user.emailAddresses[0].emailAddress: "",
         firstName: user.firstName ?? "",
         lastName: user.lastName ?? "",
-        lineCode: nextLineCode,
+        isPaid: false,
+        currentExpireDate: null,
+        role: "freeUser",
       },
     });
     // save default post template

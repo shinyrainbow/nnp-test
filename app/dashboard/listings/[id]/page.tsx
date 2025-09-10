@@ -23,7 +23,7 @@ interface Property {
   // status
   status?: "pending" | "available" | "rented" | "sold"
   whenAvailable?: string
-  isAcceptShortTerm?: boolean
+  isAcceptShortTerm?: string
 
   // details
   addressNumber?: string
@@ -32,11 +32,11 @@ interface Property {
   roomSize?: string
   floor?: string
   building?: string
-  roomType?: "Condo" | "Townhouse" | "SingleHouse" | "Apartment" | "Other"
-  isPetFriendly?: boolean
+  propertyType?: "Condo" | "Townhouse" | "SingleHouse" | "Apartment" | "Other"
+  isPetFriendly?: string
   carPark?: string
   imageUrls: string[]
-  roomAmenities: string[]
+  amenities: string[]
 
   // price
   rentalRate?: string
@@ -47,7 +47,7 @@ interface Property {
   lineId?: string
   fbUser?: string
 
-  isOwner?: boolean
+  isOwner?: string
   linkPost?: string
 
   // messages
@@ -126,16 +126,14 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
     formData.append("roomSize", property.roomSize);
     formData.append("floor", property.floor);
     formData.append("building", property.building);
-    formData.append("roomType", property.roomType);
+    formData.append("propertyType", property.propertyType);
     formData.append("isPetFriendly", property.isPetFriendly);
     formData.append("carPark", property.carPark);
 
-    ////////////////
     const keptImages = selectedImages;
     const removedImages = property.imageUrls.filter(
       (old) => !selectedImages.includes(old) // find which were deleted
     );
-    // formData.append("imageUrls", property.imageUrls);
     // keep/remove lists
     formData.append("keptImages", JSON.stringify(keptImages));
     formData.append("removedImages", JSON.stringify(removedImages));
@@ -143,9 +141,8 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
     newFiles.forEach((file) => {
       formData.append("newFiles", file);
     });
-    ///////////////
 
-    formData.append("roomAmenities", JSON.stringify( property.roomAmenities));
+    formData.append("amenities", JSON.stringify( property.amenities));
 
     formData.append("rentalRate", property.rentalRate);
     formData.append("sellPrice", property.sellPrice);
@@ -162,16 +159,13 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
     formData.append("messageToPost", property.messageToPost);
 
     formData.append("projectCode", property.projectCode);
+    formData.append("postId", property.postId);
 
     setSaving(true)
     try {
       const response = await fetch(`/api/listings/${id}`, {
         method: "PUT",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
         body: formData,
-        // body: JSON.stringify(property),
       })
 
       if (response.ok) {
@@ -207,54 +201,12 @@ const [preview, setPreviews] = useState<string[]>([])
   const handleFileUpload = async (files: FileList) => {  // files = e.target.files
     if (!files || files.length === 0) return
 
-    // setUploading(true)
-    // setUploadProgress(0)
     if (files) {
       const newFileImages = Array.from(files)
       setNewFiles(Array.from(files)); // convert FileList → File[]
       const urls = newFileImages.map((newfile) => URL.createObjectURL(newfile));
     setPreviews(urls);
     }
-
-    // try {
-    //   const formData = new FormData()
-    //   Array.from(files).forEach((file) => {
-    //     formData.append("files", file)
-    //   })
-
-    //   const response = await fetch("/api/upload", {
-    //     method: "POST",
-    //     body: formData,
-    //   })
-
-    //   if (!response.ok) {
-    //     throw new Error("Upload failed")
-    //   }
-
-    //   const result = await response.json()
-
-    //   if (result.success && property) {
-    //     const newImageUrls = result.files.map((file: any) => file.url)
-    //     setProperty({
-    //       ...property,
-    //       imageUrls: [...property.imageUrls, ...newImageUrls],
-    //     })
-
-    //     toast({
-    //       title: "Success",
-    //       description: `${result.files.length} image(s) uploaded successfully`,
-    //     })
-    //   }
-    // } catch (error) {
-    //   toast({
-    //     title: "Error",
-    //     description: "Failed to upload images",
-    //     variant: "destructive",
-    //   })
-    // } finally {
-    //   setUploading(false)
-    //   setUploadProgress(0)
-    // }
   }
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -279,22 +231,10 @@ const [preview, setPreviews] = useState<string[]>([])
     }
   }
 
-  console.log(property?.imageUrls, 44444)
   const [selectedImages, setSelectedImages] = useState<string[]>(property?.imageUrls || []);
   const allCurrentImages = [...selectedImages, ...preview]
   const removeImageUrl = (url: string) => {
-    console.log('removeddd')
     setSelectedImages((prev) => prev.filter((img) => img !== url));
-
-    // if (property) {
-    //   const 
-    //   setProperty({
-    //     ...property,
-    //     keptImages: []
-    //     removedImages: [property.imageUrls]
-    //     // imageUrls: property.imageUrls.filter((_, i) => i !== index),
-    //   })
-    // }
   }
 
   const addAmenity = () => {
@@ -378,17 +318,17 @@ const [preview, setPreviews] = useState<string[]>([])
               </div>
 
               <div>
-                <Label htmlFor="roomType">Room Type</Label>
-                <Select value={property.roomType} onValueChange={(value) => updateProperty("roomType", value)}>
+                <Label htmlFor="propertyType">Property Type</Label>
+                <Select value={property.propertyType} onValueChange={(value) => updateProperty("roomType", value)}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Condo">Condo</SelectItem>
+                    <SelectItem value="Apartment">Apartment</SelectItem>
                     <SelectItem value="Townhouse">Townhouse</SelectItem>
                     <SelectItem value="SingleHouse">SingleHouse</SelectItem>
-                    <SelectItem value="Apartment">Apartment</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
+                    {/* <SelectItem value="Other">Other</SelectItem> */}
                   </SelectContent>
                 </Select>
               </div>
@@ -714,7 +654,7 @@ const [preview, setPreviews] = useState<string[]>([])
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {property.roomAmenities.map((amenity, index) => (
+              {property.amenities.map((amenity, index) => (
                 <div key={index} className="relative group">
                   <Badge variant="outline" className="pr-6">
                     {amenity}

@@ -48,6 +48,39 @@ async function uploadImagesToS3(files: File[], propertyId: string) {
   return uploadedUrls;
 }
 
+
+// DELETE /api/property/[id]
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const propertyId = params.id;
+
+    if (!propertyId) {
+      return NextResponse.json(
+        { error: "Property ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const deleted = await prisma.property.delete({
+      where: { id: propertyId },
+    });
+
+    return NextResponse.json({
+      message: "Property deleted successfully",
+      property: deleted,
+    });
+  } catch (err: any) {
+    console.error("Error deleting property:", err);
+    return NextResponse.json(
+      { error: "Failed to delete property" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -98,8 +131,7 @@ export async function PUT(
 
     const status = (formData.get("status") as string) || "pending";
     const whenAvailable = formData.get("whenAvailable") as string;
-    const isAcceptShortTerm =
-      (formData.get("isAcceptShortTerm") as string) || false;
+    const isAcceptShortTerm = formData.get("isAcceptShortTerm") as string;
 
     const addressNumber = formData.get("addressNumber") as string;
     const bedRoom = formData.get("bedRoom") as string;
@@ -107,8 +139,8 @@ export async function PUT(
     const roomSize = formData.get("roomSize") as string;
     const floor = formData.get("floor") as string;
     const building = formData.get("building") as string;
-    const roomType = formData.get("roomType") as string;
-    const isPetFriendly = (formData.get("isPetFriendly") as string) || false;
+    const propertyType = formData.get("propertyType") as string;
+    const isPetFriendly = formData.get("isPetFriendly") as string;
     const carPark = formData.get("carPark") as string;
 
     const keptImages = JSON.parse(formData.get("keptImages") as string);
@@ -117,7 +149,7 @@ export async function PUT(
 
     const newFiles = formData.getAll("newFiles") as File[];
 
-    const roomAmenities = JSON.parse(formData.get("roomAmenities") as string);
+    const amenities = JSON.parse(formData.get("amenities") as string) || [];
 
     const rentalRate = formData.get("rentalRate") as string;
     const sellPrice = formData.get("sellPrice") as string;
@@ -126,7 +158,7 @@ export async function PUT(
     const lineId = formData.get("lineId") as string;
     const fbUser = formData.get("fbUser") as string;
 
-    const isOwner = (formData.get("isOwner") as string) || false;
+    const isOwner = formData.get("isOwner") as string;
     const linkPost = formData.get("linkPost") as string;
 
     const note = formData.get("note") as string;
@@ -134,9 +166,7 @@ export async function PUT(
     const messageToPost = formData.get("messageToPost") as string;
 
     const projectCode = formData.get("projectCode") as string;
-
-    // console.log(keptImages, 55555555)
-    // console.log(removedImages, 55555555)
+    const postId = formData.get("postId") as string;
 
     if (!projectCode) {
       return NextResponse.json(
@@ -170,7 +200,7 @@ export async function PUT(
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
-        const Key = `properties/${projectCode}/${projectCode}-${projectPropertyCode}/${file.name}-${randomUUID()}`;
+        const Key = `/${postId}/${file.name}-${randomUUID()}`;
 
         await s3.send(
           new PutObjectCommand({
@@ -197,7 +227,7 @@ export async function PUT(
 
         status: status as PropertyStatus,
         whenAvailable,
-        isAcceptShortTerm: Boolean(isAcceptShortTerm),
+        isAcceptShortTerm: isAcceptShortTerm,
 
         addressNumber,
         bedRoom,
@@ -205,11 +235,11 @@ export async function PUT(
         roomSize,
         floor,
         building,
-        roomType: roomType as RoomType,
-        isPetFriendly: Boolean(isPetFriendly),
+        propertyType: propertyType as RoomType,
+        isPetFriendly: isPetFriendly,
         carPark,
         imageUrls: finalImages,
-        roomAmenities,
+        amenities,
 
         rentalRate,
         sellPrice,
@@ -218,7 +248,7 @@ export async function PUT(
         lineId,
         fbUser,
 
-        isOwner: Boolean(isOwner),
+        isOwner: isOwner,
         linkPost,
 
         note,
@@ -239,57 +269,3 @@ export async function PUT(
   }
 }
 
-// export async function updateProperty(data, newFiles: File[]) {
-//     // Step 1: Delete removed images
-//     if (data.removedImages && data.removedImages.length > 0) {
-//       await deleteImagesFromS3(data.removedImages);
-//     }
-
-//     // Step 2: Upload new images
-//     const newImageUrls = newFiles.length
-//       ? await uploadImagesToS3(newFiles, data.id)
-//       : [];
-
-//     // Step 3: Merge kept images + new uploads
-//     const finalImages = [...(data.keptImages || []), ...newImageUrls];
-
-//     // Step 4: Update DB
-//     return prisma.property.update({
-//       where: { id: data.id },
-//       data: {
-//         roomSize: data.roomSize,
-//         rentalRate: data.rentalRate,
-//         imageUrls: finalImages,
-//       },
-//     });
-//   }
-
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    if (!mockProperties.has(params.id)) {
-      return NextResponse.json(
-        { error: "Property not found" },
-        { status: 404 }
-      );
-    }
-
-    // In a real app, you would delete from database here
-    // await prisma.property.delete({
-    //   where: { id: params.id }
-    // })
-
-    // Delete from mock data
-    mockProperties.delete(params.id);
-
-    return NextResponse.json({ message: "Property deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting property:", error);
-    return NextResponse.json(
-      { error: "Failed to delete property" },
-      { status: 500 }
-    );
-  }
-}

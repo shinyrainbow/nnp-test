@@ -9,8 +9,6 @@ export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-
   const [imageUrl, setImageUrl] = useState('');
   const [downloadStatus, setDownloadStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);

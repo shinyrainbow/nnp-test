@@ -8,36 +8,47 @@ import { useLanguage } from "@/contexts/language-context";
 export function HeroSection() {
   const { t } = useLanguage();
   return (
-    <section className="py-20 px-4 
-        bg-gradient-to-br from-teal-100 to-blue-200
-    ">
-      <div className="container mx-auto text-center">
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-          {t("home.banner")}
-          <span className="text-primary block">{t("home.subBanner")}</span>
-        </h1>
-        <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-          {t("home.description")}
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <Button size="lg" asChild className="text-lg px-8 py-6">
-            <Link href="/dashboard">
-              {t("home.viewDashboard")}
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            asChild
-            className="text-lg px-8 py-6"
-          >
-            <Link href="/features">{t("home.more")}</Link>
-          </Button>
-        </div>
+    <section
+    className="relative py-20 px-4 overflow-hidden"
+  >
+    {/* Background image */}
+    <div
+      className="absolute inset-0 bg-cover bg-center opacity-30"
+      style={{ backgroundImage: "url('/banner-bg.jpg')" }}
+    />
+  
+    {/* Gradient overlay */}
+    <div className="absolute inset-0 bg-gradient-to-br from-teal-100 to-blue-200 opacity-60" />
+  
+    {/* Content */}
+    <div className="relative container mx-auto text-center">
+      <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+        {t("home.banner")}
+        <span className="text-primary block">{t("home.subBanner")}</span>
+      </h1>
+      <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+        {t("home.description")}
+      </p>
+  
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+        <Button size="lg" asChild className="text-lg px-8 py-6">
+          <Link href="/dashboard">
+            {t("home.viewDashboard")}
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+        </Button>
+        <Button
+          size="lg"
+          variant="outline"
+          asChild
+          className="text-lg px-8 py-6"
+        >
+          <Link href="/features">{t("home.more")}</Link>
+        </Button>
       </div>
-    </section>
+    </div>
+  </section>
+  
   );
 }
 

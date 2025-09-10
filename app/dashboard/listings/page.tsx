@@ -9,11 +9,10 @@ import {
   Ruler,
   Heart,
   Loader2,
-  Grid,
-  List,
   Download,
   Calendar,
   Edit,
+  Trash,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -40,7 +39,7 @@ export interface Property {
 
   status: string;
   whenAvailable: string;
-  isAcceptShortTerm: boolean;
+  isAcceptShortTerm: string;
 
   addressNumber: string;
   bedRoom: string;
@@ -48,8 +47,8 @@ export interface Property {
   roomSize: string;
   floor: number;
   building: string;
-  roomType: string;
-  isPetFriendly: boolean;
+  propertyType: string;
+  isPetFriendly: string;
   carPark: string;
   imageUrls: string[];
   roomAmenities: string[];
@@ -61,7 +60,7 @@ export interface Property {
   lineId: string;
   fbUser: string;
 
-  isOwner: boolean;
+  isOwner: string;
   linkPost: string;
 
   note: string;
@@ -92,7 +91,7 @@ export interface Project {
   addressZipcode: string;
 }
 
-const propertyTypes = ["Condo", "Apartment", "Townhouse", "House"];
+const propertyTypes = ["Condo", "Apartment", "Townhouse", "SingleHouse"];
 
 export default function PropertySearch() {
   const router = useRouter();
@@ -126,6 +125,7 @@ export default function PropertySearch() {
       setError(null);
 
       const res = await fetch(`/api/listings?${query}`);
+      
       if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status}`);
       }
@@ -151,7 +151,7 @@ export default function PropertySearch() {
     fetchData(`page=${currentPage}&limit=${pageSize}&
       projectName=${searchTerm}&
       minPrice=${minPrice}&maxPrice=${maxPrice}&
-      roomType=${selectedRoomType}&bedRoom=${selectedBedRoom}&
+      propertyType=${selectedRoomType}&bedRoom=${selectedBedRoom}&
       minSize=${minSize}&maxSize=${maxSize}`);
   }, []);
 
@@ -240,7 +240,7 @@ export default function PropertySearch() {
       maxPrice,
       minSize,
       maxSize,
-      roomType: selectedRoomType,
+      propertyType: selectedRoomType,
       bedRoom: selectedBedRoom,
       page,
       limit: pageSize,
@@ -267,7 +267,7 @@ export default function PropertySearch() {
       maxPrice,
       minSize,
       maxSize,
-      roomType: selectedRoomType,
+      propertyType: selectedRoomType,
       bedRoom: selectedBedRoom,
       page: 1,
       limit: newPageSize,
@@ -291,7 +291,7 @@ export default function PropertySearch() {
       maxPrice,
       minSize,
       maxSize,
-      roomType: selectedRoomType,
+      propertyType: selectedRoomType,
       bedRoom: selectedBedRoom,
       page: 1,
     };
@@ -323,7 +323,7 @@ export default function PropertySearch() {
       maxPrice: "",
       minSize: "",
       maxSize: "",
-      roomType: "all",
+      propertyType: "all",
       bedRoom: "all",
     };
 
@@ -351,6 +351,25 @@ export default function PropertySearch() {
     }
   }, [error, setError]);
 
+
+  const deleteProperty = async (id) => {
+    try {
+      const res =await fetch(`/api/listings/${id}`, {
+        method: "DELETE",
+      });
+    
+      const data = await res.json();
+      console.log(data);
+     
+      if (!res.ok) {
+        throw new Error(`Failed to fetch: ${res.status}`);
+      }
+
+    } catch (err: any) {
+      // setError(err.message || "Something went wrong");
+    } finally {
+    }
+  }
   return (
     <div className="">
       {error && (
@@ -408,11 +427,11 @@ export default function PropertySearch() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">{t("allRoomTypes")}</SelectItem>
-                    {propertyTypes.map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {getLocalizedPropertyType(type)}
-                      </SelectItem>
-                    ))}
+                    <SelectItem  value={"Condo"}>{t("condo")}</SelectItem>
+                    <SelectItem  value={"Apartment"}>{t("apartment")}</SelectItem>
+                    <SelectItem  value={"Townhouse"}>{t("townhouse")}</SelectItem>
+                    <SelectItem value={"SingleHouse"}>{t("house")}</SelectItem>
+                   
                   </SelectContent>
                 </Select>
               </div>
@@ -535,7 +554,7 @@ export default function PropertySearch() {
                 <div className="flex gap-2 pt-6">
                   <Button
                     type="submit"
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700"
+                    className="flex items-center gap-2 bg-primary hover:bg-primary-700"
                   >
                     {loading ? (
                       <Loader2 className="w-4 h-4" />
@@ -623,7 +642,8 @@ export default function PropertySearch() {
 
           {viewMode === "grid" ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-              {properties.map((property) => {
+              {properties.map((property,index) => {
+                console.log(property, 888888888)
                 const priceRentalNumber = parsePrice(property.rentalRate);
                 const formattedRentalPrice = formatPrice(priceRentalNumber);
 
@@ -632,7 +652,7 @@ export default function PropertySearch() {
 
                 return (
                   <Card
-                    key={property.id}
+                    key={index}
                     className="hover:shadow-lg transition-shadow"
                   >
                     <CardHeader className="pb-3">
@@ -640,6 +660,7 @@ export default function PropertySearch() {
                         <div>
                           <CardTitle className="text-lg font-semibold text-gray-900">
                             {property.project.projectNameEn}
+                            {/* {property.postId} */}
                           </CardTitle>
                           {/* <p className="text-sm text-gray-600 mt-1">
                         {t("room")} {property.roomNumber} • 
@@ -656,10 +677,21 @@ export default function PropertySearch() {
                       </div> */}
                         </div>
 
+
                         <div className="flex gap-1">
                           <Button variant="ghost" size="sm">
                             <Heart className="w-4 h-4" />
                           </Button>
+
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => deleteProperty(property.id)}
+                            className="text-blue-600 hover:text-blue-700"
+                          >
+                            <Trash className="w-4 h-4" />
+                          </Button>
+
                           <Button
                             variant="ghost"
                             size="sm"
@@ -669,6 +701,7 @@ export default function PropertySearch() {
                             <Edit className="w-4 h-4" />
                           </Button>
                         </div>
+
                       </div>
 
                       {/* <div className="flex items-center gap-1 text-sm text-gray-600">
@@ -700,11 +733,11 @@ export default function PropertySearch() {
                     </div>
 
                     <CardContent className="space-y-2">
-                      <div className="grid grid-cols-4 gap-1 text-sm text-[10px]">
+                      <div className="grid grid-cols-4 gap-1 text-sm text-[9px]">
                         <div className="flex items-center gap-1">
                           <Building className="w-4 h-4 text-gray-500" />
                           <span>
-                            Fl. {property.floor}
+                            {t("floor")} {property.floor}
                             {/* {getLocalizedPropertyType(property.roomType)} */}
                           </span>
                         </div>
@@ -820,17 +853,16 @@ export default function PropertySearch() {
                       <div className="border-t pt-4">
                         <div className="flex justify-between items-center mb-1">
                           <div>
-                            <p className="text-sm text-gray-600">{t("rent")}</p>
+                            {/* <p className="text-sm text-gray-600">{t("rent")}</p> */}
                             <p className="text-lg font-bold text-blue-600">
-                              ฿{formattedRentalPrice}
-                              {t("month")}
+                              <span className="text-sm text-gray-600">{t("rent")}:</span> {formattedRentalPrice}{t("month")}
                             </p>
                           </div>
                         </div>
                         <div className="text-left">
-                          <p className="text-sm text-gray-600">{t("sale")}</p>
+                          {/* <p className="text-sm text-gray-600">{t("sale")}</p> */}
                           <p className="text-lg font-bold text-green-600">
-                            ฿{formattedSellPrice}
+                          <span className="text-sm text-gray-600">{t("sale")}:</span> {formattedSellPrice !== "0" ? formattedSellPrice :  "-" }
                           </p>
                         </div>
 

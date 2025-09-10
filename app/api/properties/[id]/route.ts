@@ -169,7 +169,7 @@ const projects = [
   },
 ]
 
-const TYPES = ["Condo", "Apartment", "Townhouse", "House"]
+const TYPES = ["Condo", "Apartment", "Townhouse", "SingleHouse"]
 const STATIONS = ["ทองหล่อ", "อโศก", "สุขุมวิท", "พระโขนง", "เอกมัย", "สยาม", "ชิดลม", "ราชเทวี"]
 
 // Room amenities options

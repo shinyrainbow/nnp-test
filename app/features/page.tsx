@@ -121,6 +121,7 @@ export default function FeaturesPage() {
               </Card>
             ))}
           </div>
+
         </div>
       </main>
       <Footer />

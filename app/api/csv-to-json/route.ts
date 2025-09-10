@@ -12,6 +12,7 @@ export const config = {
     bodyParser: false,
   },
 };
+
 function getContentType(filePath: string) {
   return mime.lookup(filePath) || "application/octet-stream";
 }

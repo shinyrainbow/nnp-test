@@ -73,7 +73,7 @@ export const defaultFields: TemplateField[] = [
     label: "Property Type",
     type: "select",
     emoji: "🏢",
-    options: ["Condo", "House", "Townhouse", "Apartment"],
+    options: ["Condo", "Apartment",  "Townhouse","SingleHouse"],
     required: true,
   },
   {

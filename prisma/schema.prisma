@@ -16,15 +16,20 @@ model User {
   isPaid                   Boolean                   @default(false)
   currentExpireDate        DateTime?
   imageUrl                 String?
-  lineCode                 Int                       @default(2025)
-  isEnableLine             Boolean                   @default(false)
   createdAt                DateTime                  @default(now())
   updatedAt                DateTime                  @updatedAt
+  role                     Roles                  @default(freeUser)
   postTemplate             PostTemplate[]
   rentalContracts          RentalContract[]
   purchaseAndSaleContracts PurchaseAndSaleContract[]
+  appointment              Appointment[]
+}
 
-  appointment Appointment[]
+
+enum Roles {
+  admin
+  freeUser
+  paidUser
 }
 
 enum PropertyStatus {
@@ -78,20 +83,21 @@ model Property {
   // status
   status            PropertyStatus? @default(pending)
   whenAvailable     String?
-  isAcceptShortTerm Boolean?        @default(false)
+  isAcceptShortTerm String?
 
   // details
   addressNumber String? // 42/188
   bedRoom       String?
   bathRoom      String?
   roomSize      String? // in sqm
+  houseSize    String?
   floor         String?
   building      String?
-  roomType      RoomType? @default(Condo)
-  isPetFriendly Boolean?  @default(false)
+  propertyType      RoomType? @default(Condo)
+  isPetFriendly String?
   carPark       String?
   imageUrls     String[]  @default([])
-  roomAmenities String[]  @default([])
+  amenities String[]  @default([])
 
   // price
   rentalRate String?
@@ -102,7 +108,7 @@ model Property {
   lineId String?
   fbUser String? // name and lasname 
 
-  isOwner  Boolean? @default(false)
+  isOwner  String?
   linkPost String? //link of the post 
 
   // messages
@@ -112,6 +118,8 @@ model Property {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  postId String?
 
   // Relation
   projectCode String
