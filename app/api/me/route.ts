@@ -27,11 +27,6 @@ export async function GET() {
   });
 
   if (!dbUser) {
-    const lastUser = await prisma.user.findFirst({
-      orderBy: { lineCode: "desc" },
-    });
-    const nextLineCode = lastUser ? lastUser.lineCode + 1 : 2025;
-
     dbUser = await prisma.user.create({
       data: {
         clerkId: user.id,
@@ -43,6 +38,7 @@ export async function GET() {
         role: "freeUser",
       },
     });
+    
     // save default post template
     await prisma.postTemplate.create({
       data: {
