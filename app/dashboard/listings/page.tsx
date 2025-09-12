@@ -692,14 +692,15 @@ export default function PropertySearch() {
                             <Trash className="w-4 h-4" />
                           </Button>
 
-                          <Button
+<a href={`/dashboard/listings/${property.id}`} target="_blank" >click</a>
+                          {/* <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleEditProperty(property.id)}
                             className="text-blue-600 hover:text-blue-700"
                           >
                             <Edit className="w-4 h-4" />
-                          </Button>
+                          </Button> */}
                         </div>
                       </div>
 

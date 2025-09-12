@@ -1,19 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { projects } from "@/mock/projects";
 // import { thaiNames } from "@/mock/thaiNames";
 
 export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState([]);
 
   const [jsonInput, setJsonInput] = useState(JSON.stringify(projects));
 
   const handleCreateProjects = async () => {
     setLoading(true);
     setError(null);
-    setMessage("");
+    // setMessage("");
 
     let projectsToSend = [];
 
@@ -40,11 +40,11 @@ export default function App() {
     // Now, send the validated projects data to the API.
     try {
       const response = await fetch("/api/project-create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(projects),
+        method: "GET",
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        // body: JSON.stringify(projects),
       });
 
       if (!response.ok) {
@@ -55,13 +55,18 @@ export default function App() {
       }
 
       const data = await response.json();
-      setMessage(data.message);
+      console.log(data.data, 8888)
+
+      setMessage(data.data);
     } catch (err) {
-      setError(err.message);
+      // setError(err.message);
     } finally {
       setLoading(false);
     }
   };
+  useEffect(()=> {
+    handleCreateProjects()
+  }, [])
   // const sorted = projects.sort((a, b) =>
   //   a.projectNameEn.localeCompare(b.projectNameEn)
   // );
@@ -103,6 +108,9 @@ export default function App() {
   // console.log(ttt)
   // const uuu = engNames.slice(500)
   // console.log(uuu)
+  if(loading){
+    return <div>Loading...</div>
+  }
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg text-center">
@@ -110,21 +118,21 @@ export default function App() {
           Create Projects
         </h1>
 
-        {projects.map((name, index) => {
+        {message.map((name, index) => {
           return (
             <div key={index}>
-              {index + 1} {name.projectNameEn} - {name.projectNameTh}
+              {name.projectCode} {name.projectNameEn} - {name.projectNameTh}
             </div>
           );
         })}
 
-        <button
+        {/* <button
           onClick={handleCreateProjects}
           disabled={loading}
           className="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           {loading ? "Creating..." : "Send Data to API"}
-        </button>
+        </button> */}
         {/* Textarea for JSON input */}
         {/* <p className="text-sm text-gray-600 mb-2">
           Paste your JSON array below. If the box is empty, the default data will be used.

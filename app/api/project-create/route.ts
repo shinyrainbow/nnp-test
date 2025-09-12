@@ -8,6 +8,18 @@ import { uuid } from "zod/v4";
 // Instantiate the Prisma client. This is a best practice to do outside the handler.
 const prisma = new PrismaClient();
 
+export async function GET() {
+  try {
+    const pp = await prisma.project.findMany({})
+    return NextResponse.json({data: pp}, {status: 200})
+  }catch(err){
+
+  }
+}
+
+
+
+
 // This is the main API route handler function for POST requests.
 // In the App Router, the function name corresponds to the HTTP method.
 export async function POST(req: Request) {

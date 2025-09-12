@@ -71,8 +71,6 @@ export async function GET(req: NextRequest) {
       });
     }
 
-
-
     const { searchParams } = new URL(req.url);
 
     const projectName = searchParams.get("projectName") || "";
@@ -102,8 +100,9 @@ export async function GET(req: NextRequest) {
     const projects = await prisma.project.findMany({
       where: {
         OR: [
-          { projectNameEn: { contains: projectName, mode: "insensitive" } },
-          { projectNameTh: { contains: projectName, mode: "insensitive" } },
+          { projectCode: {contains: "P000"} },
+          // { projectNameEn: { contains: projectName, mode: "insensitive" } },
+          // { projectNameTh: { contains: projectName, mode: "insensitive" } },
         ],
       },
       select: {
@@ -126,7 +125,7 @@ export async function GET(req: NextRequest) {
         propertyTypeFilter.propertyType = { in: types };
       }
     }
-// console.log(propertyTypeFilter, 55555)
+
     const bedRoomFilter: any = {};
     if (bedRoom && bedRoom !== "all") {
       bedRoomFilter.bedRoom = bedRoom;
@@ -149,6 +148,10 @@ export async function GET(req: NextRequest) {
           ...(projectCodes.length > 0
             ? { projectCode: { in: projectCodes } }
             : {}),
+          originalMessage: {
+            contains: projectName,      
+            mode: "insensitive",    
+          }
         },
         include: {
           project: true,

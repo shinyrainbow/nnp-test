@@ -114,7 +114,7 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
 
     const formData = new FormData();
     formData.append("id", property.id);
-    formData.append("projectPropertyCode", property.projectPropertyCode);
+    formData.append("projectPropertyCode", property.propertyCode);
 
     formData.append("status", property.status);
     formData.append("whenAvailable", property.whenAvailable);
@@ -142,7 +142,7 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
       formData.append("newFiles", file);
     });
 
-    formData.append("amenities", JSON.stringify( property.amenities));
+    formData.append("amenities", JSON.stringify(property.amenities));
 
     formData.append("rentalRate", property.rentalRate);
     formData.append("sellPrice", property.sellPrice);
@@ -169,11 +169,13 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
       })
 
       if (response.ok) {
+        console.log('asdasdasd')
         toast({
           title: "Success",
           description: "Property updated successfully",
         })
-        router.push("/dashboard/listings")
+        
+        // router.push("/dashboard/listings")
       } else {
         toast({
           title: "Error",
@@ -282,6 +284,7 @@ const [preview, setPreviews] = useState<string[]>([])
       <div className="mb-6">
         <h1 className="text-3xl font-bold">Edit Property</h1>
         <p className="text-muted-foreground">Update property information</p>
+        <p>{property.originalMessage}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -292,15 +295,15 @@ const [preview, setPreviews] = useState<string[]>([])
               <CardTitle>Basic Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="projectPropertyCode">Property Code</Label>
+              {/* <div>
+                <Label htmlFor="projectPropertyCode">Project Property Code</Label>
                 <Input
                   id="projectPropertyCode"
                   value={property.projectPropertyCode || ""}
                   onChange={(e) => updateProperty("projectPropertyCode", e.target.value)}
                   placeholder="e.g., RHB-1"
                 />
-              </div>
+              </div> */}
 
               <div>
                 <Label htmlFor="status">Status</Label>
@@ -540,7 +543,7 @@ const [preview, setPreviews] = useState<string[]>([])
         </div>
 
         {/* Property Images */}
-        <Card>
+        {/* <Card>
           <CardHeader>
             <CardTitle>Property Images</CardTitle>
           </CardHeader>
@@ -608,7 +611,6 @@ const [preview, setPreviews] = useState<string[]>([])
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement
-                          // target.src = "/modern-house-exterior.png"
                         }}
                       />
                     </div>
@@ -623,7 +625,6 @@ const [preview, setPreviews] = useState<string[]>([])
                     </Button>
                     <div className="absolute bottom-2 left-2 right-2">
                       <Badge variant="secondary" className="text-xs truncate w-full">
-                        {/* Image {index + 1} */}
                         {url}
                       </Badge>
                     </div>
@@ -632,10 +633,10 @@ const [preview, setPreviews] = useState<string[]>([])
               </div>
             )}
           </CardContent>
-        </Card>
+        </Card> */}
 
         {/* Room Amenities */}
-        <Card>
+        {/* <Card>
           <CardHeader>
             <CardTitle>Room Amenities</CardTitle>
           </CardHeader>
@@ -672,10 +673,10 @@ const [preview, setPreviews] = useState<string[]>([])
               ))}
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         {/* Notes Section */}
-        <Card>
+        {/* <Card>
           <CardHeader>
             <CardTitle>Additional Information</CardTitle>
           </CardHeader>
@@ -713,7 +714,7 @@ const [preview, setPreviews] = useState<string[]>([])
               />
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         {/* Action Buttons */}
         <div className="flex gap-4 justify-end">

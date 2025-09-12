@@ -22,31 +22,31 @@ async function deleteImagesFromS3(imageUrls: string[]) {
   }
 }
 
-async function uploadImagesToS3(files: File[], propertyId: string) {
-  const uploadedUrls: string[] = [];
+// async function uploadImagesToS3(files: File[], propertyId: string) {
+//   const uploadedUrls: string[] = [];
 
-  for (const file of files) {
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+//   for (const file of files) {
+//     const arrayBuffer = await file.arrayBuffer();
+//     const buffer = Buffer.from(arrayBuffer);
 
-    const Key = `properties/${projectCode}/${projectCode}-${projectPropertyCode}`
+//     const Key = `properties/${projectCode}/${projectCode}-${projectPropertyCode}`
 
-    await s3.send(
-      new PutObjectCommand({
-        Bucket: process.env.AWS_S3_BUCKET_NAME!,
-        Key,
-        Body: buffer,
-        ContentType: file.type,
-      })
-    );
+//     await s3.send(
+//       new PutObjectCommand({
+//         Bucket: process.env.AWS_S3_BUCKET_NAME!,
+//         Key,
+//         Body: buffer,
+//         ContentType: file.type,
+//       })
+//     );
 
-    uploadedUrls.push(
-      `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${Key}`
-    );
-  }
+//     uploadedUrls.push(
+//       `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${Key}`
+//     );
+//   }
 
-  return uploadedUrls;
-}
+//   return uploadedUrls;
+// }
 
 
 // DELETE /api/property/[id]

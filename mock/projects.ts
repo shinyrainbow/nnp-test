@@ -15400,7 +15400,44 @@ export const projects = [
         "completeYear": "",
         "distanceToStation": [],
         "priceRange": ""
-    }
+    },
+    ////////////// continue
+    {
+        "projectNameEn": "Supalai Premier Si Phraya - Samyan",
+        "projectNameTh": "",
+        "projectCode": "P0821",
+        "projectDescriptionEn": "",
+        "projectDescriptionTh": "",
+        "projectLocation": [],
+        "projectImageUrl": [],
+        "projectFacilities": [],
+        "addressNumberRoad": "",
+        "addressSubDistrict": "",
+        "addressDistrict": "",
+        "addressProvince": "",
+        "addressZipcode": "",
+        "completeYear": "",
+        "distanceToStation": [],
+        "priceRange": ""
+    },
+    {
+        "projectNameEn": "Supalai Premier Si Phraya - Samyan",
+        "projectNameTh": "",
+        "projectCode": "P0821",
+        "projectDescriptionEn": "",
+        "projectDescriptionTh": "",
+        "projectLocation": [],
+        "projectImageUrl": [],
+        "projectFacilities": [],
+        "addressNumberRoad": "",
+        "addressSubDistrict": "",
+        "addressDistrict": "",
+        "addressProvince": "",
+        "addressZipcode": "",
+        "completeYear": "",
+        "distanceToStation": [],
+        "priceRange": ""
+    },
 ]
 
 

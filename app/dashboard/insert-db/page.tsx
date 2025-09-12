@@ -1,6 +1,19 @@
 'use client'
 
 export default function InsertDB() {
+  async function getUnknown() {
+    try {
+        const res = await fetch("/api/insert-db", {
+          method: "PUT",
+          // headers: { "Content-Type": "application/json" },
+          body: ""
+        });
+        if (!res.ok) throw new Error("Failed to insert");
+        
+      } catch (err) {
+        console.error(err);
+      }
+  }
   // async function insertDB() {
   //   try {
   //       const res = await fetch("/api/insert-db", {
@@ -14,23 +27,23 @@ export default function InsertDB() {
   //     }
   // }
 
-  async function trigger() {
-    try {
-        const res = await fetch("/api/insert-image-url", {
-          method: "GET",
-          // headers: { "Content-Type": "application/json" },
-          // body: ""
-        });
-        if (!res.ok) throw new Error("Failed to insert");
+  // async function trigger() {
+  //   try {
+  //       const res = await fetch("/api/insert-image-url", {
+  //         method: "GET",
+  //         // headers: { "Content-Type": "application/json" },
+  //         // body: ""
+  //       });
+  //       if (!res.ok) throw new Error("Failed to insert");
         
-      } catch (err) {
-        console.error(err);
-      }
-  }
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  // }
 
   return (
    <div>
-    <button onClick={trigger}>insert imageUrls to neon db</button>
+    <button onClick={getUnknown}>insert imageUrls to neon db</button>
    </div>
   );
 }

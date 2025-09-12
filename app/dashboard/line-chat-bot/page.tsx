@@ -11,11 +11,9 @@ import {
 import { Check, MessageCircle, Users, Send, Loader2, Home } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
 import Image from "next/image";
+
 export default function LineChatBot() {
   const { t } = useLanguage();
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchUser();
@@ -44,7 +42,7 @@ export default function LineChatBot() {
     }
   };
 
-  if (loading || loadingUser) {
+  if (loadingUser) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -53,10 +51,9 @@ export default function LineChatBot() {
       </div>
     );
   }
-  if (error) return <div>Error...</div>;
+  if (errorUser) return <div>Error...</div>;
 
   return (
-    // <div className="w-full pt-4 space-y-6">
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-4">
@@ -181,9 +178,9 @@ export default function LineChatBot() {
               <Image
                 src="/line-starter.jpg"
                 alt="Start setting up Line Chat Bot"
-                width={160} // set width
-                height={200} // set height
-                priority // optional: preload for faster load
+                width={160} 
+                height={200} 
+                priority 
               />
             </div>
 
@@ -205,16 +202,16 @@ export default function LineChatBot() {
                 src="/line-setting-page.jpg"
                 alt="Setting page"
                 className="mr-4"
-                width={160} // set width
-                height={200} // set height
-                priority // optional: preload for faster load
+                width={160} 
+                height={200} 
+                priority 
               />
               <Image
                 src="/line-languages-picker.jpg"
                 alt="Setting page"
-                width={160} // set width
-                height={200} // set height
-                priority // optional: preload for faster load
+                width={160} 
+                height={200} 
+                priority 
               />
             </div>
 
@@ -237,32 +234,32 @@ export default function LineChatBot() {
                 src="/line-thai.jpg"
                 alt="Setting language"
                 className="mr-4"
-                width={160} // set width
-                height={200} // set height
-                priority // optional: preload for faster load
+                width={160} 
+                height={200}
+                priority 
               />
               <Image
                 src="/line-english.jpg"
                 alt="Setting language"
                 className="mr-4"
-                width={160} // set width
-                height={200} // set height
-                priority // optional: preload for faster load
+                width={160} 
+                height={200} 
+                priority 
               />
               <Image
                 src="/line-japanese.jpg"
                 alt="Setting language"
                 className="mr-4"
-                width={160} // set width
-                height={200} // set height
-                priority // optional: preload for faster load
+                width={160} 
+                height={200} 
+                priority 
               />
               <Image
                 src="/line-chinese.jpg"
                 alt="Setting language"
-                width={160} // set width
-                height={200} // set height
-                priority // optional: preload for faster load
+                width={160} 
+                height={200} 
+                priority 
               />
             </div>
             <div className="flex gap-3">
@@ -285,9 +282,9 @@ export default function LineChatBot() {
               <Image
                 src="/line-end-contract.jpg"
                 alt="End contract message"
-                width={160} // set width
-                height={200} // set height
-                priority // optional: preload for faster load
+                width={160} 
+                height={200} 
+                priority 
               />
             </div>
 
